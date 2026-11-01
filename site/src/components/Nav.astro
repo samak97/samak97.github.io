@@ -1,0 +1,324 @@
+---
+import Icon from './Icon.astro';
+import { profile } from '../data/profile';
+import { nav } from '../data/nav';
+---
+
+<!-- Mobile / tablet top bar -->
+<header class="topbar">
+  <a href="#readme" class="brand" aria-label={`${profile.name}, back to top`}>
+    <span class="logo" aria-hidden="true">AS</span>
+    <span class="brand-name">ahmed<span class="dim">.samak</span></span>
+  </a>
+  <div class="topbar-actions">
+    <button class="icon-btn" data-palette-open aria-label="Search the site">
+      <Icon name="search" />
+    </button>
+    <button class="icon-btn" data-theme-toggle aria-label="Toggle light and dark theme">
+      <Icon name="sun" class="i-sun" /><Icon name="moon" class="i-moon" />
+    </button>
+    <button class="icon-btn" data-drawer-open aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">
+      <Icon name="menu" />
+    </button>
+  </div>
+</header>
+
+<div class="scrim" data-drawer-close hidden></div>
+
+<aside class="sidebar" id="sidebar" aria-label="Site navigation">
+  <div class="sidebar-top">
+    <a href="#readme" class="brand">
+      <span class="logo" aria-hidden="true">AS</span>
+      <span class="brand-name">ahmed<span class="dim">.samak</span></span>
+    </a>
+    <span class="version" title="Current career version">{profile.version}</span>
+    <button class="icon-btn drawer-close" data-drawer-close aria-label="Close navigation">
+      <Icon name="close" />
+    </button>
+  </div>
+
+  <button class="search" data-palette-open>
+    <Icon name="search" size={16} />
+    <span>Search docs…</span>
+    <kbd class="kbd-hint">Ctrl K</kbd>
+  </button>
+
+  <nav class="toc">
+    {
+      nav.map((group) => (
+        <div class="toc-group">
+          <p class="toc-label">{group.label}</p>
+          <ul>
+            {group.items.map((item) => (
+              <li>
+                <a href={`#${item.id}`} data-spy={item.id}>
+                  <span class="toc-dot" aria-hidden="true" />
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </nav>
+
+  <div class="sidebar-foot">
+    <div class="status">
+      <span class="pulse" aria-hidden="true"></span>
+      Open to interesting work
+    </div>
+    <div class="socials">
+      <a class="icon-btn" href={profile.links.linkedin} target="_blank" rel="noopener me" aria-label="LinkedIn">
+        <Icon name="linkedin" size={16} />
+      </a>
+      <a class="icon-btn" href={profile.links.github} target="_blank" rel="noopener me" aria-label="GitHub">
+        <Icon name="github" size={16} />
+      </a>
+      <a class="icon-btn" href={profile.links.x} target="_blank" rel="noopener me" aria-label="X (Twitter)">
+        <Icon name="x" size={15} />
+      </a>
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle light and dark theme">
+        <Icon name="sun" size={16} class="i-sun" /><Icon name="moon" size={16} class="i-moon" />
+      </button>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .logo {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-ink);
+    background: linear-gradient(135deg, var(--c-web), var(--c-gfx) 60%, var(--c-game));
+    box-shadow: 0 6px 20px -6px var(--accent);
+  }
+  .dim {
+    color: var(--muted);
+  }
+
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    transition: color 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .icon-btn:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+  }
+
+  /* ---- Top bar (below desktop) ---- */
+  .topbar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    padding: 0 16px;
+    padding-top: env(safe-area-inset-top);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  /* ---- Sidebar ---- */
+  .sidebar {
+    position: fixed;
+    z-index: 60;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: min(86vw, var(--sidebar-w));
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px 16px;
+    background: var(--bg-2);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateX(-102%);
+    transition: transform 0.45s var(--ease-out);
+  }
+  :global(body.drawer-open) .sidebar {
+    transform: none;
+  }
+  .scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+  }
+
+  .sidebar-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .version {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    background: var(--glow);
+  }
+  .drawer-close {
+    margin-left: auto;
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.88rem;
+    text-align: left;
+    transition: border-color 0.2s;
+  }
+  .search:hover {
+    border-color: var(--border-strong);
+  }
+  .search span {
+    flex: 1;
+  }
+
+  .toc {
+    flex: 1;
+  }
+  .toc-group + .toc-group {
+    margin-top: 18px;
+  }
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--faint);
+    margin: 0 0 6px 10px;
+  }
+  .toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .toc a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    color: var(--muted);
+    transition: color 0.2s, background-color 0.2s;
+  }
+  .toc a:hover {
+    color: var(--text);
+    background: var(--surface);
+  }
+  .toc-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  }
+  .toc a.active {
+    color: var(--text);
+    background: var(--surface);
+  }
+  .toc a.active .toc-dot {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--glow);
+    transform: scale(1.2);
+  }
+
+  .sidebar-foot {
+    display: grid;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    70% {
+      box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+  }
+  .socials {
+    display: flex;
+    gap: 8px;
+  }
+
+  /* ---- Desktop: permanent sidebar ---- */
+  @media (min-width: 1100px) {
+    .topbar,
+    .scrim,
+    .drawer-close {
+      display: none !important;
+    }
+    .sidebar {
+      transform: none;
+      width: var(--sidebar-w);
+      transition: none;
+    }
+  }
+  @media (hover: none) {
+    .kbd-hint {
+      display: none;
+    }
+  }
+</style>

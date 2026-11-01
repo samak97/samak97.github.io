@@ -1,0 +1,95 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+import { profile } from '../data/profile';
+import { modules } from '../data/skills';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${profile.name} — ${profile.role}`,
+  description = profile.description,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  url: profile.siteUrl,
+  image: new URL('/me.jpg', Astro.site).href,
+  email: `mailto:${profile.email}`,
+  jobTitle: profile.role,
+  worksFor: { '@type': 'Organization', name: 'Pixonal' },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Menofia University' },
+  address: [
+    { '@type': 'PostalAddress', addressLocality: 'Cairo', addressCountry: 'EG' },
+    { '@type': 'PostalAddress', addressLocality: 'Dubai', addressCountry: 'AE' },
+  ],
+  sameAs: [profile.links.linkedin, profile.links.github, profile.links.x],
+  knowsAbout: [...new Set(modules.flatMap((m) => m.stack))],
+};
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={profile.keywords.join(', ')} />
+    <meta name="author" content={profile.name} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <meta name="theme-color" content="#0a0c10" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.name} — ${profile.role}`} />
+    <meta property="profile:first_name" content="Ahmed" />
+    <meta property="profile:last_name" content="Samak" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={profile.xHandle} />
+    <meta name="twitter:creator" content={profile.xHandle} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+
+    <!-- Motion flags before first paint. The site always opens in dark mode (data-theme above); the toggle lasts for the visit only. -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion');
+        // Safety net: never leave content hidden if animations fail to start.
+        setTimeout(function () { if (!window.__motionReady) d.classList.remove('motion'); }, 3500);
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>

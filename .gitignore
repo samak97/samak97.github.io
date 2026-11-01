@@ -1,0 +1,17 @@
+# Build output and dependencies
+site/node_modules/
+site/dist/
+site/.astro/
+
+# Private working files:
+# - Documents/: old resume lists references' personal emails; IELTS report has ID details.
+# - cv/: CV source has a commented-out line naming clients (not approved for public use yet).
+#   The site serves its own copy of the CV PDF from site/public/.
+Documents/
+cv/
+
+# Local editor / tool settings
+.claude/
+
+.DS_Store
+Thumbs.db

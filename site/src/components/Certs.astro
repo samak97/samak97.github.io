@@ -1,0 +1,92 @@
+---
+import { certs } from '../data/showcase';
+---
+
+<section id="certifications" class="section" aria-labelledby="certs-title">
+  <div class="section-head" data-reveal>
+    <p class="crumb">docs / reference / <b>certifications</b></p>
+    <h2 id="certs-title" class="section-title">Certifications &amp; education</h2>
+  </div>
+
+  <ul class="certs" role="list">
+    {
+      certs.map((c) => (
+        <li class:list={['cert card', { wip: c.status === 'in-progress' }]} data-reveal>
+          <span class="cert-icon" aria-hidden="true">{c.status === 'in-progress' ? '◐' : '◆'}</span>
+          <div>
+            <h3 class="cert-title">{c.title}</h3>
+            <p class="cert-org">
+              {c.org}
+              {c.date && <span class="mono"> · {c.date}</span>}
+            </p>
+            {c.status === 'in-progress' && <span class="wip-tag mono">in progress</span>}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .certs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+  .cert {
+    display: flex;
+    gap: 14px;
+    padding: 18px;
+    align-items: flex-start;
+    transition: border-color 0.3s;
+  }
+  .cert:hover {
+    border-color: var(--border-strong);
+  }
+  .cert-icon {
+    color: var(--accent);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .wip {
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--accent-2) 50%, var(--border));
+  }
+  .wip .cert-icon {
+    color: var(--accent-2);
+    animation: spin 4s linear infinite;
+    display: inline-block;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .cert-title {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .cert-org {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .wip-tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: var(--accent-2);
+    border: 1px solid color-mix(in srgb, var(--accent-2) 50%, transparent);
+  }
+  @media (min-width: 760px) {
+    .certs {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

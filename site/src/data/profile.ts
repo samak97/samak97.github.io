@@ -1,0 +1,55 @@
+export const profile = {
+  name: 'Ahmed Samak',
+  shortName: 'Samak',
+  role: 'Senior Software Engineer & Team Lead',
+  tagline: 'Fast, beautiful software for the web — and the GPU, the desktop, and the occasional game.',
+  location: 'Cairo, Egypt · Dubai, UAE',
+  email: 'asamak1997@gmail.com',
+  siteUrl: 'https://samak97.github.io',
+  cvPath: '/ahmed-samak-cv.pdf',
+  version: 'v6.0',
+  links: {
+    linkedin: 'https://www.linkedin.com/in/samak97/',
+    github: 'https://github.com/samak97',
+    x: 'https://x.com/samak997',
+  },
+  xHandle: '@samak997',
+  description:
+    'Ahmed Samak is a Senior Software Engineer, Team Lead, and Forward Deployed Engineer at Pixonal building Llumen, a decision intelligence and data visualization platform. Web, 3D graphics, Go microservices, Kubernetes, Azure, high-performance C++, medical software, and web games.',
+  // Badges under the title in the hero (Team Lead is already in the title). Keep an even count: they sit in a 3x2 / 2x3 grid.
+  // Order matters for the 3x2 grid: items 1&4, 2&5, 3&6 share a column, so long ones are paired with short ones.
+  hats: [
+    { label: 'Forward Deployed Engineer', color: 'var(--accent-2)' },
+    { label: 'Cloud & DevOps', note: 'Azure · K8s', color: 'var(--c-ai)' },
+    { label: 'Graphics owner', note: 'Llumen', color: 'var(--c-gfx)' },
+    { label: 'Medical software', note: 'FDA · C++', color: 'var(--c-med)' },
+    { label: 'Game dev', note: 'Unity · Unreal', color: 'var(--c-game)' },
+    { label: 'Full-Stack', note: 'Go · TS', color: 'var(--c-web)' },
+  ],
+  keywords: [
+    'Ahmed Samak',
+    'Senior Software Engineer',
+    'Team Lead',
+    'Forward Deployed Engineer',
+    'Full-Stack Developer',
+    'Three.js Developer',
+    'WebGL',
+    'Data Visualization',
+    'Go',
+    'TypeScript',
+    'Kubernetes',
+    'Microsoft Azure',
+    'C++',
+    'Web Games',
+    'Cairo',
+    'Dubai',
+  ],
+  // Rotating words in the hero ("I build ___")
+  rotating: ['data platforms', 'GPU-fast maps', 'on-site deployments', 'medical software', 'web games', '3D experiences'],
+  stats: [
+    { value: 6, suffix: '+', label: 'years shipping software' },
+    { value: 2, suffix: '', label: 'roles at Pixonal right now: Team Lead & FDE' },
+    { value: 5, suffix: '', label: 'domains: web, cloud, C++, medical, games' },
+    { value: 4, suffix: '', label: 'countries worked with: Egypt, UAE, USA, India' },
+  ],
+};

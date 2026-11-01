@@ -1,0 +1,211 @@
+---
+const facts = [
+  { k: 'role', v: 'Team Lead · Senior Software Engineer', note: 'Pixonal' },
+  { k: 'also', v: 'Forward Deployed Engineer', note: 'UAE government clients' },
+  { k: 'based', v: 'Cairo ⇄ Dubai', note: 'Hybrid, travels on-site' },
+  { k: 'next', v: 'AZ-104 Azure Administrator', note: 'In progress' },
+];
+---
+
+<section id="getting-started" class="section" aria-labelledby="about-title">
+  <div class="section-head" data-reveal>
+    <p class="crumb">docs / <b>getting-started</b></p>
+    <h2 id="about-title" class="section-title">Getting started</h2>
+    <p class="section-lead">A quick install guide for working with me.</p>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-copy">
+      <div class="install card" data-reveal>
+        <div class="install-head mono">
+          <span>terminal</span>
+          <button class="copy-cmd" data-copy="bun add ahmed-samak" aria-label="Copy install command">copy</button>
+        </div>
+        <pre class="mono"><span class="ps">$</span> bun add ahmed-samak
+<span class="ok">+ ahmed-samak@6.0.0</span>
+<span class="dim">  installed 5 modules: web, graphics, native, medical, games</span>
+<span class="dim">  0 vulnerabilities · 6+ years of patches</span></pre>
+      </div>
+
+      <div class="prose" data-reveal>
+        <!-- One line per paragraph: line breaks next to inline tags get collapsed at build time. -->
+        <p>I'm Ahmed, a software engineer who never picked just one lane. I started out making <strong>educational web games</strong>, moved into real-time 3D with <strong>Unreal Engine</strong>, spent nearly three years writing <strong>Modern C++ for FDA-approved surgical software</strong>, and now lead a team at <strong>Pixonal</strong> building Llumen, a decision intelligence platform for government leaders in the UAE.</p>
+        <p>Day to day I own Llumen's graphics: every map, chart, and 2D or 3D visual that turns data into decisions. I also work as a <strong>Forward Deployed Engineer</strong>, travelling to client sites to get the platform running on anything from Azure Kubernetes clusters to servers with no internet at all.</p>
+        <p>The common thread: I like hard performance problems, clean architecture, and software people actually enjoy using.</p>
+      </div>
+    </div>
+
+    <div class="side">
+      <figure class="portrait tilt" data-reveal>
+        <picture>
+          <source srcset="/me-320.webp 320w, /me-640.webp 640w" sizes="(min-width: 900px) 340px, 90vw" type="image/webp" />
+          <img src="/me.jpg" alt="Portrait of Ahmed Samak smiling outdoors" width="640" height="640" loading="lazy" decoding="async" />
+        </picture>
+        <figcaption class="mono"><span class="pulse-dot" aria-hidden="true"></span> ahmed.samak · online</figcaption>
+      </figure>
+
+      <dl class="facts">
+        {
+          facts.map((f) => (
+            <div class="fact card" data-reveal>
+              <dt class="mono">{f.k}</dt>
+              <dd>
+                <span class="fact-v">{f.v}</span>
+                <span class="fact-n">{f.note}</span>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr); /* lets the <pre> scroll instead of widening the page */
+    gap: 28px;
+  }
+  .install {
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .install-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+    font-size: 0.75rem;
+    color: var(--faint);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-2);
+  }
+  .copy-cmd {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    min-height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .copy-cmd:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .install pre {
+    margin: 0;
+    padding: 16px;
+    font-size: clamp(0.74rem, 1.8vw, 0.86rem);
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+  .ps {
+    color: var(--accent);
+  }
+  .ok {
+    color: #22c55e;
+  }
+  :global(html[data-theme='light']) .ok {
+    color: #15803d;
+  }
+  .dim {
+    color: var(--muted);
+  }
+  .prose {
+    display: grid;
+    gap: 16px;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+  .prose strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .side {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+  }
+  .portrait {
+    position: relative;
+    margin: 0;
+    max-width: 360px;
+    width: 100%;
+    justify-self: center;
+    padding: 4px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--c-web), var(--c-gfx) 55%, var(--c-game));
+    box-shadow: 0 24px 60px -24px color-mix(in srgb, var(--accent) 60%, transparent);
+  }
+  .portrait img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 18px;
+    background: var(--surface-2);
+  }
+  .portrait figcaption {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    color: #e7eaf0;
+    background: rgba(8, 10, 14, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+  }
+  .facts {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    align-content: start;
+  }
+  .fact {
+    padding: 16px 18px;
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 12px;
+    align-items: baseline;
+    transition: border-color 0.3s, transform 0.3s var(--ease-out);
+  }
+  .fact:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+  .fact dt {
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+  .fact dd {
+    margin: 0;
+    display: grid;
+  }
+  .fact-v {
+    font-weight: 600;
+  }
+  .fact-n {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  @media (min-width: 900px) {
+    .about-grid {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 40px;
+    }
+  }
+</style>

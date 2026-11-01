@@ -1,0 +1,231 @@
+---
+import { modules } from '../data/skills';
+---
+
+<section id="modules" class="section" aria-labelledby="modules-title">
+  <div class="section-head" data-reveal>
+    <p class="crumb">docs / reference / <b>modules</b></p>
+    <h2 id="modules-title" class="section-title">Modules</h2>
+    <p class="section-lead">
+      Everything I can import into your project. The web is my main package; the rest are battle-tested extensions.
+    </p>
+  </div>
+
+  <div class="weights card" data-reveal aria-hidden="true">
+    <p class="weights-title mono">// focus.weight</p>
+    {
+      modules.map((m) => (
+        <div class="w-row">
+          <span class="w-name mono">{m.pkg}</span>
+          <span class="w-track">
+            <span class="w-bar" style={`--w:${m.weight}%;--c:${m.color}`} />
+          </span>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="tabs" data-tabs data-reveal>
+    <div class="tablist" role="tablist" aria-label="Skill domains">
+      {
+        modules.map((m, i) => (
+          <button
+            role="tab"
+            id={`tab-${m.id}`}
+            aria-controls={`panel-${m.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+            style={`--c:${m.color}`}
+          >
+            <span class="tab-dot" aria-hidden="true" />
+            {m.name}
+          </button>
+        ))
+      }
+    </div>
+
+    {
+      modules.map((m, i) => (
+        <div
+          class="panel card"
+          role="tabpanel"
+          id={`panel-${m.id}`}
+          aria-labelledby={`tab-${m.id}`}
+          hidden={i !== 0}
+          style={`--c:${m.color}`}
+        >
+          <div class="panel-head">
+            <code class="pkg">import * from '{m.pkg}'</code>
+            <h3>{m.name}</h3>
+            <p class="panel-blurb">{m.blurb}</p>
+          </div>
+          <div class="panel-body">
+            <ul class="hl">
+              {m.highlights.map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+            <div class="chips">
+              {m.stack.map((s) => (
+                <span class="chip">{s}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .weights {
+    padding: 20px;
+    margin-bottom: 28px;
+    display: grid;
+    gap: 10px;
+  }
+  .weights-title {
+    font-size: 0.78rem;
+    color: var(--faint);
+    margin-bottom: 4px;
+  }
+  .w-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+  .w-name {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .w-track {
+    height: 8px;
+    border-radius: 99px;
+    background: var(--surface-2);
+    overflow: hidden;
+  }
+  .w-bar {
+    display: block;
+    height: 100%;
+    width: var(--w);
+    border-radius: inherit;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--c) 50%, transparent), var(--c));
+    transform-origin: left;
+  }
+
+  .tablist {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tablist::-webkit-scrollbar {
+    display: none;
+  }
+  [role='tab'] {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+  }
+  [role='tab']:hover {
+    color: var(--text);
+  }
+  [role='tab'][aria-selected='true'] {
+    color: var(--text);
+    border-color: var(--c);
+    background: color-mix(in srgb, var(--c) 12%, var(--surface));
+  }
+  .tab-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--c);
+  }
+
+  .panel {
+    position: relative;
+    padding: clamp(20px, 4vw, 36px);
+    display: grid;
+    gap: 24px;
+    overflow: hidden;
+  }
+  .panel[hidden] {
+    display: none;
+  }
+  .panel::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--c);
+  }
+  .panel::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    right: -120px;
+    top: -120px;
+    border-radius: 50%;
+    background: var(--c);
+    filter: blur(90px);
+    opacity: 0.16;
+    pointer-events: none;
+  }
+  .pkg {
+    font-size: 0.8rem;
+    color: var(--c);
+  }
+  .panel h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-top: 8px;
+  }
+  .panel-blurb {
+    margin-top: 10px;
+    color: var(--muted);
+  }
+  .panel-body {
+    display: grid;
+    gap: 20px;
+  }
+  .hl {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .hl li {
+    position: relative;
+    padding-left: 22px;
+  }
+  .hl li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--c);
+  }
+  @media (min-width: 900px) {
+    .panel {
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+    }
+    .w-row {
+      grid-template-columns: 150px 1fr;
+    }
+  }
+</style>

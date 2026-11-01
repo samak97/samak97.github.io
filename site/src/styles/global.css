@@ -1,0 +1,319 @@
+/* ---------- Tokens ---------- */
+:root {
+  --bg: #0a0c10;
+  --bg-2: #0e1117;
+  --surface: #131821;
+  --surface-2: #1a202b;
+  --border: #242c39;
+  --border-strong: #334055;
+  --text: #e7eaf0;
+  --muted: #8d97a8;
+  --faint: #5d6778;
+  --accent: #5eead4;
+  --accent-ink: #04201c;
+  --accent-2: #f5b74e;
+  --glow: rgba(94, 234, 212, 0.18);
+
+  --c-web: #5eead4;
+  --c-gfx: #7c9cff;
+  --c-cpp: #f59e5b;
+  --c-med: #f472b6;
+  --c-game: #a78bfa;
+  --c-ai: #facc15;
+
+  --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --sidebar-w: 272px;
+  --content-w: 1120px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --shadow: 0 10px 40px -12px rgba(0, 0, 0, 0.6);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: #f6f7fb;
+  --bg-2: #eef0f6;
+  --surface: #ffffff;
+  --surface-2: #f2f4f9;
+  --border: #dfe3ec;
+  --border-strong: #c6ccd9;
+  --text: #111827;
+  --muted: #535d70;
+  --faint: #8790a2;
+  --accent: #0f9b8e;
+  --accent-ink: #ffffff;
+  --accent-2: #b7791f;
+  --glow: rgba(15, 155, 142, 0.14);
+
+  --c-web: #0f9b8e;
+  --c-gfx: #4361ee;
+  --c-cpp: #d9692a;
+  --c-med: #d63384;
+  --c-game: #7c4ddb;
+  --c-ai: #b58900;
+
+  --shadow: 0 10px 30px -14px rgba(17, 24, 39, 0.25);
+  color-scheme: light;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 80px;
+}
+
+html:not(.lenis) {
+  scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  overflow-x: clip; /* decorative glows must never widen the page on phones */
+  transition: background-color 0.4s var(--ease-out), color 0.4s var(--ease-out);
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0;
+}
+
+code,
+kbd,
+.mono {
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform 0.2s;
+}
+.skip-link:focus {
+  transform: none;
+}
+
+/* ---------- Shared pieces ---------- */
+.section {
+  padding: clamp(72px, 10vw, 128px) 0;
+  position: relative;
+}
+
+.section-head {
+  margin-bottom: clamp(32px, 5vw, 56px);
+  max-width: 680px;
+}
+
+.crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.crumb b {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+}
+
+.section-lead {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--muted);
+  background: var(--surface);
+  white-space: nowrap;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  transition: transform 0.25s var(--ease-out), background-color 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 8px 30px -8px var(--accent);
+}
+.btn-primary:hover {
+  box-shadow: 0 12px 36px -6px var(--accent);
+}
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+html[data-theme='dark'] .i-sun,
+html[data-theme='light'] .i-moon {
+  display: none;
+}
+
+kbd {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  font-size: 0.72rem;
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  color: var(--muted);
+  background: var(--surface-2);
+}
+
+/* Reveal: hidden only when JS is running and motion is allowed, so content is never lost. */
+html.js.motion [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+}
+/* Hero intro pieces wait for the GSAP timeline (same safety net applies). */
+html.js.motion .hero .ch,
+html.js.motion .hero-crumb,
+html.js.motion .hero-role,
+html.js.motion .hat,
+html.js.motion .hero-build,
+html.js.motion .hero-tagline,
+html.js.motion .hero-ctas > *,
+html.js.motion .hero-loc,
+html.js.motion .terminal,
+html.js.motion .hero .stat,
+html.js.motion .scroll-cue {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

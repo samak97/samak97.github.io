@@ -1,0 +1,128 @@
+---
+import { caseStudies } from '../data/showcase';
+---
+
+<section id="case-studies" class="section" aria-labelledby="cases-title">
+  <div class="section-head" data-reveal>
+    <p class="crumb">docs / reference / <b>case-studies</b></p>
+    <h2 id="cases-title" class="section-title">Case studies</h2>
+    <p class="section-lead">The problem, what I did, and what happened. Details kept client-safe.</p>
+  </div>
+
+  <div class="cases">
+    {
+      caseStudies.map((c, i) => (
+        <article class="case card spotlight" data-reveal>
+          <p class="case-kicker mono">
+            <span class="case-n">0{i + 1}</span> {c.kicker}
+          </p>
+          <h3 class="case-title">{c.title}</h3>
+          <dl class="case-body">
+            <div>
+              <dt class="mono">problem</dt>
+              <dd>{c.problem}</dd>
+            </div>
+            <div>
+              <dt class="mono">solution</dt>
+              <dd>{c.solution}</dd>
+            </div>
+            <div class="result">
+              <dt class="mono">result</dt>
+              <dd>{c.result}</dd>
+            </div>
+          </dl>
+          <div class="chips">
+            {c.tags.map((t) => (
+              <span class="chip">{t}</span>
+            ))}
+          </div>
+          {c.id === 'million-markers' && (
+            <a class="try mono" href="#playground">
+              try it yourself ↓
+            </a>
+          )}
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .cases {
+    display: grid;
+    gap: 18px;
+  }
+  .case {
+    position: relative;
+    padding: clamp(20px, 3.5vw, 30px);
+    display: grid;
+    gap: 16px;
+    align-content: start;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.4s var(--ease-out);
+  }
+  .case:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-4px);
+  }
+  /* Cursor-following glow (vars set from JS) */
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, -20%), var(--glow), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+  .case-kicker {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .case-n {
+    color: var(--accent);
+    margin-right: 6px;
+  }
+  .case-title {
+    font-size: clamp(1.3rem, 2.6vw, 1.65rem);
+  }
+  .case-body {
+    margin: 0;
+    display: grid;
+    gap: 12px;
+  }
+  .case-body dt {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+  }
+  .case-body dd {
+    margin: 2px 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .result dd {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .result dt {
+    color: var(--accent);
+  }
+  .try {
+    font-size: 0.82rem;
+    color: var(--accent);
+    width: fit-content;
+  }
+  .try:hover {
+    text-decoration: underline;
+  }
+  @media (min-width: 900px) {
+    .cases {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,183 @@
+---
+import Icon from './Icon.astro';
+import { games } from '../data/showcase';
+---
+
+<section id="arcade" class="section" aria-labelledby="arcade-title">
+  <div class="section-head" data-reveal>
+    <p class="crumb">docs / extras / <b>arcade</b></p>
+    <h2 id="arcade-title" class="section-title">Arcade <span class="coin mono">INSERT COIN</span></h2>
+    <p class="section-lead">
+      Small games from where it all started. Light, quick, and playable in a coffee break.
+    </p>
+  </div>
+
+  <div class="cabinets">
+    {
+      games.map((g) => (
+        <article class="cab card tilt" data-reveal style={`--h:${g.hue}`}>
+          <div class="screen" aria-hidden="true">
+            <span class="glyph">{g.glyph}</span>
+            <span class="scan" />
+          </div>
+          <div class="cab-body">
+            <p class="cab-meta mono">
+              {g.genre} · {g.engine}
+            </p>
+            <h3 class="cab-title">{g.title}</h3>
+            <p class="cab-desc">{g.description}</p>
+            <div class="cab-actions">
+              {g.playUrl ? (
+                <a class="btn btn-play" href={g.playUrl} target="_blank" rel="noopener">
+                  <Icon name="play" size={16} /> Play
+                </a>
+              ) : (
+                <span class="btn btn-soon">{g.note ?? 'Link coming soon'}</span>
+              )}
+              {g.sourceUrl && (
+                <a class="btn" href={g.sourceUrl} target="_blank" rel="noopener" aria-label={`${g.title} source code`}>
+                  <Icon name="github" size={16} />
+                </a>
+              )}
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <p class="konami mono" aria-hidden="true">psst… ↑ ↑ ↓ ↓ ← → ← → B A</p>
+</section>
+
+<style>
+  .coin {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--accent-2);
+    animation: blink 1.2s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0.2;
+    }
+  }
+  .cabinets {
+    display: grid;
+    gap: 18px;
+  }
+  .cab {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform-style: preserve-3d;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    will-change: transform;
+  }
+  .cab:hover {
+    border-color: hsl(var(--h) 80% 60% / 0.6);
+    box-shadow: 0 20px 50px -20px hsl(var(--h) 80% 50% / 0.5);
+  }
+  .screen {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 30% 30%, hsl(var(--h) 90% 65% / 0.55), transparent 55%),
+      radial-gradient(circle at 75% 70%, hsl(calc(var(--h) + 60) 90% 55% / 0.45), transparent 55%),
+      linear-gradient(135deg, hsl(var(--h) 45% 12%), hsl(calc(var(--h) + 40) 45% 8%));
+  }
+  .screen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 22px 22px;
+    transform: perspective(300px) rotateX(55deg) translateY(30%);
+    transform-origin: bottom;
+  }
+  .glyph {
+    position: relative;
+    font-size: clamp(3rem, 8vw, 4.4rem);
+    color: #fff;
+    text-shadow: 0 0 24px hsl(var(--h) 100% 70%), 0 0 4px #fff;
+    transition: transform 0.5s var(--ease-out);
+  }
+  .cab:hover .glyph {
+    transform: scale(1.15) rotate(-6deg);
+  }
+  .scan {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0 1px, transparent 1px 3px);
+    pointer-events: none;
+  }
+  .cab-body {
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+  .cab-meta {
+    font-size: 0.72rem;
+    color: hsl(var(--h) 70% 65%);
+  }
+  :global(html[data-theme='light']) .cab-meta {
+    color: hsl(var(--h) 60% 38%);
+  }
+  .cab-title {
+    font-size: 1.2rem;
+  }
+  .cab-desc {
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  /* Pinned to the bottom so buttons line up across cards with different description lengths. */
+  .cab-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 10px;
+  }
+  .btn-play {
+    background: hsl(var(--h) 80% 60%);
+    border-color: transparent;
+    color: #0a0c10;
+  }
+  .btn-soon {
+    min-height: 40px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--faint);
+    border-style: dashed;
+    cursor: default;
+  }
+  .btn-soon:hover {
+    transform: none;
+    border-color: var(--border-strong);
+  }
+  .konami {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--faint);
+    opacity: 0.6;
+  }
+  @media (min-width: 640px) {
+    .cabinets {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 1300px) {
+    .cabinets {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,131 @@
+---
+import Icon from './Icon.astro';
+import { profile } from '../data/profile';
+
+const year = new Date().getFullYear();
+---
+
+<section id="contact" class="section contact" aria-labelledby="contact-title">
+  <div class="contact-card card" data-reveal>
+    <div class="contact-top">
+      <img class="avatar" src="/me-320.webp" alt="" width="64" height="64" loading="lazy" decoding="async" />
+      <p class="crumb">docs / <b>contact</b></p>
+    </div>
+    <h2 id="contact-title" class="contact-title">
+      Let's build something <span class="grad">fast</span> &amp; <span class="grad g2">beautiful</span>.
+    </h2>
+    <p class="section-lead">
+      Hiring, freelance work, or a hard rendering problem? My inbox is open.
+    </p>
+
+    <div class="email-row">
+      <a class="email mono" href={`mailto:${profile.email}`}>{profile.email}</a>
+      <button class="btn copy-email" data-copy={profile.email} aria-label="Copy email address">
+        <Icon name="copy" size={16} /> <span data-copy-label>Copy</span>
+      </button>
+    </div>
+
+    <div class="links">
+      <a class="btn btn-primary magnetic" href={`mailto:${profile.email}`}><Icon name="mail" /> Email me</a>
+      <a class="btn magnetic" href={profile.links.linkedin} target="_blank" rel="noopener me"><Icon name="linkedin" size={16} /> LinkedIn</a>
+      <a class="btn magnetic" href={profile.links.x} target="_blank" rel="noopener me"><Icon name="x" size={15} /> X</a>
+      <a class="btn magnetic" href={profile.links.github} target="_blank" rel="noopener me"><Icon name="github" size={16} /> GitHub</a>
+      <a class="btn magnetic" href={profile.cvPath} download><Icon name="download" /> CV (PDF)</a>
+    </div>
+  </div>
+
+  <footer class="foot mono">
+    <span>© {year} {profile.name}</span>
+    <span>Built with Astro · hosted on GitHub Pages · <a href="#readme">back to top ↑</a></span>
+  </footer>
+</section>
+
+<style>
+  .contact {
+    padding-bottom: 32px;
+  }
+  .contact-card {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(28px, 6vw, 64px);
+    display: grid;
+    gap: 6px;
+    background:
+      radial-gradient(600px circle at 100% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+      radial-gradient(500px circle at 0% 100%, color-mix(in srgb, var(--c-game) 14%, transparent), transparent 60%),
+      var(--surface);
+  }
+  .contact-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .contact-top .crumb {
+    margin: 0;
+  }
+  .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--surface);
+    box-shadow: 0 0 0 2px var(--accent), 0 10px 30px -10px var(--accent);
+  }
+  .contact-title {
+    font-size: clamp(2rem, 6vw, 3.6rem);
+    max-width: 760px;
+  }
+  .grad {
+    background: linear-gradient(90deg, var(--c-web), var(--c-gfx));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .g2 {
+    background-image: linear-gradient(90deg, var(--c-game), var(--c-med));
+  }
+  .email-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 26px;
+  }
+  .email {
+    font-size: clamp(1rem, 3.4vw, 1.5rem);
+    font-weight: 600;
+    word-break: break-all;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .email:hover {
+    color: var(--accent);
+  }
+  .copy-email {
+    min-height: 40px;
+    font-size: 0.85rem;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+  }
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 40px;
+    font-size: 0.75rem;
+    color: var(--faint);
+  }
+  .foot a {
+    color: var(--muted);
+  }
+  .foot a:hover {
+    color: var(--accent);
+  }
+</style>

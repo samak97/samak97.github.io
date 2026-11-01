@@ -1,0 +1,561 @@
+---
+import Icon from './Icon.astro';
+import { profile } from '../data/profile';
+
+// Letters are animated individually but grouped per word so the name only wraps between words.
+const words = profile.name.split(' ').map((w) => w.split(''));
+
+// `touch` replaces `text` on touch screens.
+const terminal: { kind: string; text: string; touch?: string }[] = [
+  { kind: 'cmd', text: 'whoami' },
+  { kind: 'out', text: 'Team Lead & Forward Deployed Engineer @ Pixonal' },
+  { kind: 'cmd', text: 'cat stack.json' },
+  { kind: 'json', text: '{ "main": "web", "gpu": "three.js + glsl",' },
+  { kind: 'json', text: '  "api": "go · python", "ops": "k8s · helm · azure",' },
+  { kind: 'json', text: '  "native": "c++ · vtk · qt", "fun": "games" }' },
+  { kind: 'cmd', text: './gravity --follow cursor', touch: './gravity --follow finger' },
+  { kind: 'ok', text: '✓ gravity on · move your cursor over this page', touch: '✓ gravity on · drag your finger across the top' },
+];
+
+// Built as one string: whitespace inside <pre> is significant, so no template formatting here.
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+const termHtml = terminal
+  .map(
+    (l) =>
+      `<span class="tl tl-${l.kind}" data-text="${esc(l.text)}"${l.touch ? ` data-touch="${esc(l.touch)}"` : ''}>` +
+      (l.kind === 'cmd' ? '<span class="ps">~/ahmed $ </span>' : '') +
+      `<span class="tx">${esc(l.text)}</span>\n</span>`,
+  )
+  .join('');
+---
+
+<section id="readme" class="hero" aria-labelledby="hero-title">
+  <!-- Full-bleed background: spans the whole viewport width (minus the sidebar), not just the content column. -->
+  <div class="hero-bg" aria-hidden="true">
+    <canvas class="hero-canvas"></canvas>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="crumb hero-crumb">docs <span>/</span> ahmed-samak <span>/</span> <b>README.md</b></p>
+
+      <h1 id="hero-title" class="hero-title" aria-label={profile.name}>
+        {
+          words.map((w) => (
+            <span class="word" aria-hidden="true">
+              {w.map((l) => (
+                <span class="ch">{l}</span>
+              ))}
+            </span>
+          ))
+        }
+      </h1>
+
+      <p class="hero-role">{profile.role}</p>
+      <ul class="hats" role="list" aria-label="Current roles">
+        {
+          profile.hats.map((h) => (
+            <li class="hat" style={`--c:${h.color}`}>
+              <b>{h.label}</b>
+              {h.note && <span>{h.note}</span>}
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="hero-build mono" aria-live="off">
+        <span class="prompt">&gt;</span> I build{' '}<span class="rotator" data-words={JSON.stringify(profile.rotating)}
+          >{profile.rotating[0]}</span
+        ><span class="caret" aria-hidden="true">_</span>
+      </p>
+
+      <p class="hero-tagline">{profile.tagline}</p>
+
+      <div class="hero-ctas">
+        <a class="btn btn-primary magnetic" href="#contact">
+          Get in touch <Icon name="arrow" />
+        </a>
+        <a class="btn btn-outline magnetic" href={profile.cvPath} download>
+          <Icon name="download" /> Download CV
+        </a>
+        <a class="btn btn-outline btn-games magnetic" href="#arcade"><Icon name="play" size={16} /> Play my games</a>
+      </div>
+
+      <p class="hero-loc"><Icon name="pin" size={16} /> {profile.location}</p>
+    </div>
+
+    <div class="terminal card" data-terminal>
+      <div class="term-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="term-title mono">~/ahmed — zsh</span>
+      </div>
+      <pre class="term-body mono" aria-label="Terminal introduction" set:html={termHtml} />
+    </div>
+  </div>
+
+  <ul class="stats" role="list">
+    {
+      profile.stats.map((s) => (
+        <li class="stat">
+          <span class="stat-num">
+            <span data-count={s.value}>{s.value}</span>
+            {s.suffix}
+          </span>
+          <span class="stat-label">{s.label}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <a href="#getting-started" class="scroll-cue" aria-label="Scroll to Getting Started">
+    <span></span>
+  </a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 96px 0 32px;
+    isolation: isolate;
+  }
+  .hero-bg {
+    --bleed: 100vw;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: var(--bleed);
+    transform: translateX(-50%);
+    overflow: hidden;
+    pointer-events: none;
+    /* Fade out at the bottom so the hero melts into the next section. */
+    mask-image: linear-gradient(#000 75%, transparent);
+    -webkit-mask-image: linear-gradient(#000 75%, transparent);
+  }
+  .hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .b1 {
+    width: 420px;
+    height: 420px;
+    background: var(--c-web);
+    top: 8%;
+    right: -6%;
+    animation: float 14s ease-in-out infinite;
+  }
+  .b2 {
+    width: 360px;
+    height: 360px;
+    background: var(--c-game);
+    bottom: 10%;
+    left: -10%;
+    animation: float 18s ease-in-out infinite reverse;
+  }
+  :global(html[data-theme='light']) .blob {
+    opacity: 0.18;
+  }
+  @keyframes float {
+    50% {
+      transform: translate(-40px, 30px) scale(1.08);
+    }
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+  }
+  .hero-crumb span {
+    color: var(--faint);
+  }
+  .hero-title {
+    font-size: clamp(3rem, 11vw, 6.4rem);
+    padding-bottom: 0.06em; /* room for descenders under background-clip text */
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.25em;
+  }
+  .word {
+    display: inline-flex;
+    white-space: nowrap;
+  }
+  .ch {
+    display: inline-block;
+    background: linear-gradient(180deg, var(--text) 30%, color-mix(in srgb, var(--text) 55%, var(--accent)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    will-change: transform;
+  }
+  .hero-role {
+    margin-top: 18px;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+    font-weight: 500;
+    color: var(--text);
+  }
+  /* Sized by its column, so the badges can switch between grid layouts below. */
+  .hero-copy {
+    container-type: inline-size;
+  }
+  .hats {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  /* Phones: one swipeable row instead of ragged wrapping, fading out at the right edge. */
+  @container (max-width: 469px) {
+    .hats {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 32px 4px 0;
+      margin-right: calc(-1 * var(--gutter));
+      mask-image: linear-gradient(90deg, #000 85%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
+    }
+    .hats::-webkit-scrollbar {
+      display: none;
+    }
+    .hat {
+      flex: 0 0 auto;
+    }
+  }
+  /* Even grids so no badge is left dangling on its own row. */
+  @container (min-width: 470px) {
+    .hats {
+      display: grid;
+      grid-template-columns: repeat(2, max-content);
+      /* Each badge keeps its natural width instead of stretching to the widest one in its column. */
+      justify-items: start;
+    }
+  }
+  @container (min-width: 620px) {
+    .hats {
+      gap: 6px;
+      grid-template-columns: repeat(3, max-content);
+    }
+  }
+  .hat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px 4px 4px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface) 80%, transparent);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  .hat b {
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    color: var(--bg);
+    background: var(--c);
+  }
+  .hat {
+    transition: border-color 0.25s, transform 0.25s var(--ease-out);
+  }
+  .hat:hover {
+    border-color: var(--c);
+    transform: translateY(-2px);
+  }
+  .hat span {
+    color: var(--muted);
+  }
+  /* A badge without a note shouldn't keep the empty right padding. */
+  .hat:not(:has(span)) {
+    padding-right: 4px;
+  }
+  .hero-build {
+    margin-top: 14px;
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    color: var(--muted);
+    min-height: 1.7em;
+  }
+  .prompt {
+    color: var(--accent);
+  }
+  .rotator {
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+  .caret {
+    color: var(--accent);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  .hero-tagline {
+    margin-top: 10px;
+    max-width: 560px;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+  /* One row of equal-height buttons: one filled, two matching outlines whose icons carry the colour. */
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .hero-ctas .btn {
+    height: 48px;
+    min-height: 48px;
+    padding: 0 22px;
+  }
+  /* Narrow text column (small laptops): tighten the buttons so all three stay on one row. */
+  @container (max-width: 560px) {
+    .hero-ctas {
+      gap: 10px;
+    }
+    .hero-ctas .btn {
+      height: 44px;
+      min-height: 44px;
+      padding: 0 16px;
+      font-size: 0.88rem;
+    }
+  }
+  /* Phones: full-width primary button, the two outlines side by side underneath.
+     (Must come after the base .hero-ctas rule to override its flex layout.) */
+  @container (max-width: 469px) {
+    .hero-ctas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .hero-ctas .btn-primary {
+      grid-column: 1 / -1;
+    }
+    .hero-ctas .btn {
+      padding: 0 12px;
+    }
+  }
+  .btn-outline {
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    border-color: var(--border-strong);
+  }
+  .btn-outline :global(svg) {
+    color: var(--accent);
+  }
+  .btn-games:hover {
+    border-color: var(--c-game);
+    box-shadow: 0 10px 30px -12px var(--c-game);
+  }
+  .btn-games :global(svg) {
+    color: var(--c-game);
+  }
+  .hero-loc {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    font-size: 0.88rem;
+    color: var(--faint);
+  }
+
+  /* Terminal */
+  .terminal {
+    overflow: hidden;
+    box-shadow: var(--shadow), 0 0 0 1px var(--border);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .term-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-2);
+  }
+  .dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .r {
+    background: #ff5f57;
+  }
+  .y {
+    background: #febc2e;
+  }
+  .g {
+    background: #28c840;
+  }
+  .term-title {
+    margin-left: 8px;
+    font-size: 0.75rem;
+    color: var(--faint);
+  }
+  .term-body {
+    margin: 0;
+    padding: 16px 18px 20px;
+    font-size: clamp(0.72rem, 1.6vw, 0.84rem);
+    line-height: 1.75;
+    white-space: pre-wrap;
+    word-break: break-word;
+    min-height: 260px;
+  }
+  .term-body :global(.ps) {
+    color: var(--accent);
+  }
+  .term-body :global(.tl-cmd .tx) {
+    color: var(--text);
+  }
+  .term-body :global(.tl-out .tx) {
+    color: var(--muted);
+  }
+  .term-body :global(.tl-json .tx) {
+    color: var(--c-gfx);
+  }
+  .term-body :global(.tl-ok .tx) {
+    color: #22c55e;
+  }
+  :global(html[data-theme='light']) .term-body :global(.tl-ok .tx) {
+    color: #15803d;
+  }
+
+  /* Stats */
+  .stats {
+    list-style: none;
+    margin: 44px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .stat {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+  }
+  .stat-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* In normal flow below the stats, so it never sits on top of the cards. */
+  .scroll-cue {
+    position: relative;
+    width: 24px;
+    height: 38px;
+    margin: 28px auto 0;
+    border: 2px solid var(--border-strong);
+    border-radius: 12px;
+    display: none;
+  }
+  .scroll-cue span {
+    position: absolute;
+    left: 50%;
+    top: 7px;
+    width: 4px;
+    height: 8px;
+    margin-left: -2px;
+    border-radius: 2px;
+    background: var(--accent);
+    animation: cue 1.8s var(--ease-out) infinite;
+  }
+  @keyframes cue {
+    to {
+      transform: translateY(14px);
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 760px) {
+    .stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .hero {
+      /* No top bar on desktop, so less room is needed above the content. */
+      padding-top: 56px;
+    }
+    .hero-bg {
+      --bleed: calc(100vw - var(--sidebar-w));
+    }
+  }
+  @media (min-width: 1200px) {
+    .hero-inner {
+      grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+      gap: 56px;
+    }
+    .hero-title {
+      /* The text column tops out around 620px; the name is sized to stay on one line within it. */
+      font-size: clamp(3.4rem, 5vw, 5.6rem);
+    }
+    .scroll-cue {
+      display: block;
+    }
+  }
+  /* Short desktop screens (e.g. 1280x800): tighten vertical spacing so the stat cards still fit on the first screen. */
+  @media (min-width: 1100px) and (max-height: 860px) {
+    .hero {
+      padding-top: 32px;
+      padding-bottom: 20px;
+    }
+    .hero-role {
+      margin-top: 12px;
+    }
+    .hero-ctas {
+      margin-top: 22px;
+    }
+    .hero-loc {
+      margin-top: 12px;
+    }
+    .stats {
+      margin-top: 32px;
+    }
+    .stat {
+      padding: 14px 18px;
+    }
+    .scroll-cue {
+      margin-top: 18px;
+    }
+  }
+</style>

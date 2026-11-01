@@ -1,0 +1,253 @@
+---
+import Icon from './Icon.astro';
+import { releases } from '../data/experience';
+---
+
+<section id="changelog" class="section" aria-labelledby="changelog-title">
+  <div class="section-head" data-reveal>
+    <p class="crumb">docs / reference / <b>changelog</b></p>
+    <h2 id="changelog-title" class="section-title">Changelog</h2>
+    <p class="section-lead">Every role is a release. Breaking changes included.</p>
+  </div>
+
+  <div class="timeline">
+  <span class="rail" aria-hidden="true"><span class="rail-fill"></span></span>
+  <ol class="tl-list" role="list">
+    {
+      releases.map((r) => (
+        <li class:list={['rel', { branch: r.branch, latest: r.latest }]} data-reveal>
+          <span class="node" aria-hidden="true" />
+          <article class="rel-card card">
+            <header class="rel-head">
+              <div class="rel-meta">
+                {r.branch ? (
+                  <span class="ver ver-branch mono">
+                    <Icon name="branch" size={13} /> {r.branch}
+                  </span>
+                ) : (
+                  <span class="ver mono">{r.version}</span>
+                )}
+                {r.latest && <span class="badge mono">latest</span>}
+                <span class="dates mono">{r.dates}</span>
+              </div>
+              <h3 class="rel-title">{r.title}</h3>
+              <p class="rel-co">
+                <strong>{r.company}</strong> · {r.location}
+              </p>
+            </header>
+            <p class="rel-sum">{r.summary}</p>
+            <details open={r.latest}>
+              <summary class="mono">
+                <span class="when-closed">Show release notes ({r.bullets.length})</span>
+                <span class="when-open">Hide release notes</span>
+              </summary>
+              <ul class="notes">
+                {r.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            </details>
+            <div class="chips">
+              {r.tags.map((t) => (
+                <span class="chip">{t}</span>
+              ))}
+            </div>
+          </article>
+        </li>
+      ))
+    }
+  </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    position: relative;
+    padding-left: 30px;
+  }
+  .tl-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 22px;
+  }
+  .rail {
+    position: absolute;
+    left: 9px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .rail-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(var(--accent), var(--c-gfx), var(--c-game));
+    transform-origin: top;
+  }
+  .rel {
+    position: relative;
+  }
+  .node {
+    position: absolute;
+    left: -27px;
+    top: 26px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    z-index: 1;
+  }
+  .latest .node {
+    background: var(--accent);
+    box-shadow: 0 0 0 6px var(--glow);
+  }
+  .branch .node {
+    border-color: var(--c-game);
+    border-style: dashed;
+  }
+
+  .rel-card {
+    padding: clamp(18px, 3vw, 26px);
+    display: grid;
+    gap: 14px;
+    transition: border-color 0.3s, transform 0.4s var(--ease-out), box-shadow 0.3s;
+  }
+  .rel-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+  .latest .rel-card {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  }
+  .branch .rel-card {
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--c-game) 50%, var(--border));
+  }
+
+  .rel-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    margin-bottom: 10px;
+  }
+  .ver {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .ver-branch {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--c-game);
+  }
+  .badge {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: var(--accent-ink);
+    background: var(--accent);
+  }
+  .dates {
+    font-size: 0.78rem;
+    color: var(--faint);
+  }
+  .rel-title {
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+  }
+  .rel-co {
+    margin-top: 4px;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .rel-co strong {
+    color: var(--text);
+  }
+  .rel-sum {
+    color: var(--muted);
+  }
+
+  details summary {
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.8rem;
+    color: var(--accent);
+    width: fit-content;
+    padding: 4px 0;
+  }
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  details summary::before {
+    content: '+ ';
+  }
+  details[open] summary::before {
+    content: '− ';
+  }
+  .when-open,
+  details[open] .when-closed {
+    display: none;
+  }
+  details[open] .when-open {
+    display: inline;
+  }
+  .notes {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 9px;
+  }
+  .notes li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 0.95rem;
+  }
+  .notes li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.65em;
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--accent) 70%, transparent);
+  }
+  .branch .notes li::before {
+    background: var(--c-game);
+  }
+
+  @media (min-width: 900px) {
+    .timeline {
+      padding-left: 44px;
+    }
+    .rail {
+      left: 14px;
+    }
+    .node {
+      left: -37px;
+    }
+    .branch {
+      margin-left: 48px;
+    }
+    .branch::before {
+      content: '';
+      position: absolute;
+      left: -78px;
+      top: 33px;
+      width: 52px;
+      border-top: 2px dashed color-mix(in srgb, var(--c-game) 60%, transparent);
+    }
+    .branch .node {
+      left: -33px;
+    }
+  }
+</style>

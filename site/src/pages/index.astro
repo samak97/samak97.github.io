@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Modules from '../components/Modules.astro';
+import Changelog from '../components/Changelog.astro';
+import CaseStudies from '../components/CaseStudies.astro';
+import Playground from '../components/Playground.astro';
+import Arcade from '../components/Arcade.astro';
+import Threads from '../components/Threads.astro';
+import Certs from '../components/Certs.astro';
+import Contact from '../components/Contact.astro';
+import CommandPalette from '../components/CommandPalette.astro';
+---
+
+<BaseLayout>
+  <div class="progress" aria-hidden="true"></div>
+  <Nav />
+  <div class="shell">
+    <main id="main" class="content">
+      <Hero />
+      <About />
+      <Modules />
+      <Changelog />
+      <CaseStudies />
+      <Threads />
+      <Certs />
+      <Playground />
+      <Arcade />
+      <Contact />
+    </main>
+  </div>
+  <CommandPalette />
+</BaseLayout>
+
+<script>
+  import '../scripts/main';
+</script>
+
+<style>
+  .progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    z-index: 70;
+    background: linear-gradient(90deg, var(--c-web), var(--c-gfx), var(--c-game));
+    transform-origin: left;
+    transform: scaleX(var(--p, 0));
+  }
+  .content {
+    width: 100%;
+    max-width: calc(var(--content-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  @media (min-width: 1100px) {
+    .shell {
+      padding-left: var(--sidebar-w);
+    }
+  }
+</style>
