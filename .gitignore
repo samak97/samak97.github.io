@@ -3,15 +3,13 @@ site/node_modules/
 site/dist/
 site/.astro/
 
-# Private working files:
-# - Documents/: old resume lists references' personal emails; IELTS report has ID details.
-# - cv/: CV source has a commented-out line naming clients (not approved for public use yet).
-#   The site serves its own copy of the CV PDF from site/public/.
+# Private working files — never commit (this repo is public):
+# old resume with references' personal emails, IELTS report with ID details, original photos.
 Documents/
-cv/
 
-# Local editor / tool settings
-.claude/
+# Local Claude Code settings, except the shared preview-server config.
+.claude/*
+!.claude/launch.json
 
 .DS_Store
 Thumbs.db

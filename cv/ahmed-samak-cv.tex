@@ -1,0 +1,192 @@
+% Ahmed Samak - CV (ATS-optimized)
+% Compile with pdfLaTeX on Overleaf.
+% Design rules: single column, no tables / icons / text boxes, standard section
+% names, real text layer (glyphtounicode + no ligatures) so ATS parsers read it cleanly.
+% Note: ligatures are disabled, so write dashes as \textendash{} (a plain -- would print as two hyphens).
+
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{charter}
+\usepackage[a4paper,margin=0.6in,top=0.5in,bottom=0.5in]{geometry}
+\usepackage{microtype}
+\DisableLigatures{encoding = *, family = *}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\input{glyphtounicode}
+\pdfgentounicode=1
+
+\hypersetup{
+  pdftitle={Ahmed Samak - Senior Software Engineer and Team Lead - CV},
+  pdfauthor={Ahmed Samak},
+  pdfsubject={Curriculum Vitae},
+  pdfkeywords={Senior Software Engineer, Team Lead, Forward Deployed Engineer, Full-Stack, Go, TypeScript, Python, C++, Microservices, Kubernetes, Helm, Microsoft Azure, Data Visualization}
+}
+
+\definecolor{accent}{RGB}{40,80,130}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{leftmargin=1.2em, itemsep=1pt, topsep=2pt, parsep=0pt}
+
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0em}{\MakeUppercase}[\vspace{-6pt}\rule{\linewidth}{0.4pt}]
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+
+% \job{Title}{Company}{Location}{Dates}
+\newcommand{\job}[4]{%
+  \textbf{#1}\hfill #4\\
+  \textit{#2 | #3}\par\vspace{1pt}}
+
+\begin{document}
+
+% ---------------- HEADER ----------------
+\begin{center}
+  {\LARGE\bfseries Ahmed Samak}\\[3pt]
+  Senior Software Engineer and Team Lead | Full-Stack, Cloud, Web Graphics and Data Visualization\\[3pt]
+  Cairo, Egypt - Dubai, UAE | +20 106 746 9799 | +971 58 688 1804\\
+  \href{mailto:asamak1997@gmail.com}{asamak1997@gmail.com} |
+  \href{https://www.linkedin.com/in/samak97}{linkedin.com/in/samak97} |
+  \href{https://github.com/samak97}{github.com/samak97}
+  % Uncomment once the portfolio is live:
+  % | \href{https://samak97.github.io}{samak97.github.io}
+\end{center}
+
+% ---------------- SUMMARY ----------------
+\section{Summary}
+Senior Software Engineer and Team Lead with 6+ years of experience building web platforms, high-performance
+desktop software, and interactive 2D/3D graphics. Team Lead on Llumen, a decision intelligence and data
+visualization platform for government leadership in the UAE, owning the product's map and 2D/3D graphics,
+and Forward Deployed Engineer delivering it on Microsoft Azure and air-gapped on-premise infrastructure with
+Kubernetes and Helm. \mbox{Hands-on} with TypeScript, Go, Python, Three.js, and microservices, with a background in Modern
+C++ for FDA-approved medical software and in freelance web game development.
+
+% ---------------- EXPERIENCE ----------------
+\section{Experience}
+
+\job{Team Lead / Senior Software Engineer}{Pixonal}{Sheikh Zayed, Egypt - Dubai, UAE (Hybrid)}{Feb 2026 \textendash{} Present}
+\begin{itemize}
+  \item Lead an engineering team working on Llumen, Pixonal's decision intelligence platform that brings data, analytics,
+        models, and AI into one environment for government leaders; own sprint planning, task breakdown, code reviews,
+        mentoring, and hiring.
+  \item Own the graphics layer of Llumen: develop, maintain, and optimize all map visualizations and the 2D and 3D
+        graphics used to visualize data.
+  \item Re-engineered map rendering with GPU instancing and custom shaders, making it more than 100x faster: the map
+        now renders over 1 million markers smoothly, where it previously struggled at 100K.
+  \item Deliver bi-weekly releases of a large microservices platform (Go, TypeScript, Python, PostgreSQL), coordinating
+        scope, QA, and rollout across cloud and client-hosted environments.
+  \item Act as Forward Deployed Engineer for UAE government entities: run on-site meetings and requirement workshops,
+        translate operational needs into product features and configurations, and help clients get the most out of the platform.
+        % Client names kept generic until Pixonal approves naming them (names are in Ahmed's private notes).
+  \item Deploy and operate the platform on Microsoft Azure VMs with Kubernetes and Helm charts, and on air-gapped
+        on-premise servers; travel to client sites to resolve deployment and network connectivity issues.
+  \item Administer Azure resources for client and internal environments, including virtual machines, AKS,
+        virtual networks, and storage.
+\end{itemize}
+
+\job{Senior Full-Stack Engineer}{Pixonal}{Sheikh Zayed, Egypt - Dubai, UAE (Hybrid)}{Jan 2025 \textendash{} Feb 2026}
+\begin{itemize}
+  \item Built immersive, data-driven products and dashboards for leaders and decision-makers in government.
+  \item Developed Go and Python microservices for data ingestion, management, and analytics, including JSON-to-Parquet
+        conversion pipelines, data summarization, and AI/LLM-based analysis.
+  \item Designed an optimized stories, whiteboards, and dashboards system with complex components and interactive
+        map visualizations.
+  \item Built a scalable 3D GeoJSON visualization library on Mapbox and Three.js.
+  \item Optimized data loading and rendering so graphics-heavy dashboards run smoothly in the browser for many
+        concurrent users.
+  \item Tools: Go, TypeScript, Python, FastAPI, C\# (.NET), PostgreSQL, Supabase, React, Next.js, Mapbox, Three.js, Docker, Kubernetes.
+\end{itemize}
+
+\job{Senior Software Engineer}{MedSoft}{Cairo, Egypt (Hybrid)}{Apr 2022 \textendash{} Dec 2024}
+\begin{itemize}
+  \item Worked on PPDS, FDA-approved high-performance medical software for simulating orthognathic surgery (now owned by
+        Johnson \& Johnson): six plugins covering the procedure steps, letting surgeons simulate the operation, generate
+        surgical guides, plates, and screws, and review results through a web plugin.
+  \item Re-designed the screw placement and editing feature used across plugins into a reusable widget, saving about
+        20\% of development time in following sprints; contributed to system design and sprint planning for many features.
+  \item Developed bridge classes connecting Qt/QML user interface components to the C++ back-end.
+  \item Implemented data-model algorithms to serialize and deserialize patient data into case folders, and features to
+        design and generate 3D surgical hardware.
+  \item Collaborated with teams in the USA and India using Scrum and Jira in an Agile environment.
+  \item Tools: Modern C++17, VTK, Qt/QML, CMake, Software Design Patterns.
+\end{itemize}
+
+\job{Senior Front-End Software Engineer}{Bld.ai}{USA (Remote)}{Sep 2022 \textendash{} Feb 2023}
+\begin{itemize}
+  \item Built responsive, dynamic user interfaces for web and mobile platforms using React and React Native.
+  \item Worked with design and back-end teams to integrate APIs and deliver seamless user experiences.
+\end{itemize}
+
+\job{Unreal Engine Developer}{Archrete}{New Cairo, Egypt (On-Site)}{Aug 2021 \textendash{} May 2022}
+\begin{itemize}
+  \item Worked on iMaket, a real-time simulation product for major architectural projects in the Middle East.
+  \item Designed and implemented Unreal Engine 5 plugins in C++ exposed as Blueprints, extending simulation
+        functionality and unblocking projects.
+  \item Worked with clients to understand requirements and delivered tailored .NET solutions in C\#.
+\end{itemize}
+
+\job{JavaScript Game Developer}{ElMoasserBooks}{Cairo, Egypt (On-Site)}{Aug 2020 \textendash{} Aug 2021}
+\begin{itemize}
+  \item Developed educational web games with designers and writers, optimized to run smoothly on phones and laptops.
+  \item Used JavaScript, CreateJS, Three.js, Adobe Animate, and Unity.
+\end{itemize}
+
+\job{Freelance Interactive Web and Game Developer}{Self-Employed}{Remote}{2020 \textendash{} Present}
+\begin{itemize}
+  \item Build animated 2D web games for educational and commercial clients, optimized to run smoothly on phones,
+        tablets, and desktops.
+  \item Develop lightweight real estate pitching simulations: interactive Three.js and 2D web apps that let sales teams
+        present properties on any device.
+  \item Built Reveola, a Facebook Instant Game in React and the Instant Games API, a gamified version of the Reveola
+        review app for movies and places.
+  \item Tools: JavaScript, TypeScript, Three.js, Tween.js, CreateJS, HTML5 Canvas, React.
+\end{itemize}
+
+% ---------------- SKILLS ----------------
+\section{Skills}
+\textbf{Languages:} TypeScript, JavaScript, Go, Python, C++, C, C\#, SQL, PL/pgSQL, Java, QML, HTML, CSS\\
+\textbf{Backend and Data:} Microservices, REST APIs, FastAPI, .NET, PostgreSQL, Supabase, Data Pipelines, Parquet, JSON, GeoJSON\\
+\textbf{Cloud and DevOps:} Microsoft Azure (VMs, AKS, Networking, Storage), Kubernetes, Helm, Docker, Linux,
+On-Premise and Air-Gapped Deployments, Git, GitHub, GitLab, Bitbucket\\
+\textbf{Frontend and Visualization:} React, Next.js, React Native, Redux, Mapbox, Data Visualization, Dashboards\\
+\textbf{Web Graphics and Games:} Three.js, WebGL, Shaders, GPU Instancing, Tween.js, CreateJS, HTML5 Canvas, 2D Web Games, Unity, Unreal Engine 5\\
+\textbf{Systems and Desktop:} Modern C++, STL, Qt/QML, VTK, CMake\\
+\textbf{AI:} LLMs, Model Context Protocol (MCP), AI-Assisted Development (Claude Code, Cursor)\\
+\textbf{Leadership and Practices:} Team Leadership, Mentoring, Code Review, Hiring, Sprint Planning, Agile and Scrum,
+Client Requirements, Stakeholder Management, System Design, Design Patterns, SOLID, OOP, Jira
+
+% ---------------- EDUCATION ----------------
+% Dates stay inline (not right-aligned) so ATS parsers keep them on the same line as each entry.
+\section{Education and Certifications}
+\textbf{Microsoft Certified: Azure Administrator Associate (AZ-104)}, Microsoft, Expected 2026\\
+% When earned, replace "Expected 2026" with the month and year.
+\textbf{B.Sc. in Computer Science}, Menofia University, Egypt, Sep 2015 \textendash{} Jul 2019\\
+\textbf{IELTS Academic}, Overall Band 7.5 (CEFR C1), May 2026\\
+\textbf{TOEFL iBT}, Score 95, ETS, Jan 2020\\
+\textbf{ITIDA Next Technology Leaders}, 5 Courses, Smart Village, Giza, Egypt\\
+\textbf{Game Design and Development Specialization}, Michigan State University (Coursera), May 2018
+
+% ---------------- PROJECTS ----------------
+\section{Projects}
+\begin{itemize}
+  \item \textbf{Solar System Simulation}: Unity 3D simulation with relatively accurate planet distances, camera focus
+        on any body, and adjustable orbit speeds.
+  \item \textbf{Pixie} (Graduation project, team lead): Android app in Java that scans paper and reads text aloud
+        through voice commands to help visually impaired people.
+\end{itemize}
+
+% ---------------- ACTIVITIES ----------------
+\section{Activities}
+\begin{itemize}
+  \item Co-Founder and Practice Sessions Instructor, ICPC Menofia University Team (2017 \textendash{} 2019); ICPC Arab
+        Collegiate Programming Contest contestant (2018).
+  \item Event Coordinator, MUFIX Student Activity (2017 \textendash{} 2019); Executive Member, Microsoft Student Partners Tech Club (2015 \textendash{} 2017).
+\end{itemize}
+
+% ---------------- LANGUAGES ----------------
+%\section{Languages}
+%Arabic (Native), English (Fluent), German (Beginner)
+
+\end{document}
