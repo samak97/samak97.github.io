@@ -64,12 +64,14 @@ AI: LLMs, Model Context Protocol (MCP), AI-Assisted Development (Claude Code, Cu
 Leadership and Practices: Team Leadership, Mentoring, Code Review, Hiring, Sprint Planning, Agile and Scrum, Client Requirements, Stakeholder Management, System Design, Design Patterns, SOLID, OOP, Jira
 
 EDUCATION AND CERTIFICATIONS
-Microsoft Certified: Azure Administrator Associate (AZ-104), Microsoft, Expected 2026
-B.Sc. in Computer Science, Menofia University, Egypt, Sep 2015 - Jul 2019
+B.Sc. in Computer Science
+Menofia University | Menofia, Egypt | Sep 2015 - Jul 2019
+
 IELTS Academic, Overall Band 7.5 (CEFR C1), May 2026
 TOEFL iBT, Score 95, ETS, Jan 2020
 ITIDA Next Technology Leaders, 5 Courses, Smart Village, Giza, Egypt
 Game Design and Development Specialization, Michigan State University (Coursera), May 2018
+Microsoft Certified: Azure Administrator Associate (AZ-104), Microsoft, Expected 2026
 
 PROJECTS
 
@@ -81,6 +83,9 @@ Tools: Rust, Tauri, TypeScript, USB HID, Windows Audio APIs
 Maclip: Native macOS Clipboard Manager | github.com/samak97/Maclip | Apr 2026
 Tools: Swift, SwiftUI, macOS Keychain
 - Clipboard history with pins, collections, and search; passwords stored in the Keychain behind Touch ID; and shell command history (zsh, bash, fish) pasted and run in one keystroke. Fully private: no cloud, no telemetry.
+
+- Solar System Simulation: Unity 3D simulation with relatively accurate planet distances, camera focus on any body, and adjustable orbit speeds.
+- Pixie (Graduation project, team lead): Android app in Java that scans paper and reads text aloud through voice commands to help visually impaired people.
 
 ACTIVITIES
 - Co-Founder and Practice Sessions Instructor, ICPC Menofia University Team (2017 - 2019); ICPC Arab Collegiate Programming Contest contestant (2018).

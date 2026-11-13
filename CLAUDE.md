@@ -8,8 +8,11 @@ This file carries the project context between machines — keep it up to date wh
 - `site/` — the Astro app (static output). Content lives in `site/src/data/*.ts`; sections in `site/src/components/`.
   - `profile.ts` (name, roles, hero badges, stats), `experience.ts` (changelog), `skills.ts` (modules),
     `showcase.ts` (case studies, games, certifications, X posts), `nav.ts` (sidebar order).
-- `cv/` — `ahmed-samak-cv.tex` (Overleaf source, ATS-optimised) and `ahmed-samak-cv.txt` (plain-text copy for paste-in forms).
-  Overleaf is the master for the PDF; mirror wording changes into the `.txt` and into the site data.
+- `cv/` — `ahmed-samak-cv.tex` (source) and `ahmed-samak-cv.txt` (plain-text copy for paste-in forms).
+  Layout modelled on a CV Ahmed liked: left-aligned name with italic title, icon contact grid, heavy section rules,
+  date over location on the right, Projects with link + Tools line. Compiles on Overleaf (pdfLaTeX) or locally with
+  `tectonic ahmed-samak-cv.tex` (XeTeX; the file guards the pdfLaTeX-only lines). Copy the PDF to `cv/My_Resume.pdf`
+  and `site/public/ahmed-samak-cv.pdf`; mirror wording changes into the `.txt` and into `site/src/data/experience.ts`.
 - `.github/workflows/deploy.yml` — builds `site/` with Bun and deploys to GitHub Pages on push to `main` (Pages is set to "GitHub Actions" mode, not branch mode).
 - `Documents/` — **private, never committed** (references' emails, IELTS report with ID details, original photos). Transfer between machines privately, not via this public repo.
 
@@ -35,6 +38,12 @@ Bun only (Ahmed prefers it; there was no Node on the Windows machine). Scripts a
 - Client names are written as "UAE government entities" everywhere until Pixonal approves naming them. Don't commit the names.
 - Phone numbers appear only in the CV PDF, not on the site.
 - CV keeps **both** IELTS (7.5, C1, May 2026) and TOEFL (95, Jan 2020).
+- Pixonal titles: **Senior Engineer & Delivery Team Lead** (Dubai, Feb 2026–) with client-facing bullets only (delivery
+  team, FDE, deployments); **Senior Software Engineer** (Sheikh Zayed, Jan 2025–Feb 2026) with the engineering bullets
+  (graphics + 100x GPU work, dashboards, GeoJSON library). Ahmed leads the **delivery** team; never write that he leads
+  or co-leads the engineering team. CV headline: "Senior Software Engineer & Team Lead".
+- CV Projects: Frazer and Maclip first, then Solar System and Pixie as one-liners. Keep all four (Ahmed wants them all).
+- CV Education: the degree is its own entry (title/university, dates/location) at the top; certifications follow, Azure AZ-104 last.
 - Reveola game card is commented out in `showcase.ts` for now.
 - Sidebar order: Introduction (README, Getting Started) → Reference (Modules, Changelog, Case Studies, Threads, Certifications, GPU Playground) → Extras (Arcade, Contact).
 - Photo: the outdoor portrait, shown in Getting Started and as the Contact/Threads avatar.
@@ -53,7 +62,7 @@ Bun only (Ahmed prefers it; there was no Node on the Windows machine). Scripts a
 ## Open to-do
 
 1. Job slideshows: make the MedSoft project clickable → slideshow of product screenshots; maybe every job. Waiting on screenshots (check they're OK to show publicly).
-2. Recompile the CV on Overleaf (IELTS + TOEFL) and copy the PDF to `site/public/ahmed-samak-cv.pdf`.
+2. Maclip's repo is private, so its CV link 404s for readers: make it public or drop the link.
 3. Add Frazer (Rust headset app) as an X post once Ahmed posts it.
 4. Custom domain after friends' feedback: add `site/public/CNAME`, update the site URL in `astro.config.mjs`, `profile.ts`, `robots.txt`, and the OG image text (`scripts/gen-images.ts`).
 
