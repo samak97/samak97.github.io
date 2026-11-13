@@ -1,31 +1,25 @@
 AHMED SAMAK
-Senior Software Engineer and Team Lead | Full-Stack, Cloud, Web Graphics and Data Visualization
-Cairo, Egypt - Dubai, UAE | +20 106 746 9799 | +971 58 688 1804
-asamak1997@gmail.com | linkedin.com/in/samak97 | github.com/samak97
+Senior Software Engineer & Team Lead
+Dubai, UAE - Cairo, Egypt | +971 55 359 8220 | +20 106 746 9799
+asamak1997@gmail.com | linkedin.com/in/samak97 | github.com/samak97 | samak97.github.io
 
 SUMMARY
-Senior Software Engineer and Team Lead with 6+ years of experience building web platforms, high-performance desktop software, and interactive 2D/3D graphics. Team Lead on Llumen, a decision intelligence and data visualization platform for government leadership in the UAE, owning the product's map and 2D/3D graphics, and Forward Deployed Engineer delivering it on Microsoft Azure and air-gapped on-premise infrastructure with Kubernetes and Helm. Hands-on with TypeScript, Go, Python, Three.js, and microservices, with a background in Modern C++ for FDA-approved medical software and in freelance web game development.
+Senior Software Engineer and Team Lead with 6+ years of experience building web platforms, high-performance desktop software, and interactive 2D/3D graphics. Leads the delivery team for Llumen, a decision intelligence and data visualization platform for government leadership in the UAE, as a Forward Deployed Engineer delivering it on Microsoft Azure and air-gapped on-premise infrastructure, and owns the product's map and 2D/3D graphics. Hands-on with TypeScript, Go, Python, Three.js, and microservices, with a background in Modern C++ for FDA-approved medical software.
 
 EXPERIENCE
 
-Team Lead / Senior Software Engineer
-Pixonal | Sheikh Zayed, Egypt - Dubai, UAE (Hybrid) | Feb 2026 - Present
-- Lead an engineering team working on Llumen, Pixonal's decision intelligence platform that brings data, analytics, models, and AI into one environment for government leaders; own sprint planning, task breakdown, code reviews, mentoring, and hiring.
-- Own the graphics layer of Llumen: develop, maintain, and optimize all map visualizations and the 2D and 3D graphics used to visualize data.
-- Re-engineered map rendering with GPU instancing and custom shaders, making it more than 100x faster: the map now renders over 1 million markers smoothly, where it previously struggled at 100K.
-- Deliver bi-weekly releases of a large microservices platform (Go, TypeScript, Python, PostgreSQL), coordinating scope, QA, and rollout across cloud and client-hosted environments.
-- Act as Forward Deployed Engineer for UAE government entities: run on-site meetings and requirement workshops, translate operational needs into product features and configurations, and help clients get the most out of the platform.
-- Deploy and operate the platform on Microsoft Azure VMs with Kubernetes and Helm charts, and on air-gapped on-premise servers; travel to client sites to resolve deployment and network connectivity issues.
-- Administer Azure resources for client and internal environments, including virtual machines, AKS, virtual networks, and storage.
+Senior Engineer & Delivery Team Lead
+Pixonal | Dubai, UAE | Feb 2026 - Present
+- Lead the delivery team for Llumen, Pixonal's decision intelligence platform that brings data, analytics, models, and AI into one environment for government leaders in the UAE.
+- Forward Deployed Engineer for UAE government entities: run on-site meetings and requirement workshops, and turn operational needs into product features and configurations.
+- Deploy and operate the platform on Microsoft Azure (AKS, VMs, networking) with Kubernetes and Helm, and on air-gapped on-premise servers; redesigned secure team access to client environments without extra VMs, cutting infrastructure costs.
 
-Senior Full-Stack Engineer
-Pixonal | Sheikh Zayed, Egypt - Dubai, UAE (Hybrid) | Jan 2025 - Feb 2026
-- Built immersive, data-driven products and dashboards for leaders and decision-makers in government.
-- Developed Go and Python microservices for data ingestion, management, and analytics, including JSON-to-Parquet conversion pipelines, data summarization, and AI/LLM-based analysis.
-- Designed an optimized stories, whiteboards, and dashboards system with complex components and interactive map visualizations.
+Senior Software Engineer
+Pixonal | Sheikh Zayed, Egypt | Jan 2025 - Feb 2026
+- Own Llumen's map and 2D/3D graphics; re-engineered map rendering with GPU instancing and custom shaders, making it more than 100x faster: over 1 million markers render smoothly, where it previously struggled at 100K.
+- Built the stories, whiteboards, and dashboards system that government decision-makers use, with complex components and interactive map visualizations.
 - Built a scalable 3D GeoJSON visualization library on Mapbox and Three.js.
-- Optimized data loading and rendering so graphics-heavy dashboards run smoothly in the browser for many concurrent users.
-- Tools: Go, TypeScript, Python, FastAPI, C# (.NET), PostgreSQL, Supabase, React, Next.js, Mapbox, Three.js, Docker, Kubernetes.
+- Built Go and Python microservices for data ingestion and LLM-based analysis.
 
 Senior Software Engineer
 MedSoft | Cairo, Egypt (Hybrid) | Apr 2022 - Dec 2024
@@ -78,12 +72,16 @@ ITIDA Next Technology Leaders, 5 Courses, Smart Village, Giza, Egypt
 Game Design and Development Specialization, Michigan State University (Coursera), May 2018
 
 PROJECTS
-- Solar System Simulation: Unity 3D simulation with relatively accurate planet distances, camera focus on any body, and adjustable orbit speeds.
-- Pixie (Graduation project, team lead): Android app in Java that scans paper and reads text aloud through voice commands to help visually impaired people.
+
+Frazer: Lightweight Razer Synapse Replacement | github.com/samak97/Frazer | Oct 2026
+Tools: Rust, Tauri, TypeScript, USB HID, Windows Audio APIs
+- Windows tray app that drives Razer wireless headsets directly over USB, replacing a dozen background processes with one small app; detects any Razer headset automatically. Released as open source.
+- On-headset 10-band EQ edited on a live curve, with presets tuned by ear, plus mic control, live battery status, and a per-app volume mixer.
+
+Maclip: Native macOS Clipboard Manager | github.com/samak97/Maclip | Apr 2026
+Tools: Swift, SwiftUI, macOS Keychain
+- Clipboard history with pins, collections, and search; passwords stored in the Keychain behind Touch ID; and shell command history (zsh, bash, fish) pasted and run in one keystroke. Fully private: no cloud, no telemetry.
 
 ACTIVITIES
 - Co-Founder and Practice Sessions Instructor, ICPC Menofia University Team (2017 - 2019); ICPC Arab Collegiate Programming Contest contestant (2018).
 - Event Coordinator, MUFIX Student Activity (2017 - 2019); Executive Member, Microsoft Student Partners Tech Club (2015 - 2017).
-
-LANGUAGES
-Arabic (Native), English (Fluent), German (Beginner)
