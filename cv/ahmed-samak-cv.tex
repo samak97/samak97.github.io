@@ -161,9 +161,9 @@ Client Requirements, Stakeholder Management, System Design, Design Patterns, SOL
 \textbf{Microsoft Certified: Azure Administrator Associate (AZ-104)}, Microsoft, Expected 2026
 
 % ---------------- PROJECTS ----------------
-% \project{Name}{Link URL}{Tools}{Date}
+% \project{Name}{Link URL}{Tools}{Date} -- leave the link empty to drop the link icon.
 \newcommand{\project}[4]{%
-  \vspace{4pt}\textbf{#1}~\href{#2}{\small\faLink}\hfill #4\\
+  \vspace{4pt}\textbf{#1}\if\relax\detokenize{#2}\relax\else~\href{#2}{\small\faLink}\fi\hfill #4\\
   \textit{Tools: #3}\par\vspace{1pt}}
 
 \section{Projects}
@@ -181,12 +181,15 @@ Client Requirements, Stakeholder Management, System Design, Design Patterns, SOL
         shell command history (zsh, bash, fish) pasted and run in one keystroke. Fully private: no cloud, no telemetry.
 \end{itemize}
 
-\vspace{4pt}
+\project{Solar System Simulation}{https://samak97.github.io/Solar-System-Simulation/}{Unity, C\#, WebGL}{Feb 2021}
 \begin{itemize}
-  \item \textbf{Solar System Simulation}: Unity 3D simulation with relatively accurate planet distances, camera focus
-        on any body, and adjustable orbit speeds.
-  \item \textbf{Pixie} (Graduation project, team lead): Android app in Java that scans paper and reads text aloud
-        through voice commands to help visually impaired people.
+  \item 3D simulation of the solar system with relatively accurate planet distances, playable in the browser; focus the
+        camera on any body and change orbit speeds.
+\end{itemize}
+
+\project{Pixie: Reading Assistant for the Visually Impaired}{}{Java, Android}{2019}
+\begin{itemize}
+  \item Graduation project, as team lead: an Android app that scans paper and reads the text aloud through voice commands.
 \end{itemize}
 
 % ---------------- ACTIVITIES ----------------

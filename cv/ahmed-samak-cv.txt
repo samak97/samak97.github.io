@@ -84,8 +84,13 @@ Maclip: Native macOS Clipboard Manager | github.com/samak97/Maclip | Apr 2026
 Tools: Swift, SwiftUI, macOS Keychain
 - Clipboard history with pins, collections, and search; passwords stored in the Keychain behind Touch ID; and shell command history (zsh, bash, fish) pasted and run in one keystroke. Fully private: no cloud, no telemetry.
 
-- Solar System Simulation: Unity 3D simulation with relatively accurate planet distances, camera focus on any body, and adjustable orbit speeds.
-- Pixie (Graduation project, team lead): Android app in Java that scans paper and reads text aloud through voice commands to help visually impaired people.
+Solar System Simulation | samak97.github.io/Solar-System-Simulation | Feb 2021
+Tools: Unity, C#, WebGL
+- 3D simulation of the solar system with relatively accurate planet distances, playable in the browser; focus the camera on any body and change orbit speeds.
+
+Pixie: Reading Assistant for the Visually Impaired | 2019
+Tools: Java, Android
+- Graduation project, as team lead: an Android app that scans paper and reads the text aloud through voice commands.
 
 ACTIVITIES
 - Co-Founder and Practice Sessions Instructor, ICPC Menofia University Team (2017 - 2019); ICPC Arab Collegiate Programming Contest contestant (2018).
