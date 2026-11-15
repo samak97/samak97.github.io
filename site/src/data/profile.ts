@@ -14,8 +14,9 @@ export const profile = {
     x: 'https://x.com/samak997',
   },
   xHandle: '@samak997',
+  // Also the link-preview text: keep it under 160 characters or previews cut it off.
   description:
-    'Ahmed Samak is a Senior Software Engineer, Team Lead, and Forward Deployed Engineer at Pixonal building Llumen, a decision intelligence and data visualization platform. Web, 3D graphics, Go microservices, Kubernetes, Azure, high-performance C++, medical software, and web games.',
+    'Senior Software Engineer & Team Lead at Pixonal. I lead delivery for Llumen and build fast maps, data platforms and 2D/3D graphics.',
   // Badges under the title in the hero (Team Lead is already in the title). Keep an even count: they sit in a 3x2 / 2x3 grid.
   // Order matters for the 3x2 grid: items 1&4, 2&5, 3&6 share a column, so long ones are paired with short ones.
   hats: [

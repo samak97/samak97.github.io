@@ -45,6 +45,12 @@ Bun only (Ahmed prefers it; there was no Node on the Windows machine). Scripts a
   → game → contact.
 - Hero line under the name is a quote from his X article ("Jack of all trades, master of none…"), not a tagline.
 - Threads are big cards with the post images, not plain lines.
+- Projects open with a wide Llumen card (work project): a still from Pixonal's LinkedIn video cropped to the map
+  only (the side panels show client data), linking to the post and pixonal.com; the video is linked, not rehosted.
+  His own projects follow with drawn thumbnails (Frazer EQ, Maclip window, orbit, Pixie page).
+- Recommendation section (before Threads): Mohamed Fouad Fakhr's LinkedIn recommendation. The quote is cut off at
+  "contributed to the…" because only the truncated text was available; replace with the full text when Ahmed sends it.
+- `profile.description` is also the link-preview text: keep it under 160 characters.
 - The "1M markers / 100x faster" stat appears only in the case study, the GPU playground and the Pixonal experience entry — not repeated elsewhere.
 - Forward Deployed Engineer is mentioned up front (hero intro).
 - Client names are written as "UAE government entities" everywhere until Pixonal approves naming them. Don't commit the names.

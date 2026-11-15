@@ -261,6 +261,18 @@
   $('#zout').addEventListener('click', () => zoomAt(1 / 1.8));
   $('#reset').addEventListener('click', () => { z = 1; cx = cy = .5; slider.value = 100; count = N; layers.forEach((l) => l.checked = true); queue(); });
 
+  // ---------- Frazer thumbnail: a 10-band EQ curve ----------
+  (() => {
+    const svg = $('#eq'); if (!svg) return;
+    const gains = [3, 4.5, 3.5, 1, -1, -1.5, 0, 2, 3.5, 2.5], W = 440, padX = 24, mid = 62, k = 8;
+    const step = (W - padX * 2) / 9, pts = gains.map((g, i) => [padX + i * step, mid - g * k]);
+    let d = `M${pts[0]}`; for (let i = 1; i < 10; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], c = (x0 + x1) / 2; d += ` C${c},${y0} ${c},${y1} ${x1},${y1}`; }
+    const grid = pts.map(([x]) => `<line x1="${x}" y1="14" x2="${x}" y2="112" stroke="rgba(255,255,255,.08)"/>`).join('');
+    const lab = ['31', '62', '125', '250', '500', '1k', '2k', '4k', '8k', '16k'].map((l, i) => `<text x="${pts[i][0]}" y="127" fill="#687083" font-size="10" font-family="Geist Mono, monospace" text-anchor="middle">${l}</text>`).join('');
+    const dots = pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" fill="#0d1017" stroke="url(#eqs)" stroke-width="2"/>`).join('');
+    svg.innerHTML = `<defs><linearGradient id="eqs" x1="0" x2="1"><stop offset="0" stop-color="#6f9bff"/><stop offset=".52" stop-color="#ff5e7e"/><stop offset="1" stop-color="#ffc35c"/></linearGradient><linearGradient id="eqf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5e7e" stop-opacity=".22"/><stop offset="1" stop-color="#6f9bff" stop-opacity="0"/></linearGradient></defs>${grid}<line x1="${padX}" y1="${mid}" x2="${W - padX}" y2="${mid}" stroke="rgba(255,255,255,.2)" stroke-dasharray="3 4"/><path d="${d} L${W - padX},112 L${padX},112Z" fill="url(#eqf)"/><path d="${d}" fill="none" stroke="url(#eqs)" stroke-width="2.4"/>${dots}${lab}`;
+  })();
+
   // ---------- copy email ----------
   document.querySelectorAll('.copy-email').forEach((btn) => btn.addEventListener('click', async () => {
     // The dock button has no label, so its tooltip carries the feedback instead.

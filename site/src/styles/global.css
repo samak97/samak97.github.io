@@ -150,7 +150,69 @@ input[type=range] { width: 100%; accent-color: var(--acc); }
 .proj h3 small { font: 500 11.5px var(--mono); letter-spacing: .08em; color: var(--dim); margin-left: 10px; vertical-align: middle; text-transform: uppercase; }
 .proj p { margin: 0; color: var(--muted); font-size: 15.5px; }
 .proj .tools { font: 500 12px var(--mono); color: var(--dim); margin-top: auto; padding-top: 6px; }
-.proj .go { font-weight: 600; font-size: 15px; color: var(--acc2); text-underline-offset: 4px; text-decoration-color: rgba(184,202,255,.5); }
+.proj .go, .llumen .go, .reco .go { font-weight: 600; font-size: 15px; color: var(--acc2); text-underline-offset: 4px; text-decoration-color: rgba(184,202,255,.5); }
+.proj { overflow: hidden; }
+.subhead { font: 500 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin: 40px 0 0; }
+.subhead + .projects { margin-top: 14px; }
+
+/* project thumbnails: each card opens with a small drawing of the app */
+.proj .art { height: 196px; margin: -22px -22px 12px; background: var(--bg2); background-image: radial-gradient(circle, rgba(255,255,255,.07) 1px, transparent 1.3px); background-size: 8px 8px; border-bottom: 1px solid var(--line); display: grid; place-items: center; overflow: hidden; }
+.eq { width: 92%; height: 128px; }
+.mac { width: min(320px, 86%); border: 1px solid var(--line2); border-radius: 10px; background: rgba(22,25,33,.92); box-shadow: 0 18px 40px -18px rgba(0,0,0,.8); overflow: hidden; font: 500 12px var(--mono); }
+.mac .bar { display: flex; align-items: center; gap: 5px; padding: 7px 9px; border-bottom: 1px solid var(--line); color: var(--dim); }
+.mac .bar i { width: 8px; height: 8px; border-radius: 50%; background: #ff5f57; }
+.mac .bar i:nth-child(2) { background: #febc2e; }
+.mac .bar i:nth-child(3) { background: #28c840; }
+.mac .bar span { margin-left: 6px; }
+.mac .search { margin: 7px 8px 4px; padding: 5px 8px; border-radius: 6px; background: rgba(255,255,255,.05); color: var(--dim); }
+.mac .row { display: flex; align-items: center; gap: 8px; margin: 3px 8px; padding: 5px 7px; border-radius: 6px; color: var(--fg); white-space: nowrap; overflow: hidden; }
+.mac .row:last-child { margin-bottom: 8px; }
+.mac .row.on { background: linear-gradient(100deg, rgba(111,155,255,.28), rgba(255,94,126,.22)); }
+.mac .ic { width: 16px; text-align: center; color: var(--muted); }
+.mac kbd { margin-left: auto; font-size: 10.5px; padding: 0 5px; }
+.orbit { position: relative; width: 136px; height: 136px; }
+.orbit i { position: absolute; inset: 0; margin: auto; border: 1px dashed rgba(255,255,255,.18); border-radius: 50%; animation: spin linear infinite; }
+.orbit i::after { content: ""; position: absolute; top: -4px; left: 50%; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%; background: #7ea2ff; }
+.orbit i:nth-child(1) { width: 52px; height: 52px; animation-duration: 4s; }
+.orbit i:nth-child(2) { width: 92px; height: 92px; animation-duration: 9s; }
+.orbit i:nth-child(2)::after { background: #ff6b8b; width: 10px; height: 10px; margin-left: -5px; top: -5px; }
+.orbit i:nth-child(3) { width: 134px; height: 134px; animation-duration: 16s; }
+.orbit b { position: absolute; inset: 0; margin: auto; width: 24px; height: 24px; border-radius: 50%; background: #ffc35c; box-shadow: 0 0 22px rgba(255,195,92,.7); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.pixie { display: flex; align-items: center; gap: 20px; }
+.pixie .page { width: 64px; height: 82px; background: #e9e6dd; border-radius: 4px; padding: 11px 9px; display: grid; gap: 6px; align-content: start; }
+.pixie .page i { height: 4px; background: rgba(10,11,15,.4); border-radius: 2px; }
+.pixie .page i:nth-child(2n) { width: 70%; }
+.pixie .waves { display: flex; gap: 5px; align-items: center; }
+.pixie .waves i { width: 5px; height: 40px; border-radius: 3px; background: var(--grad); animation: wave 1.1s ease-in-out infinite; }
+.pixie .waves i:nth-child(2) { animation-delay: -.2s; } .pixie .waves i:nth-child(3) { animation-delay: -.4s; } .pixie .waves i:nth-child(4) { animation-delay: -.6s; } .pixie .waves i:nth-child(5) { animation-delay: -.8s; }
+@keyframes wave { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+
+/* Llumen: the work project, shown wide with its video */
+.llumen { display: grid; grid-template-columns: 1.15fr 1fr; padding: 0; overflow: hidden; margin-top: 36px; }
+.llumen .media { position: relative; display: block; min-height: 300px; overflow: hidden; border-right: 1px solid var(--line); background: #0b1220; }
+.llumen .media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.llumen .media:hover img { transform: scale(1.04); }
+.llumen .badge { position: absolute; left: 14px; top: 14px; font: 500 11.5px var(--mono); background: rgba(9,11,16,.8); border: 1px solid var(--line2); padding: 4px 9px; border-radius: 999px; }
+.llumen .lb { padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 12px; }
+.llumen .kick { font: 500 12px var(--mono); letter-spacing: .04em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.llumen h3 { margin: 0; font: var(--dw) calc(var(--ds) * 44px)/1 var(--display); letter-spacing: var(--dls); }
+.llumen p { margin: 0; color: var(--muted); font-size: 15.5px; }
+.llumen p.lead { color: #d5dbe8; font-size: 16.5px; }
+.llumen p b { color: var(--fg); font-weight: 600; }
+.llumen .tags { margin: 2px 0 0; }
+.llumen .links { display: flex; gap: 20px; margin-top: auto; padding-top: 6px; }
+
+/* recommendation */
+.reco { position: relative; margin: 36px 0 0; padding: 34px 34px 26px; overflow: hidden; }
+.reco::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--grad); }
+.reco .qm { position: absolute; right: 26px; top: -10px; font: 400 180px/1 var(--display); background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; opacity: .35; }
+.reco blockquote { margin: 0; max-width: 46em; font: 400 calc(var(--ds) * clamp(22px, 2.2vw, 27px))/1.45 var(--display); color: #e2e7f1; }
+.reco figcaption { display: flex; align-items: center; gap: 14px; margin-top: 24px; flex-wrap: wrap; }
+.reco .init { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--grad); color: #0a0d18; font-weight: 700; }
+.reco figcaption b { display: block; font-weight: 600; }
+.reco figcaption small { color: var(--dim); font-size: 13.5px; }
+.reco figcaption .go { margin-left: auto; }
 .more { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; margin: 20px 0 0; }
 .more > span { font: 500 12px var(--mono); color: var(--dim); letter-spacing: .1em; text-transform: uppercase; margin-right: 6px; }
 .more a { text-decoration: none; font-size: 14.5px; border: 1px solid var(--line2); padding: 6px 13px; border-radius: 999px; transition: border-color .2s, color .2s; }
@@ -233,7 +295,8 @@ footer { margin-top: clamp(90px, 11vw, 140px); border-top: 1px solid var(--line)
 
 @media (max-width: 900px) {
   .about, .two { grid-template-columns: 1fr; gap: 32px; }
-  .cases, .projects, .threads { grid-template-columns: 1fr; }
+  .cases, .projects, .threads, .llumen { grid-template-columns: 1fr; }
+  .llumen .media { min-height: 0; aspect-ratio: 16 / 9; border-right: 0; border-bottom: 1px solid var(--line); }
   .winbody { grid-template-columns: 1fr; }
   .side { border-right: 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   .timing { grid-column: 1 / -1; }
@@ -248,10 +311,12 @@ footer { margin-top: clamp(90px, 11vw, 140px); border-top: 1px solid var(--line)
   .hello img { width: 132px; height: 132px; order: -1; }
   #game { aspect-ratio: 4 / 5; }
   .socials { margin-left: 0; width: 100%; }
+  .reco { padding: 28px 20px 22px; }
+  .reco figcaption .go { margin-left: 0; width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .rv { transition: none; opacity: 1; transform: none; }
   .btn, .dock { transition: none; }
-  .aurora i { animation: none; }
+  .aurora i, .orbit i, .pixie .waves i { animation: none; }
 }
