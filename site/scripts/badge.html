@@ -1,0 +1,69 @@
+<!doctype html>
+<!-- Template for the lanyard badge in the footer: badge.html#front (1024×1440), #back (1024×1440) and
+     #strap (1600×192, repeated along the strap). Render all three with scripts/gen-badge.sh. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400..700&family=Geist+Mono:wght@500&display=block" rel="stylesheet">
+<style>
+  :root { --grad: linear-gradient(100deg, #6f9bff 0%, #ff5e7e 52%, #ffc35c 100%); }
+  html, body { margin: 0; overflow: hidden; background: #0d1017; color: #e8ecf4; font-family: 'Geist', sans-serif; }
+  section { position: relative; width: 1024px; height: 1440px; overflow: hidden; display: none; }
+  :target { display: block; }
+  em { font-style: italic; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .05em; }
+  .dots { position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,.07) 1.6px, transparent 2px); background-size: 16px 16px; }
+
+  /* Front: the slot is punched through the top centre, so the band keeps that area empty. */
+  #front .top { position: absolute; left: 56px; right: 56px; top: 150px; display: flex; justify-content: space-between; align-items: center; font: 500 26px 'Geist Mono', monospace; letter-spacing: .12em; color: #8b93a6; }
+  #front .top svg { width: 52px; height: 52px; }
+  #front .photo { position: absolute; left: 56px; top: 232px; width: 912px; height: 820px; border-radius: 36px; object-fit: cover; }
+  #front .name { position: absolute; left: 56px; right: 56px; top: 1078px; }
+  #front h1 { font: 400 124px/1 'Instrument Serif', serif; letter-spacing: -.015em; margin: 0; }
+  #front p { margin: 18px 0 0; font-size: 34px; color: #b6bdcc; }
+  #front .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background: var(--grad); display: flex; align-items: center; justify-content: space-between; padding: 0 56px; font: 600 26px 'Geist Mono', monospace; letter-spacing: .14em; color: #0a0d18; }
+
+  #back .aurora i { position: absolute; width: 760px; height: 760px; border-radius: 50%; filter: blur(130px); }
+  #back .aurora i:nth-child(1) { background: #3f6bff; left: -260px; top: -160px; opacity: .55; }
+  #back .aurora i:nth-child(2) { background: #ff3d6a; right: -300px; top: 380px; opacity: .4; }
+  #back .aurora i:nth-child(3) { background: #ffb534; left: 60px; bottom: -380px; opacity: .3; }
+  #back .mid { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 30px; }
+  #back svg { width: 360px; height: 360px; margin: 0 auto; }
+  #back p { margin: 10px 0 0; font: 500 34px 'Geist Mono', monospace; letter-spacing: .12em; color: #b6bdcc; }
+
+  #strap { width: 1600px; height: 192px; background: #111318; display: none; }
+  #strap:target { display: flex; }
+  #strap { align-items: center; justify-content: space-around; font: 600 64px 'Geist', sans-serif; letter-spacing: .2em; color: #e8ecf4; border-top: 10px solid; border-bottom: 10px solid; border-image: var(--grad) 1; box-sizing: border-box; }
+  #strap b { font-weight: 600; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="14" y1="8" x2="50" y2="56"><stop offset="0" stop-color="#6f9bff"/><stop offset=".5" stop-color="#ff5e7e"/><stop offset="1" stop-color="#ffc35c"/></linearGradient>
+      <symbol id="logo" viewBox="0 0 64 64"><path d="M50 8H27q-10 0-11.5 9l-.8 5q-1.5 9 8.5 9h5L21 43h16q4 0 3.5 3.5L40 49l-28-1-3 9h29q12 0 14-11l.6-4q1.5-9-8.5-9h-6L46 25H31q-3 0-2.5-3l.2-1q.5-3 3.5-3H47z" fill="url(#g)"/></symbol>
+    </defs>
+  </svg>
+
+  <section id="front">
+    <div class="dots"></div>
+    <div class="top"><span>SAMAK97.GITHUB.IO</span><svg><use href="#logo"/></svg></div>
+    <img class="photo" src="badge-photo.jpg" alt="">
+    <div class="name">
+      <h1>Ahmed <em>Samak</em></h1>
+      <p>Senior Software Engineer &amp; Team Lead</p>
+    </div>
+    <div class="bar"><span>FORWARD DEPLOYED</span><span>CODE WIZARD</span></div>
+  </section>
+
+  <section id="back">
+    <div class="aurora"><i></i><i></i><i></i></div>
+    <div class="dots"></div>
+    <div class="mid">
+      <svg><use href="#logo"/></svg>
+      <p>SAMAK97.GITHUB.IO</p>
+    </div>
+  </section>
+
+  <section id="strap"><span>AHMED SAMAK</span><b>✦</b><span>SAMAK97</span><b>✦</b></section>
+</body>
+</html>

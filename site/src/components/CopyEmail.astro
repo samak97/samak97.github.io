@@ -1,0 +1,17 @@
+---
+// "Copy email" as a React Bits Bell Toggle: the envelope rings and the label turns into "Copied!".
+// The behaviour is in scripts/effects.js and scripts/rb/bell-toggle.js.
+---
+<span class="bell-toggle copy-bell" data-on="false">
+  <button type="button" class="bell-toggle__button" aria-pressed="false" aria-label="Copy email">
+    <span class="bell-toggle__bell" aria-hidden="true">
+      <span class="bell-toggle__glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+      <svg class="bell-toggle__wave bell-toggle__wave--left" viewBox="0 0 14 14"><path d="M14 8a6 6 0 0 0-6 6"/><path d="M14 4A10 10 0 0 0 4 14"/></svg>
+      <svg class="bell-toggle__wave bell-toggle__wave--right" viewBox="0 0 14 14"><path d="M0 8a6 6 0 0 1 6 6"/><path d="M0 4a10 10 0 0 1 10 10"/></svg>
+    </span>
+    <span class="bell-toggle__say" aria-hidden="true">
+      <span class="bell-toggle__face bell-toggle__face--off">Copy email</span>
+      <span class="bell-toggle__face bell-toggle__face--on">Copied!</span>
+    </span>
+  </button>
+</span>

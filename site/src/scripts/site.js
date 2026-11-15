@@ -1,4 +1,4 @@
-// Hero sky, GPU playground, copy-email buttons, the game, and scroll-driven UI (nav, dock, reveals).
+// Hero sky (with lightning from the moon), GPU playground, the dock's copy-email button, the game, and the dock.
 (() => {
   const $ = (s) => document.querySelector(s);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -60,11 +60,36 @@
     S = { cols, rows, img, buf, rnd, cr, cloud, cw, rM, moon };
     dirty = true;
   }
-  const C = { star: [228, 232, 246], moon: [232, 233, 240], moonDark: [96, 102, 126], cloud: [112, 120, 146], ptr: [190, 204, 232] };
+  const C = { star: [228, 232, 246], moon: [232, 233, 240], moonDark: [96, 102, 126], cloud: [112, 120, 146], ptr: [190, 204, 232], bolt: [236, 240, 255], lit: [196, 206, 240] };
+
+  // ---------- lightning from the moon ----------
+  // Every 7–16 s a bolt drops from the moon's underside: a jagged walk down the grid that kinks sideways every
+  // few cells, with one short branch. It flickers twice and fades in about half a second, lighting up the clouds.
+  let bolt = null, nextStrike = performance.now() + 2500 + Math.random() * 3000;
+  function makeBolt(t) {
+    const { rows, rM, moon } = S, cells = [];
+    const walk = (x, y, lean, len, a, branch) => {
+      for (let n = 0; n < len && y < rows * .95;) {
+        const step = Math.random() < .5 ? lean : (Math.random() < .5 ? -1 : 1) * (Math.random() < .5 ? 0 : 1);
+        for (let k = 0, seg = 2 + ((Math.random() * 3) | 0); k < seg && n < len; k++, n++) {
+          y++; x += step; cells.push([x, y, a]);
+          if (branch && n > len * .25 && Math.random() < .03) { branch = false; walk(x, y, -lean || 1, 6 + Math.random() * 12, .5, false); }
+        }
+      }
+    };
+    const lean = Math.random() < .5 ? -1 : 1;
+    walk(Math.round(moon[0] + (Math.random() - .5) * rM), Math.round(moon[1] + rM), lean, rows * (.45 + Math.random() * .35), 1, true);
+    return { cells, t0: t };
+  }
+  // Brightness over the strike's life: a flash, a dip, a second flash, then a fade.
+  const boltLevel = (dt) => dt < 0 || dt > 560 ? 0 : dt < 70 ? 1 : dt < 130 ? .15 : dt < 210 ? .9 : .9 * (1 - (dt - 210) / 350) ** 1.5;
+
   function drawSky(t) {
     if (!S) return;
     const { cols, rows, buf, rnd, cr, cloud, cw, rM, moon } = S; buf.fill(0);
     const drift = reduce ? 0 : Math.floor(t / 1400) % cw, W = cols * 2, pR = 16;
+    if (!reduce && t > nextStrike) { bolt = makeBolt(t); nextStrike = t + 7000 + Math.random() * 9000; }
+    const strike = bolt ? boltLevel(t - bolt.t0) : 0, flash = strike * .7;
     for (let y = 0; y < rows; y++) {
       // The sky fades out towards the bottom of the hero so it melts into the page.
       const fade = 1 - sm(.6, 1, y / rows);
@@ -72,7 +97,7 @@
         const i = y * cols + x, inText = x > cr.x0 && x < cr.x1 && y > cr.y0 && y < cr.y1;
         let I = 0, col = null, big = false;
         const c = cloud[y * cw + ((x + drift) % cw)];
-        if (c > 0 && !inText) { I = c * .55; col = C.cloud; }
+        if (c > 0 && !inText) { I = c * (.55 + .5 * flash); col = flash > .02 ? mix(C.cloud, C.lit, flash) : C.cloud; }
         if (c < .1 && rnd[i] < .004 && !inText) {
           const s = .45 + .45 * Math.sin(t * .001 * (.4 + rnd[i] * 60) + rnd[i] * 999);
           if (s > .3) { I = .9; col = C.star; }
@@ -94,6 +119,16 @@
           buf[o] = p; if (big) { buf[o + 1] = p; buf[o + W] = p; buf[o + W + 1] = p; }
         }
       }
+    }
+    // The bolt: solid cells for the core, single dim pixels either side for its glow. It stays out of the text.
+    if (strike > 0) for (const [x, y, a] of bolt.cells) {
+      if (x < 1 || x >= cols - 1 || y < 0 || y >= rows || (x > cr.x0 && x < cr.x1 && y > cr.y0 && y < cr.y1)) continue;
+      const b = strike * a * (1 - sm(.6, 1, y / rows));
+      if (b < .05) continue;
+      const p = pack(C.bolt, .35 + .65 * b), g = pack(C.lit, .45 * b), o = y * 2 * W + x * 2;
+      buf[o] = buf[o + 1] = buf[o + W] = buf[o + W + 1] = p;
+      if (!buf[o - 2]) buf[o - 2] = g;
+      if (!buf[o + 3]) buf[o + 3] = g;
     }
     sctx.putImageData(S.img, 0, 0);
   }
@@ -382,16 +417,11 @@
   gcv.addEventListener('keyup', (e) => { if (G) G.keys[e.key] = false; });
   $('#again').addEventListener('click', () => { newGame(); gcv.focus(); });
 
-  // ---------- visibility, nav and reveals ----------
+  // ---------- visibility (the nav highlight and the reveals live in effects.js) ----------
   const vis = { hero: true, game: false };
   const io = new IntersectionObserver((es) => es.forEach((e) => { vis[e.target.dataset.vis] = e.isIntersecting; }), { rootMargin: '80px' });
   hero.dataset.vis = 'hero'; $('.game').dataset.vis = 'game';
   io.observe(hero); io.observe($('.game'));
-  const rio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px' });
-  document.querySelectorAll('.rv').forEach((el) => rio.observe(el));
-  const navLinks = [...document.querySelectorAll('.nav .links a')];
-  const nio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) navLinks.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-45% 0px -50% 0px' });
-  document.querySelectorAll('main section[id]').forEach((s) => nio.observe(s));
 
   // The dock slides in once the hero is mostly out of view.
   const dock = $('#dock');

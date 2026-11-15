@@ -1,19 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CopyEmail from '../components/CopyEmail.astro';
 ---
 
 <BaseLayout>
 
 <nav class="nav" aria-label="Main">
   <a class="logo" href="#top">samak</a>
-  <div class="links">
-    <a href="#about">About</a>
-    <a href="#llumen">Llumen</a>
-    <a href="#experience">Experience</a>
-    <a href="#education">Education</a>
-    <a href="#projects">Projects</a>
-    <a href="#work">Case studies</a>
-    <a href="#play">Play</a>
+  <div class="gooey-nav links">
+    <div class="gooey-nav__stage">
+      <canvas class="gooey-nav__canvas" aria-hidden="true"></canvas>
+      <span class="gooey-nav__fallback" aria-hidden="true"></span>
+      <ul class="gooey-nav__list">
+        <li class="gooey-nav__item"><a class="gooey-nav__link" href="#about">About</a></li>
+        <li class="gooey-nav__item"><a class="gooey-nav__link" href="#experience">Experience</a></li>
+        <li class="gooey-nav__item"><a class="gooey-nav__link" href="#education">Education</a></li>
+        <li class="gooey-nav__item"><a class="gooey-nav__link" href="#projects">Projects</a></li>
+      </ul>
+      <ul class="gooey-nav__list gooey-nav__list--active" aria-hidden="true">
+        <li class="gooey-nav__item"><span class="gooey-nav__link">About</span></li>
+        <li class="gooey-nav__item"><span class="gooey-nav__link">Experience</span></li>
+        <li class="gooey-nav__item"><span class="gooey-nav__link">Education</span></li>
+        <li class="gooey-nav__item"><span class="gooey-nav__link">Projects</span></li>
+      </ul>
+    </div>
   </div>
   <a class="pill-btn" href="/ahmed-samak-cv.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 21h14"/></svg>CV</a>
 </nav>
@@ -30,10 +40,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
       <h1>Ahmed Samak</h1>
       <blockquote class="tagline">“Jack of all trades, master of none. Did the LLM revolution just flip that and put <em>generalists in power?</em>”<a class="src" href="https://x.com/samak997/status/2050335855697613014" target="_blank" rel="noopener">from my article on X ↗</a></blockquote>
-      <p class="lede">I lead the delivery team for <a href="https://www.linkedin.com/posts/pixonal_llumen-the-agentic-geo-intelligence-platform-activity-7526623550733115392-y97I" target="_blank" rel="noopener"><b>Llumen</b></a>, a decision intelligence platform, and work on site with government clients as a <a href="https://www.linkedin.com/posts/pixonal_llumen-the-agentic-geo-intelligence-platform-activity-7526623550733115392-y97I" target="_blank" rel="noopener"><b>Forward Deployed Engineer</b></a>. 6+ years across web platforms, 2D/3D graphics, FDA-approved C++ software and games.</p>
+      <p class="lede">I lead the delivery team for <a href="https://www.linkedin.com/posts/pixonal_llumen-the-agentic-geo-intelligence-platform-activity-7526623550733115392-y97I" target="_blank" rel="noopener"><b>Llumen</b></a>, a decision intelligence platform, and work on site with government clients as a <b>Forward Deployed Engineer</b>. 6+ years across web platforms, 2D/3D graphics, FDA-approved C++ software and games.</p>
       <div class="ctas">
         <a class="btn" href="/ahmed-samak-cv.pdf" target="_blank" rel="noopener"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 21h14"/></svg>Download CV</b><span>PDF</span></a>
-        <button class="btn ghost copy-email" type="button"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><i class="lbl">Copy email</i></b></button>
+        <CopyEmail />
         <div class="socials"><a href="https://www.linkedin.com/in/samak97/" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/samak97" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/samak997" target="_blank" rel="noopener">X</a></div>
       </div>
     </div>
@@ -355,14 +365,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </main>
 
 <footer id="contact">
+  <div class="hang" id="hang">
+    <img src="/me-wide.jpg" alt="Portrait of Ahmed Samak" loading="lazy" decoding="async">
+    <span class="hint">drag me · tap to flip</span>
+  </div>
   <div class="wrap">
     <div class="hello rv">
       <div>
         <h2>Let's build something <em>fast &amp; beautiful.</em></h2>
         <p>Hiring, freelance work, or a hard rendering problem? My inbox is open.</p>
-        <div class="mail"><code id="email">asamak1997@gmail.com</code><button class="btn small copy-email" type="button"><b><i class="lbl">Copy email</i></b></button></div>
+        <div class="mail"><code id="email">asamak1997@gmail.com</code><CopyEmail /></div>
       </div>
-      <img src="/me-wide.jpg" alt="Portrait of Ahmed Samak" loading="lazy" decoding="async">
     </div>
     <div class="flinks">
       <nav aria-label="Elsewhere">
@@ -389,4 +402,5 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <script>
   import '../scripts/site.js';
+  import '../scripts/effects.js';
 </script>

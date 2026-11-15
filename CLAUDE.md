@@ -10,10 +10,18 @@ This file carries the project context between machines — keep it up to date wh
     case studies with the GPU playground, game, contact) as plain markup.
   - `src/styles/global.css` — the styles; `src/scripts/site.js` — the dotted hero sky (real moon phase), the
     cursor gravity particles over it (brought back from the old site at Ahmed's request), the GPU
-    playground, copy-email buttons, the "Light up the city" game, nav highlight, the bottom dock and reveals.
+    playground, copy-email buttons, the "Light up the city" game, the bottom dock and reveals.
+  - `src/scripts/effects.js` wires in components from React Bits (reactbits.dev), ported to plain JS in
+    `src/scripts/rb/` (no React on the site): Glass Surface on the nav, dock and plain buttons, Gooey Nav (the nav
+    highlight), Bell Toggle (the "Copy email" buttons, markup in `src/components/CopyEmail.astro`), Fade Content
+    (every `.rv` block fades in from a blur; uses gsap), Magic Bento effects on every card and widget, Click Spark,
+    Gradual Blur at the bottom of the page, and the Lanyard badge in the footer (three.js, lazy-loaded near the footer).
+  - The hero sky in `site.js` also throws an occasional pixel lightning bolt down from the moon.
   - `src/layouts/BaseLayout.astro` — head, SEO meta and JSON-LD, fed by `src/data/profile.ts` and `skills.ts`.
   - Images in `public/`: `me-hero.jpg` (round portrait with the Pixonal logo, shown in black and white by CSS),
-    `me-wide.jpg` (footer), `me-avatar.jpg` (thread cards), `x-article.jpg` / `x-maclip.jpg` (X post images, self-hosted).
+    `me-wide.jpg` (footer fallback), `me-avatar.jpg` (thread cards), `x-article.jpg` / `x-maclip.jpg` (X post images,
+    self-hosted), `badge-front/back/strap.jpg` (the lanyard's textures, rendered from `scripts/badge.html`).
+  - `favicon.svg`: an italic S whose spine is a lightning zigzag, in the blue / red / yellow gradient.
 - `cv/` — `ahmed-samak-cv.tex` (source) and `ahmed-samak-cv.txt` (plain-text copy for paste-in forms).
   Layout modelled on a CV Ahmed liked: left-aligned name with italic title, icon contact grid, heavy section rules,
   date over location on the right, Projects with link + Tools line. Compiles on Overleaf (pdfLaTeX) or locally with
@@ -30,7 +38,8 @@ bun run dev       # local dev server
 bun run build     # static build into site/dist
 bun run preview   # serve the build (add --host to open it from a phone on the same Wi-Fi)
 sh scripts/gen-og.sh                 # render scripts/og.html into og.png (link preview); then bump ?v= in BaseLayout
-bun scripts/gen-images.ts            # regenerate the app icons from favicon.svg
+bun scripts/gen-images.ts            # regenerate the app icons from favicon.svg; then bump ?v= on the icon links
+sh scripts/gen-badge.sh              # render scripts/badge.html into the lanyard textures (badge-*.jpg)
 bun scripts/gen-photo.ts <photo.jpg> # regenerate the cropped portrait (me-320/640.webp, me.jpg)
 ```
 
@@ -65,6 +74,14 @@ Bun only (Ahmed prefers it; there was no Node on the Windows machine). Scripts a
 - CV Education: the degree is its own entry (title/university, dates/location) at the top; certifications follow, Azure AZ-104 last.
 - Reveola is left off the site for now.
 - Photos: hero = office photo with the PXNL logo, round and black and white; footer and thread avatars = the lakeside photo.
+- React Bits components he picked (Nov 2026): Lanyard (footer badge with his photo), Gooey Nav (top nav, kept at
+  the old size; links are About, Experience, Education, Projects only), Glass Surface (nav, dock and the plain
+  buttons; the gradient CTAs stay gradient), Bell Toggle (Copy email), Fade Content (reveals), Magic Bento effects
+  (all cards and widgets), Click Spark, Gradual Blur (page bottom). He tried Laser Flow between About and Llumen
+  and dropped it. He also wants the Accordion (React Bits "Accordion Gallery") added later; not placed yet.
+- Badge: front bar reads "FORWARD DEPLOYED" / "CODE WIZARD"; the back is only the logo and the site URL.
+- Lightning from the moon in the hero: simple and occasional (every 7–16 s), in the sky's own pixel style.
+- Only "Llumen" in the hero intro links to the LinkedIn post; "Forward Deployed Engineer" is plain bold text.
 
 ## Gotchas
 
@@ -74,13 +91,19 @@ Bun only (Ahmed prefers it; there was no Node on the Windows machine). Scripts a
 - X post text/images come from `https://cdn.syndication.twimg.com/tweet-result?id=<id>&token=a` (oEmbed returns nothing). Save post images into `public/` rather than hot-linking pbs.twimg.com; strip tracking params from post URLs.
 - Game links: `https://samak97.github.io/<Repo>/` (his other repos' GitHub Pages) — they coexist with this site on the same domain.
 - When previewing in Claude's browser pane, a hidden pane throttles animations and screenshots can be stale; verify with JS measurements.
+- `.badge` is already the pill label on the Llumen and thread images; the footer lanyard box is `.hang`. Check a class
+  name isn't taken before styling it globally.
+- The React Bits ports keep each component's engine as published and swap only the React wrapper for a mount
+  function, so a newer upstream version can be diffed against them. Glass Surface keeps only its SVG and
+  frosted modes, and Magic Bento only its card effects (not its grid).
 
 ## Open to-do
 
 1. Job slideshows: make the MedSoft project clickable → slideshow of product screenshots; maybe every job. Waiting on screenshots (check they're OK to show publicly).
 2. Maclip's repo is private, so its CV link 404s for readers: make it public or drop the link.
 3. Add Frazer (Rust headset app) as an X post once Ahmed posts it.
-4. Custom domain after friends' feedback: add `site/public/CNAME`, update the site URL in `astro.config.mjs`, `profile.ts`, `robots.txt`, and the OG image text (`scripts/og.html`).
+4. Accordion (React Bits Accordion Gallery, needs gsap): Ahmed wants it; where it goes is still to decide.
+5. Custom domain after friends' feedback: add `site/public/CNAME`, update the site URL in `astro.config.mjs`, `profile.ts`, `robots.txt`, and the OG image text (`scripts/og.html`).
 
 ## Working agreement
 
