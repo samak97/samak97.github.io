@@ -1,62 +1,338 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Modules from '../components/Modules.astro';
-import Changelog from '../components/Changelog.astro';
-import CaseStudies from '../components/CaseStudies.astro';
-import Playground from '../components/Playground.astro';
-import Arcade from '../components/Arcade.astro';
-import Threads from '../components/Threads.astro';
-import Certs from '../components/Certs.astro';
-import Contact from '../components/Contact.astro';
-import CommandPalette from '../components/CommandPalette.astro';
 ---
 
 <BaseLayout>
-  <div class="progress" aria-hidden="true"></div>
-  <Nav />
-  <div class="shell">
-    <main id="main" class="content">
-      <Hero />
-      <About />
-      <Modules />
-      <Changelog />
-      <CaseStudies />
-      <Threads />
-      <Certs />
-      <Playground />
-      <Arcade />
-      <Contact />
-    </main>
+
+<nav class="nav" aria-label="Main">
+  <a class="logo" href="#top">samak</a>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#projects">Projects</a>
+    <a href="#work">Case studies</a>
+    <a href="#play">Play</a>
   </div>
-  <CommandPalette />
+  <a class="pill-btn" href="/ahmed-samak-cv.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 21h14"/></svg>CV</a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="copy">
+      <div class="who">
+        <span class="ring"><img class="bw" src="/me-hero.jpg" alt="Ahmed Samak"></span>
+        <div><b>Senior Software Engineer &amp; Team Lead</b><span>Pixonal · Cairo ⇄ Dubai</span></div>
+      </div>
+      <h1>Ahmed Samak</h1>
+      <blockquote class="tagline">“Jack of all trades, master of none. Did the LLM revolution just flip that and put <em>generalists in power?</em>”<a class="src" href="https://x.com/samak997/status/2050335855697613014" target="_blank" rel="noopener">from my article on X ↗</a></blockquote>
+      <p class="lede">I lead the delivery team for <b>Llumen</b>, a decision intelligence platform, and work on site with government clients as a <b>Forward Deployed Engineer</b>. 6+ years across web platforms, 2D/3D graphics, FDA-approved C++ software and games.</p>
+      <div class="ctas">
+        <a class="btn" href="/ahmed-samak-cv.pdf" target="_blank" rel="noopener"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 21h14"/></svg>Download CV</b><span>PDF</span></a>
+        <button class="btn ghost copy-email" type="button"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><i class="lbl">Copy email</i></b></button>
+        <div class="socials"><a href="https://www.linkedin.com/in/samak97/" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/samak97" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/samak997" target="_blank" rel="noopener">X</a></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="sec" id="about">
+    <div class="wrap">
+      <div class="rv">
+        <p class="eyebrow">About</p>
+        <h2>An engineer who never <em>picked one lane.</em></h2>
+      </div>
+      <div class="about">
+        <div class="prose rv">
+          <p>I'm Ahmed. I started out making <strong>educational web games</strong>, moved into real-time 3D with <strong>Unreal Engine</strong>, spent nearly three years writing <strong>Modern C++ for FDA-approved surgical software</strong>, and then joined <strong>Pixonal</strong> to work on Llumen, a decision intelligence platform for government leaders.</p>
+          <p>I own Llumen's map and 2D/3D graphics, and I lead its <strong>delivery team</strong>. As a <strong>Forward Deployed Engineer</strong> I travel to client sites, run the requirement workshops, and get the platform running on anything from Azure Kubernetes clusters to servers with no internet at all.</p>
+          <p>The common thread: I like hard performance problems, clean architecture, and software people actually enjoy using.</p>
+        </div>
+        <dl class="facts rv">
+          <div><dt>role</dt><dd>Senior Engineer &amp; Delivery Team Lead<small>Pixonal</small></dd></div>
+          <div><dt>also</dt><dd>Forward Deployed Engineer<small>Government clients</small></dd></div>
+          <div><dt>based</dt><dd>Cairo ⇄ Dubai<small>Travels on site</small></dd></div>
+          <div><dt>next</dt><dd>AZ-104 Azure Administrator<small>In progress</small></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="experience">
+    <div class="wrap">
+      <div class="rv">
+        <p class="eyebrow">Experience</p>
+        <h2>Six years, <em>seven roles.</em></h2>
+      </div>
+      <div class="jobs rv">
+        <article class="job now"><span class="when">Feb 2026 – Present</span><div><h3>Senior Engineer &amp; Delivery Team Lead</h3><div class="at">Pixonal · Dubai, UAE</div><ul>
+          <li>Lead the delivery team for Llumen, Pixonal's decision intelligence platform that brings data, analytics, models and AI into one environment for government leaders in the UAE.</li>
+          <li>Forward Deployed Engineer for UAE government entities: run on-site meetings and requirement workshops, and turn operational needs into product features and configurations.</li>
+          <li>Deploy and operate the platform on Microsoft Azure (AKS, VMs, networking) with Kubernetes and Helm, and on air-gapped on-premise servers; redesigned secure team access to client environments without extra VMs, cutting infrastructure costs.</li></ul></div></article>
+        <article class="job"><span class="when">Jan 2025 – Feb 2026</span><div><h3>Senior Software Engineer</h3><div class="at">Pixonal · Sheikh Zayed, Egypt</div><ul>
+          <li>Own Llumen's map and 2D/3D graphics; re-engineered map rendering with GPU instancing and custom shaders, making it more than 100x faster: over 1 million markers render smoothly, where it previously struggled at 100K.</li>
+          <li>Built the stories, whiteboards and dashboards system that government decision-makers use, with complex components and interactive map visualizations.</li>
+          <li>Built a scalable 3D GeoJSON visualization library on Mapbox and Three.js, and Go and Python microservices for data ingestion and LLM-based analysis.</li></ul></div></article>
+        <article class="job"><span class="when">Apr 2022 – Dec 2024</span><div><h3>Senior Software Engineer</h3><div class="at">MedSoft · Cairo, Egypt (Hybrid)</div><ul>
+          <li>Worked on PPDS, FDA-approved software for simulating orthognathic surgery, now owned by Johnson &amp; Johnson: six plugins that let surgeons simulate the operation and generate surgical guides, plates and screws.</li>
+          <li>Re-designed screw placement and editing into a reusable widget, saving about 20% of development time in following sprints.</li>
+          <li>Built bridge classes between Qt/QML and the C++ back-end, and worked with teams in the USA and India using Scrum.</li></ul></div></article>
+        <article class="job"><span class="when">Sep 2022 – Feb 2023</span><div><h3>Senior Front-End Software Engineer</h3><div class="at">Bld.ai · USA (Remote)</div><ul>
+          <li>Built responsive web and mobile interfaces in React and React Native, integrating APIs with the design and back-end teams.</li></ul></div></article>
+        <article class="job"><span class="when">Aug 2021 – May 2022</span><div><h3>Unreal Engine Developer</h3><div class="at">Archrete · New Cairo, Egypt</div><ul>
+          <li>Worked on iMaket, a real-time simulation product for major architectural projects in the Middle East, building Unreal Engine 5 plugins in C++ exposed as Blueprints.</li></ul></div></article>
+        <article class="job"><span class="when">Aug 2020 – Aug 2021</span><div><h3>JavaScript Game Developer</h3><div class="at">ElMoasserBooks · Cairo, Egypt</div><ul>
+          <li>Developed educational web games with designers and writers, optimized to run smoothly on phones and laptops.</li></ul></div></article>
+        <article class="job"><span class="when">2020 – Present</span><div><h3>Freelance Interactive Web &amp; Game Developer</h3><div class="at">Self-employed · Remote</div><ul>
+          <li>Animated 2D web games for educational and commercial clients, and Three.js real estate pitching apps that let sales teams present properties on any device.</li></ul></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="education">
+    <div class="wrap">
+      <div class="rv">
+        <p class="eyebrow">Education</p>
+        <h2>Education &amp; <em>certifications.</em></h2>
+      </div>
+      <div class="two">
+        <div class="rv">
+          <h3>Degree</h3>
+          <ul class="list">
+            <li><div>B.Sc. in Computer Science<small>Menofia University, Egypt</small></div><span>2015 – 2019</span></li>
+            <li><div>Co-Founder &amp; Instructor, ICPC team<small>Menofia University</small></div><span>2017 – 2019</span></li>
+            <li><div>Pixie, graduation project<small>Team lead</small></div><span>2019</span></li>
+          </ul>
+        </div>
+        <div class="rv">
+          <h3>Certifications</h3>
+          <ul class="list">
+            <li><div>IELTS Academic, band 7.5 (C1)</div><span>May 2026</span></li>
+            <li><div>TOEFL iBT, score 95</div><span>Jan 2020</span></li>
+            <li><div>ITIDA Next Technology Leaders<small>5 courses, Smart Village</small></div><span></span></li>
+            <li><div>Game Design and Development<small>Michigan State University (Coursera)</small></div><span>2018</span></li>
+            <li><div>Azure Administrator Associate (AZ-104)</div><span>In progress</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="skills">
+    <div class="wrap">
+      <div class="rv">
+        <p class="eyebrow">Skills</p>
+        <h2>What I <em>work with.</em></h2>
+      </div>
+      <div class="skills rv">
+        <div class="skill"><h3>Web &amp; Cloud</h3><div><p>Full-stack platforms from Go and Python microservices to React front-ends, shipped every two weeks to Azure and to air-gapped servers.</p><p class="stack">TypeScript · React · Next.js · Go · Python · PostgreSQL · Docker · Kubernetes · Helm · Azure</p></div></div>
+        <div class="skill"><h3>Graphics &amp; Data Viz</h3><div><p>Every map and every 2D and 3D visual in Llumen. I care about frames per second the way others care about uptime.</p><p class="stack">Three.js · WebGL · GLSL shaders · GPU instancing · Mapbox · GeoJSON</p></div></div>
+        <div class="skill"><h3>C++ &amp; Medical</h3><div><p>Modern C++ on desktop software where performance and correctness are not optional, including FDA-approved surgical planning.</p><p class="stack">C++17 · Qt/QML · VTK · CMake · Unreal Engine 5</p></div></div>
+        <div class="skill"><h3>Games</h3><div><p>Where it all started: educational and commercial web games, real estate sims, and Unity and Unreal projects.</p><p class="stack">JavaScript · CreateJS · Three.js · Tween.js · Unity · Unreal Engine</p></div></div>
+        <div class="skill"><h3>AI &amp; LLMs</h3><div><p>LLM-powered analysis in the product, and AI-assisted development in my daily workflow.</p><p class="stack">LLMs · MCP · Claude Code · Cursor · Python</p></div></div>
+        <div class="skill"><h3>Leadership</h3><div><p>Leading a delivery team, running client workshops, mentoring, code review, hiring and sprint planning.</p><p class="stack">Team leadership · Client requirements · Stakeholder management · Agile &amp; Scrum</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="projects">
+    <div class="wrap">
+      <div class="rv">
+        <p class="eyebrow">Projects</p>
+        <h2>Built on <em>my own time.</em></h2>
+      </div>
+      <div class="projects">
+        <article class="card proj rv">
+          <h3>Frazer<small>Oct 2026</small></h3>
+          <p>A Windows tray app that drives Razer wireless headsets directly over USB, replacing a dozen background processes with one small app. 10-band EQ on a live curve, mic control, live battery status and a per-app volume mixer. Open source.</p>
+          <p class="tools">Rust · Tauri · TypeScript · USB HID</p>
+          <a class="go" href="https://github.com/samak97/Frazer" target="_blank" rel="noopener">View on GitHub →</a>
+        </article>
+        <article class="card proj rv">
+          <h3>Maclip<small>Apr 2026</small></h3>
+          <p>A native macOS clipboard manager: history with pins, collections and search, passwords in the Keychain behind Touch ID, and shell history pasted and run in one keystroke. No cloud, no telemetry.</p>
+          <p class="tools">Swift · SwiftUI · Keychain</p>
+          <a class="go" href="https://x.com/samak997/status/2049285813989486842" target="_blank" rel="noopener">See it on X →</a>
+        </article>
+        <article class="card proj rv">
+          <h3>Solar System</h3>
+          <p>A Unity 3D simulation with relatively accurate planet distances. Focus the camera on any body and change orbit speeds.</p>
+          <p class="tools">Unity · C# · WebGL</p>
+          <a class="go" href="https://samak97.github.io/Solar-System-Simulation/" target="_blank" rel="noopener">Play in the browser →</a>
+        </article>
+        <article class="card proj rv">
+          <h3>Pixie<small>Graduation</small></h3>
+          <p>An Android app that scans paper and reads it aloud through voice commands, to help visually impaired people. I led the team.</p>
+          <p class="tools">Java · Android</p>
+        </article>
+      </div>
+      <p class="more rv"><span>More games</span><a href="https://samak97.github.io/Ben-s-Rent/" target="_blank" rel="noopener">Ben's Rent</a><a href="https://samak97.github.io/Sparty-Bros-Adventures/" target="_blank" rel="noopener">Super Sparty Adventures</a><a href="https://samak97.github.io/Box-Shooter/" target="_blank" rel="noopener">Box Shooter</a><a href="https://samak97.github.io/Mad-Ball/" target="_blank" rel="noopener">Mad Ball</a></p>
+
+    </div>
+  </section>
+
+  <section class="sec" id="writing">
+    <div class="wrap">
+      <div class="rv">
+        <p class="eyebrow">Writing</p>
+        <h2>Threads, <em>from X.</em></h2>
+        <p class="sub">Side projects, experiments, and thoughts on engineering.</p>
+      </div>
+      <div class="threads">
+        <a class="card thread rv" href="https://x.com/samak997/status/2050335855697613014" target="_blank" rel="noopener">
+          <div class="media"><img src="/x-article.jpg" alt="" loading="lazy" decoding="async"><span class="badge">Article</span></div>
+          <div class="tb">
+            <div class="who2"><img src="/me-avatar.jpg" alt="" loading="lazy" decoding="async"><div><b>Ahmed Samak</b><small>@samak997 · May 1, 2026</small></div><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></div>
+            <h4>Jack of all trades, master of none. Did the LLM revolution just flip that and put generalists in power?</h4>
+            <p>If you're a fellow perfectionist, chances are you too have skipped projects and killed ideas without even trying, just because of how agonizing building them would be…</p>
+            <span class="cta">Read the article ↗</span>
+          </div>
+        </a>
+        <a class="card thread rv" href="https://x.com/samak997/status/2049285813989486842" target="_blank" rel="noopener">
+          <div class="media"><img src="/x-maclip.jpg" alt="" loading="lazy" decoding="async"><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+          <div class="tb">
+            <div class="who2"><img src="/me-avatar.jpg" alt="" loading="lazy" decoding="async"><div><b>Ahmed Samak</b><small>@samak997 · Apr 29, 2026</small></div><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></div>
+            <p>First time messing with Swift &amp; macOS apps. Since all the nice Mac clipboard apps are paid, I decided to make my own and snuck in a few extra features :3<br>AI definitely carried me coding a new language; built this in a few hours. I love it.</p>
+            <span class="cta">Watch on X ↗</span>
+          </div>
+        </a>
+      </div>
+      <a class="card follow rv" href="https://x.com/samak997" target="_blank" rel="noopener me"><span class="xi"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></span><span><b>Follow @samak997</b><small>More threads live on X. Come say hi.</small></span><span class="arr" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="rv">
+        <p class="eyebrow">Case studies</p>
+        <h2>The problem, what I did, <em>what happened.</em></h2>
+        <p class="sub">Details kept client-safe.</p>
+      </div>
+      <div class="cases">
+        <article class="card case rv">
+          <span class="kick">Llumen · Graphics</span>
+          <h3>From 100K to 1M+ markers</h3>
+          <dl><div><dt>Problem</dt><dd>Government dashboards needed huge point datasets on a live map. Past ~100K markers, the map stuttered and froze.</dd></div>
+          <div><dt>What I did</dt><dd>Moved marker rendering to the GPU: one instanced draw call with custom shaders, instead of one object per marker.</dd></div>
+          <div><dt>Result</dt><dd class="res">More than 100x faster. Over a million markers pan and zoom smoothly.</dd></div></dl>
+          <ul class="tags"><li>WebGL</li><li>Instancing</li><li>GLSL</li><li>Mapbox</li><li>Three.js</li></ul>
+        </article>
+        <article class="card case rv">
+          <span class="kick">Llumen · Forward Deployed</span>
+          <h3>Shipping to servers with no internet</h3>
+          <dl><div><dt>Problem</dt><dd>Government clients run Llumen on premise, some fully air-gapped, while the product ships every two weeks with big changes.</dd></div>
+          <div><dt>What I did</dt><dd>Kubernetes and Helm releases that run the same on Azure and on offline servers, plus on-site work to fix network and deployment issues.</dd></div>
+          <div><dt>Result</dt><dd class="res">Regular releases reaching cloud and offline environments alike, and secure team access without extra VMs.</dd></div></dl>
+          <ul class="tags"><li>Kubernetes</li><li>Helm</li><li>Azure</li><li>Air-gapped</li></ul>
+        </article>
+        <article class="card case rv">
+          <span class="kick">MedSoft · Medical</span>
+          <h3>Surgery, simulated in C++</h3>
+          <dl><div><dt>Problem</dt><dd>Surgeons needed to plan orthognathic surgery and produce patient-specific hardware before entering the operating room.</dd></div>
+          <div><dt>What I did</dt><dd>Six C++/VTK/Qt plugins covering each procedure step, including a reusable screw placement widget shared across plugins.</dd></div>
+          <div><dt>Result</dt><dd class="res">FDA-approved software, now owned by Johnson &amp; Johnson. The widget cut about 20% of dev time in later sprints.</dd></div></dl>
+          <ul class="tags"><li>C++17</li><li>VTK</li><li>Qt/QML</li><li>FDA</li></ul>
+        </article>
+        <article class="card case rv">
+          <span class="kick">Archrete · Real-time 3D</span>
+          <h3>Walk through it before it's built</h3>
+          <dl><div><dt>Problem</dt><dd>Major architectural projects needed real-time, interactive presentations of buildings that did not exist yet.</dd></div>
+          <div><dt>What I did</dt><dd>Unreal Engine 5 plugins in C++, exposed as Blueprints so artists could extend the simulations themselves.</dd></div>
+          <div><dt>Result</dt><dd class="res">iMaket simulations for large-scale developments, with blockers solved at the engine level.</dd></div></dl>
+          <ul class="tags"><li>Unreal Engine 5</li><li>C++</li><li>Blueprints</li></ul>
+        </article>
+      </div>
+
+      <div class="win rv">
+        <div class="titlebar"><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div><div class="ttl">GPU playground · try it</div><button class="linkbtn" type="button" id="reset">reset</button></div>
+        <div class="winbody">
+          <aside class="side">
+            <div>
+              <h4>LAYERS</h4>
+              <label class="layer"><input type="checkbox" id="l0" checked>Coastline<small id="c0"></small></label>
+              <label class="layer"><input type="checkbox" id="l1" checked>Roads<small id="c1"></small></label>
+              <label class="layer"><input type="checkbox" id="l2" checked>Districts<small id="c2"></small></label>
+            </div>
+            <div>
+              <h4><label for="n">POINTS ON SCREEN</label></h4>
+              <div class="count" id="count">1,000,000</div>
+              <input type="range" id="n" min="0" max="100" value="100" aria-label="Number of points">
+            </div>
+            <p class="timing">Drawn in <b id="ms">–</b>. Drag to pan, double-click to zoom. This runs on your CPU; the real map renders on the GPU.</p>
+          </aside>
+          <div class="mapbox">
+            <canvas id="map" aria-label="Interactive density map of one million synthetic points"></canvas>
+            <div class="zoom"><button type="button" id="zin" aria-label="Zoom in">+</button><button type="button" id="zout" aria-label="Zoom out">−</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="play">
+    <div class="wrap">
+      <div class="rv">
+        <p class="eyebrow">Arcade</p>
+        <h2>Light up <em>the city.</em></h2>
+        <p class="sub">Catch the falling sparks with the boat. Each one switches on a few windows.</p>
+      </div>
+      <div class="game rv">
+        <canvas id="game" tabindex="0" aria-label="Game: steer a boat to catch falling sparks and light up a city skyline"></canvas>
+        <div class="hud">
+          <div>Lit <b id="litpct">0%</b></div>
+          <div>Time <b id="time">0.0s</b></div>
+          <div>Best <b id="best">–</b></div>
+        </div>
+        <div class="gstart" id="gstart">Move here to start</div>
+        <div class="gwin" id="gwin" hidden>
+          <div>
+            <h3>The city's <em>lit.</em></h3>
+            <p id="wintext"></p>
+            <button class="btn" type="button" id="again"><b>Play again</b></button>
+          </div>
+        </div>
+      </div>
+      <p class="howto">Move the mouse or drag to steer, or use <kbd>←</kbd> <kbd>→</kbd>.</p>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="hello rv">
+      <div>
+        <h2>Let's build something <em>fast &amp; beautiful.</em></h2>
+        <p>Hiring, freelance work, or a hard rendering problem? My inbox is open.</p>
+        <div class="mail"><code id="email">asamak1997@gmail.com</code><button class="btn small copy-email" type="button"><b><i class="lbl">Copy email</i></b></button></div>
+      </div>
+      <img src="/me-wide.jpg" alt="Portrait of Ahmed Samak" loading="lazy" decoding="async">
+    </div>
+    <div class="flinks">
+      <nav aria-label="Elsewhere">
+        <a href="/ahmed-samak-cv.pdf" target="_blank" rel="noopener">CV</a>
+        <a href="https://www.linkedin.com/in/samak97/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/samak97" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://x.com/samak997" target="_blank" rel="noopener">X</a>
+      </nav>
+      <span>© 2026 Ahmed Samak</span>
+    </div>
+  </div>
+</footer>
+
+<div class="dock" id="dock" aria-label="Quick links">
+  <a href="/ahmed-samak-cv.pdf" target="_blank" rel="noopener" data-tip="Download CV" aria-label="Download CV"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></a>
+  <button class="copy-email" type="button" data-tip="Copy email" aria-label="Copy email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></button>
+  <a href="https://www.linkedin.com/in/samak97/" target="_blank" rel="noopener" data-tip="LinkedIn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM10 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.73 0-2 1.35-2 2.75V21h-4z"/></svg></a>
+  <a href="https://github.com/samak97" target="_blank" rel="noopener" data-tip="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg></a>
+  <a href="#play" data-tip="Play" aria-label="Jump to the game"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11.5" r=".8" fill="currentColor"/><circle cx="18" cy="13.5" r=".8" fill="currentColor"/></svg></a>
+  <span class="sep" aria-hidden="true"></span>
+  <a href="#top" data-tip="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+</div>
 </BaseLayout>
 
 <script>
-  import '../scripts/main';
+  import '../scripts/site.js';
 </script>
-
-<style>
-  .progress {
-    position: fixed;
-    inset: 0 0 auto 0;
-    height: 3px;
-    z-index: 70;
-    background: linear-gradient(90deg, var(--c-web), var(--c-gfx), var(--c-game));
-    transform-origin: left;
-    transform: scaleX(var(--p, 0));
-  }
-  .content {
-    width: 100%;
-    max-width: calc(var(--content-w) + 2 * var(--gutter));
-    margin: 0 auto;
-    padding: 0 var(--gutter);
-  }
-  @media (min-width: 1100px) {
-    .shell {
-      padding-left: var(--sidebar-w);
-    }
-  }
-</style>

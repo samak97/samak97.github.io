@@ -1,7 +1,4 @@
 ---
-import '@fontsource-variable/inter';
-import '@fontsource-variable/space-grotesk';
-import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import { profile } from '../data/profile';
 import { modules } from '../data/skills';
@@ -50,7 +47,10 @@ const personLd = {
     <link rel="canonical" href={canonical} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
 
-    <meta name="theme-color" content="#0a0c10" />
+    <meta name="theme-color" content="#090b10" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -76,17 +76,6 @@ const personLd = {
     <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
-
-    <!-- Motion flags before first paint. The site always opens in dark mode (data-theme above); the toggle lasts for the visit only. -->
-    <script is:inline>
-      (function () {
-        var d = document.documentElement;
-        d.classList.add('js');
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion');
-        // Safety net: never leave content hidden if animations fail to start.
-        setTimeout(function () { if (!window.__motionReady) d.classList.remove('motion'); }, 3500);
-      })();
-    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
