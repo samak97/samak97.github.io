@@ -1,11 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#5eead4"/>
-      <stop offset=".6" stop-color="#7c9cff"/>
-      <stop offset="1" stop-color="#a78bfa"/>
+      <stop offset="0" stop-color="#6f9bff"/>
+      <stop offset=".55" stop-color="#ff5e7e"/>
+      <stop offset="1" stop-color="#ffc35c"/>
     </linearGradient>
+    <mask id="m">
+      <rect width="64" height="64" fill="#fff"/>
+      <circle cx="25" cy="25" r="17" fill="#000"/>
+    </mask>
   </defs>
-  <rect width="64" height="64" rx="16" fill="url(#g)"/>
-  <text x="32" y="42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="800" fill="#04201c">AS</text>
+  <rect width="64" height="64" rx="16" fill="#0d1017"/>
+  <circle cx="34" cy="33" r="19" fill="url(#g)" mask="url(#m)"/>
+  <circle cx="16" cy="47" r="2" fill="#e8ecf4"/>
+  <circle cx="50" cy="13" r="1.5" fill="#e8ecf4" opacity=".7"/>
 </svg>

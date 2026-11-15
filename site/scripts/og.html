@@ -1,0 +1,49 @@
+<!doctype html>
+<!-- Template for public/og.png, the link-preview image (1200×630). Render it with scripts/gen-og.sh. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400..700&family=Geist+Mono:wght@500&display=block" rel="stylesheet">
+<style>
+  :root { --grad: linear-gradient(100deg, #6f9bff 0%, #ff5e7e 52%, #ffc35c 100%); }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #090b10; color: #e8ecf4; font-family: 'Geist', sans-serif; }
+  .aurora i { position: absolute; width: 620px; height: 620px; border-radius: 50%; filter: blur(110px); }
+  .aurora i:nth-child(1) { background: #3f6bff; right: 120px; top: -220px; opacity: .45; }
+  .aurora i:nth-child(2) { background: #ff3d6a; right: -160px; top: 120px; opacity: .32; }
+  .aurora i:nth-child(3) { background: #ffb534; right: 300px; top: 330px; opacity: .2; }
+  canvas { position: absolute; inset: 0; image-rendering: pixelated; }
+  .card { position: absolute; left: 80px; top: 92px; right: 80px; }
+  .who { display: flex; align-items: center; gap: 22px; }
+  .ring { padding: 3px; border-radius: 50%; background: var(--grad); line-height: 0; }
+  .ring img { width: 112px; height: 112px; border-radius: 50%; border: 3px solid #090b10; object-fit: cover; filter: grayscale(1) contrast(1.05); }
+  .who b { display: block; font-size: 30px; font-weight: 600; }
+  .who span { font: 500 22px 'Geist Mono', monospace; color: #8b93a6; }
+  h1 { font: 400 156px/1 'Instrument Serif', serif; letter-spacing: -.015em; margin: 34px 0 10px; }
+  p { font: 400 40px/1.25 'Instrument Serif', serif; color: #d5dbe8; margin: 0; }
+  em { font-style: italic; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .05em; }
+  .url { position: absolute; left: 80px; bottom: 56px; font: 600 26px 'Geist', sans-serif; color: #0a0d18; background: var(--grad); padding: 12px 26px; border-radius: 999px; }
+</style>
+</head>
+<body>
+  <div class="aurora"><i></i><i></i><i></i></div>
+  <canvas id="sky" width="600" height="315" style="width:1200px;height:630px"></canvas>
+  <div class="card">
+    <div class="who"><span class="ring"><img src="../public/me-hero.jpg" alt=""></span><div><b>Senior Software Engineer &amp; Team Lead</b><span>Pixonal · Cairo ⇄ Dubai</span></div></div>
+    <h1>Ahmed Samak</h1>
+    <p>Data platforms, 2D/3D graphics and <em>on-site delivery.</em></p>
+  </div>
+  <div class="url">samak97.github.io</div>
+<script>
+  // A few stars and a dotted crescent moon, like the site's hero.
+  const c = document.getElementById('sky').getContext('2d');
+  let s = 7; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  c.fillStyle = 'rgba(228,232,246,.85)';
+  for (let i = 0; i < 160; i++) { const x = (r() * 300 | 0) * 2, y = (r() * 157 | 0) * 2; if (x < 330 && y > 40) continue; c.fillRect(x, y, 1, 1); }
+  const mx = 500, my = 70, mr = 26;
+  c.fillStyle = '#e8e9f0';
+  for (let y = -mr; y <= mr; y += 2) for (let x = -mr; x <= mr; x += 2) {
+    if (x * x + y * y < mr * mr && (x + mr * .55) ** 2 + (y - mr * .1) ** 2 > (mr * .9) ** 2) c.fillRect(mx + x, my + y, 2, 2);
+  }
+</script>
+</body>
+</html>

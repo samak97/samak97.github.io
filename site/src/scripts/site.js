@@ -100,6 +100,75 @@
   hero.addEventListener('pointermove', (e) => { const b = hero.getBoundingClientRect(); ptr = { x: (e.clientX - b.left) / 4, y: (e.clientY - b.top) / 4 }; dirty = true; });
   hero.addEventListener('pointerleave', () => { ptr = { x: -1e4, y: -1e4 }; dirty = true; });
 
+  // ---------- hero: drifting particles that fall into the pointer's gravity well ----------
+  // Particles drift and link up when close; near the pointer they are pulled in and swirl
+  // around it, and a hard core pushes them back out so they orbit instead of collapsing.
+  const grav = $('#gravity'), gctx2 = grav.getContext('2d');
+  const coarse = matchMedia('(pointer: coarse)').matches;
+  const GCOL = ['#7ea2ff', '#ff6b8b', '#ffc35c'], LINK = 120, WELL = coarse ? 200 : 280, CORE = 64, MAX_SPEED = 3;
+  let gw = 0, gh = 0, parts = [];
+  const well = { x: -9999, y: -9999 };
+  function sizeGravity() {
+    const dpr = Math.min(devicePixelRatio || 1, coarse ? 1.5 : 2);
+    gw = hero.clientWidth; gh = hero.clientHeight;
+    grav.width = Math.round(gw * dpr); grav.height = Math.round(gh * dpr); gctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.round(Math.min(110, (gw * gh) / (coarse ? 16000 : 11000)));
+    parts = Array.from({ length: n }, () => ({ x: Math.random() * gw, y: Math.random() * gh, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, r: Math.random() * 1.6 + .8, c: (Math.random() * 3) | 0 }));
+  }
+  function drawGravity() {
+    const c = gctx2, active = well.x > -999;
+    c.clearRect(0, 0, gw, gh);
+    if (active) {
+      const g = c.createRadialGradient(well.x, well.y, 0, well.x, well.y, WELL * .6);
+      g.addColorStop(0, 'rgba(126,162,255,.14)'); g.addColorStop(1, 'rgba(126,162,255,0)');
+      c.fillStyle = g; c.fillRect(well.x - WELL, well.y - WELL, WELL * 2, WELL * 2);
+    }
+    for (const p of parts) {
+      if (active) {
+        const dx = well.x - p.x, dy = well.y - p.y, d = Math.hypot(dx, dy) || 1;
+        if (d < WELL) {
+          const pull = d < CORE ? -.09 : (1 - d / WELL) * .07;
+          p.vx += (dx / d) * pull + (-dy / d) * .012; p.vy += (dy / d) * pull + (dx / d) * .012;
+        }
+      }
+      const sp = Math.hypot(p.vx, p.vy);
+      if (sp > MAX_SPEED) { p.vx *= MAX_SPEED / sp; p.vy *= MAX_SPEED / sp; }
+      // Ease back to a lazy drift once the pointer leaves.
+      if (sp > .35) { const damp = active ? .985 : .97; p.vx *= damp; p.vy *= damp; }
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > gw) p.vx *= -1;
+      if (p.y < 0 || p.y > gh) p.vy *= -1;
+      p.x = clamp(p.x, 0, gw); p.y = clamp(p.y, 0, gh);
+    }
+    c.lineWidth = 1;
+    if (active) {
+      c.strokeStyle = GCOL[0];
+      for (const p of parts) {
+        const d = Math.hypot(well.x - p.x, well.y - p.y);
+        if (d < WELL * .6) { c.globalAlpha = (1 - d / (WELL * .6)) * .45; c.beginPath(); c.moveTo(well.x, well.y); c.lineTo(p.x, p.y); c.stroke(); }
+      }
+    }
+    for (let i = 0; i < parts.length; i++) for (let j = i + 1; j < parts.length; j++) {
+      const a = parts[i], b = parts[j], dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
+      if (d2 < LINK * LINK) { c.globalAlpha = (1 - Math.sqrt(d2) / LINK) * .3; c.strokeStyle = GCOL[a.c]; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke(); }
+    }
+    c.globalAlpha = .9;
+    for (const p of parts) { c.fillStyle = GCOL[p.c]; c.beginPath(); c.arc(p.x, p.y, p.r, 0, 6.283); c.fill(); }
+    c.globalAlpha = 1;
+  }
+  // Tracked on the window so the well follows the pointer to the screen edges; on touch it lets go when the finger lifts.
+  const setWell = (e) => {
+    const b = grav.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top;
+    if (x < 0 || y < 0 || x > b.width || y > b.height) { well.x = well.y = -9999; return; }
+    well.x = x; well.y = y;
+  };
+  const clearWell = () => { well.x = well.y = -9999; };
+  addEventListener('pointermove', setWell, { passive: true });
+  addEventListener('pointerdown', setWell, { passive: true });
+  addEventListener('pointerup', (e) => { if (e.pointerType === 'touch') clearWell(); });
+  addEventListener('pointercancel', clearWell);
+  document.documentElement.addEventListener('pointerleave', clearWell);
+
   // ---------- GPU playground: up to a million points, splatted into a pixel buffer ----------
   const N = 1000000, P = new Float32Array(N * 2), CL = new Uint8Array(N), classCount = [0, 0, 0];
   const coast = (x) => .2 + x * .5 + Math.sin(x * 9) * .03;
@@ -319,6 +388,7 @@
   let lastSky = 0;
   function frame(now) {
     if (vis.hero && (dirty || (!reduce && now - lastSky > 50))) { drawSky(now); lastSky = now; dirty = false; }
+    if (vis.hero && !reduce && !document.hidden) drawGravity();
     if (G) { if (vis.game) stepGame(now); else G.last = now; }
     requestAnimationFrame(frame);
   }
@@ -326,7 +396,7 @@
   let lastW = 0;
   function layout() {
     const w = innerWidth; if (w === lastW) return; lastW = w;
-    buildSky(); sizeMap(); newGame();
+    buildSky(); sizeGravity(); sizeMap(); newGame();
   }
   layout();
   document.fonts && document.fonts.ready.then(() => { lastW = 0; layout(); });

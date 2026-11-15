@@ -14,7 +14,8 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL('/og.png', Astro.site).href;
+// The version query makes chat apps fetch the image again instead of reusing an old cached preview; bump it when og.png changes.
+const ogImage = new URL('/og.png?v=2', Astro.site).href;
 
 const personLd = {
   '@context': 'https://schema.org',

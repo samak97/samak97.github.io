@@ -8,7 +8,8 @@ This file carries the project context between machines — keep it up to date wh
 - `site/` — the Astro app (static output), one page:
   - `src/pages/index.astro` — all the page content (hero, about, experience, education, skills, projects, threads,
     case studies with the GPU playground, game, contact) as plain markup.
-  - `src/styles/global.css` — the styles; `src/scripts/site.js` — the dotted hero sky (real moon phase), the GPU
+  - `src/styles/global.css` — the styles; `src/scripts/site.js` — the dotted hero sky (real moon phase), the
+    cursor gravity particles over it (brought back from the old site at Ahmed's request), the GPU
     playground, copy-email buttons, the "Light up the city" game, nav highlight, the bottom dock and reveals.
   - `src/layouts/BaseLayout.astro` — head, SEO meta and JSON-LD, fed by `src/data/profile.ts` and `skills.ts`.
   - Images in `public/`: `me-hero.jpg` (round portrait with the Pixonal logo, shown in black and white by CSS),
@@ -28,7 +29,8 @@ bun install
 bun run dev       # local dev server
 bun run build     # static build into site/dist
 bun run preview   # serve the build (add --host to open it from a phone on the same Wi-Fi)
-bun scripts/gen-images.ts            # regenerate og.png + app icons
+sh scripts/gen-og.sh                 # render scripts/og.html into og.png (link preview); then bump ?v= in BaseLayout
+bun scripts/gen-images.ts            # regenerate the app icons from favicon.svg
 bun scripts/gen-photo.ts <photo.jpg> # regenerate the cropped portrait (me-320/640.webp, me.jpg)
 ```
 
@@ -72,7 +74,7 @@ Bun only (Ahmed prefers it; there was no Node on the Windows machine). Scripts a
 1. Job slideshows: make the MedSoft project clickable → slideshow of product screenshots; maybe every job. Waiting on screenshots (check they're OK to show publicly).
 2. Maclip's repo is private, so its CV link 404s for readers: make it public or drop the link.
 3. Add Frazer (Rust headset app) as an X post once Ahmed posts it.
-4. Custom domain after friends' feedback: add `site/public/CNAME`, update the site URL in `astro.config.mjs`, `profile.ts`, `robots.txt`, and the OG image text (`scripts/gen-images.ts`).
+4. Custom domain after friends' feedback: add `site/public/CNAME`, update the site URL in `astro.config.mjs`, `profile.ts`, `robots.txt`, and the OG image text (`scripts/og.html`).
 
 ## Working agreement
 
