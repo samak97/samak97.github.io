@@ -8,6 +8,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <a class="logo" href="#top">samak</a>
   <div class="links">
     <a href="#about">About</a>
+    <a href="#llumen">Llumen</a>
     <a href="#experience">Experience</a>
     <a href="#education">Education</a>
     <a href="#projects">Projects</a>
@@ -29,7 +30,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
       <h1>Ahmed Samak</h1>
       <blockquote class="tagline">“Jack of all trades, master of none. Did the LLM revolution just flip that and put <em>generalists in power?</em>”<a class="src" href="https://x.com/samak997/status/2050335855697613014" target="_blank" rel="noopener">from my article on X ↗</a></blockquote>
-      <p class="lede">I lead the delivery team for <b>Llumen</b>, a decision intelligence platform, and work on site with government clients as a <b>Forward Deployed Engineer</b>. 6+ years across web platforms, 2D/3D graphics, FDA-approved C++ software and games.</p>
+      <p class="lede">I lead the delivery team for <a href="https://www.linkedin.com/posts/pixonal_llumen-the-agentic-geo-intelligence-platform-activity-7526623550733115392-y97I" target="_blank" rel="noopener"><b>Llumen</b></a>, a decision intelligence platform, and work on site with government clients as a <a href="https://www.linkedin.com/posts/pixonal_llumen-the-agentic-geo-intelligence-platform-activity-7526623550733115392-y97I" target="_blank" rel="noopener"><b>Forward Deployed Engineer</b></a>. 6+ years across web platforms, 2D/3D graphics, FDA-approved C++ software and games.</p>
       <div class="ctas">
         <a class="btn" href="/ahmed-samak-cv.pdf" target="_blank" rel="noopener"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 21h14"/></svg>Download CV</b><span>PDF</span></a>
         <button class="btn ghost copy-email" type="button"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><i class="lbl">Copy email</i></b></button>
@@ -62,6 +63,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
+  <section class="sec" id="llumen">
+    <div class="wrap">
+      <div class="rv">
+        <p class="eyebrow">Latest project</p>
+        <h2>What I'm <em>working on.</em></h2>
+      </div>
+      <article class="card llumen rv">
+        <a class="media" href="https://www.linkedin.com/posts/pixonal_llumen-the-agentic-geo-intelligence-platform-activity-7526623550733115392-y97I" target="_blank" rel="noopener" aria-label="Watch the Llumen video on LinkedIn">
+          <img src="/llumen-video.jpg" alt="Llumen showing trip flows as 3D arcs over a city map" loading="lazy" decoding="async">
+          <span class="badge">▶ Watch on LinkedIn</span>
+        </a>
+        <div class="lb">
+          <span class="kick">At work · Pixonal</span>
+          <h3>Llumen</h3>
+          <p class="lead">The agentic geo-intelligence platform. It brings city data, infrastructure, digital twins and AI into one governed environment, so decision-makers can monitor, explore, simulate and decide how cities operate and evolve.</p>
+          <p><b>My part:</b> I lead Llumen's delivery team, deploying it on site for government clients on Azure and on servers with no internet, and I own its map and 2D/3D graphics.</p>
+          <ul class="tags"><li>Connect</li><li>Studio</li><li>Helix</li><li>Flow</li><li>Command</li></ul>
+          <div class="links"><a class="go" href="https://www.linkedin.com/posts/pixonal_llumen-the-agentic-geo-intelligence-platform-activity-7526623550733115392-y97I" target="_blank" rel="noopener">Watch the video ↗</a><a class="go" href="https://pixonal.com" target="_blank" rel="noopener">pixonal.com ↗</a></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <section class="sec" id="experience">
     <div class="wrap">
       <div class="rv">
@@ -69,23 +93,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h2>Six years, <em>seven roles.</em></h2>
       </div>
       <div class="jobs rv">
-        <article class="job now"><span class="when">Feb 2026 – Present</span><div><h3>Senior Engineer &amp; Delivery Team Lead</h3><div class="at">Pixonal · Dubai, UAE</div><ul>
+        <article class="job now"><span class="when">Feb 2026 – Present</span><div><h3>Senior Engineer &amp; Delivery Team Lead</h3><div class="at"><a href="https://www.pixonal.com/" target="_blank" rel="noopener">Pixonal<span aria-hidden="true"> ↗</span></a> · Dubai, UAE</div><ul>
           <li>Lead the delivery team for Llumen, Pixonal's decision intelligence platform that brings data, analytics, models and AI into one environment for government leaders in the UAE.</li>
           <li>Forward Deployed Engineer for UAE government entities: run on-site meetings and requirement workshops, and turn operational needs into product features and configurations.</li>
           <li>Deploy and operate the platform on Microsoft Azure (AKS, VMs, networking) with Kubernetes and Helm, and on air-gapped on-premise servers; redesigned secure team access to client environments without extra VMs, cutting infrastructure costs.</li></ul></div></article>
-        <article class="job"><span class="when">Jan 2025 – Feb 2026</span><div><h3>Senior Software Engineer</h3><div class="at">Pixonal · Sheikh Zayed, Egypt</div><ul>
+        <article class="job"><span class="when">Jan 2025 – Feb 2026</span><div><h3>Senior Software Engineer</h3><div class="at"><a href="https://www.pixonal.com/" target="_blank" rel="noopener">Pixonal<span aria-hidden="true"> ↗</span></a> · Sheikh Zayed, Egypt</div><ul>
           <li>Own Llumen's map and 2D/3D graphics; re-engineered map rendering with GPU instancing and custom shaders, making it more than 100x faster: over 1 million markers render smoothly, where it previously struggled at 100K.</li>
           <li>Built the stories, whiteboards and dashboards system that government decision-makers use, with complex components and interactive map visualizations.</li>
           <li>Built a scalable 3D GeoJSON visualization library on Mapbox and Three.js, and Go and Python microservices for data ingestion and LLM-based analysis.</li></ul></div></article>
-        <article class="job"><span class="when">Apr 2022 – Dec 2024</span><div><h3>Senior Software Engineer</h3><div class="at">MedSoft · Cairo, Egypt (Hybrid)</div><ul>
+        <article class="job"><span class="when">Apr 2022 – Dec 2024</span><div><h3>Senior Software Engineer</h3><div class="at"><a href="https://medsft.com/" target="_blank" rel="noopener">MedSoft<span aria-hidden="true"> ↗</span></a> · Cairo, Egypt (Hybrid)</div><ul>
           <li>Worked on PPDS, FDA-approved software for simulating orthognathic surgery, now owned by Johnson &amp; Johnson: six plugins that let surgeons simulate the operation and generate surgical guides, plates and screws.</li>
           <li>Re-designed screw placement and editing into a reusable widget, saving about 20% of development time in following sprints.</li>
           <li>Built bridge classes between Qt/QML and the C++ back-end, and worked with teams in the USA and India using Scrum.</li></ul></div></article>
-        <article class="job"><span class="when">Sep 2022 – Feb 2023</span><div><h3>Senior Front-End Software Engineer</h3><div class="at">Bld.ai · USA (Remote)</div><ul>
+        <article class="job"><span class="when">Sep 2022 – Feb 2023</span><div><h3>Senior Front-End Software Engineer</h3><div class="at"><a href="https://www.bld.ai/" target="_blank" rel="noopener">Bld.ai<span aria-hidden="true"> ↗</span></a> · USA (Remote)</div><ul>
           <li>Built responsive web and mobile interfaces in React and React Native, integrating APIs with the design and back-end teams.</li></ul></div></article>
-        <article class="job"><span class="when">Aug 2021 – May 2022</span><div><h3>Unreal Engine Developer</h3><div class="at">Archrete · New Cairo, Egypt</div><ul>
+        <article class="job"><span class="when">Aug 2021 – May 2022</span><div><h3>Unreal Engine Developer</h3><div class="at"><a href="https://archrete.com/" target="_blank" rel="noopener">Archrete<span aria-hidden="true"> ↗</span></a> · New Cairo, Egypt</div><ul>
           <li>Worked on iMaket, a real-time simulation product for major architectural projects in the Middle East, building Unreal Engine 5 plugins in C++ exposed as Blueprints.</li></ul></div></article>
-        <article class="job"><span class="when">Aug 2020 – Aug 2021</span><div><h3>JavaScript Game Developer</h3><div class="at">ElMoasserBooks · Cairo, Egypt</div><ul>
+        <article class="job"><span class="when">Aug 2020 – Aug 2021</span><div><h3>JavaScript Game Developer</h3><div class="at"><a href="https://www.gpseducation.com/" target="_blank" rel="noopener">ElMoasserBooks<span aria-hidden="true"> ↗</span></a> · Cairo, Egypt</div><ul>
           <li>Developed educational web games with designers and writers, optimized to run smoothly on phones and laptops.</li></ul></div></article>
         <article class="job"><span class="when">2020 – Present</span><div><h3>Freelance Interactive Web &amp; Game Developer</h3><div class="at">Self-employed · Remote</div><ul>
           <li>Animated 2D web games for educational and commercial clients, and Three.js real estate pitching apps that let sales teams present properties on any device.</li></ul></div></article>
@@ -103,7 +127,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="rv">
           <h3>Degree</h3>
           <ul class="list">
-            <li><div>B.Sc. in Computer Science<small>Menofia University, Egypt</small></div><span>2015 – 2019</span></li>
+            <li><div>B.Sc. in Computer Science<small><a href="https://www.menofia.edu.eg/Home/en" target="_blank" rel="noopener">Menofia University<span aria-hidden="true"> ↗</span></a>, Egypt</small></div><span>2015 – 2019</span></li>
             <li><div>Co-Founder &amp; Instructor, ICPC team<small>Menofia University</small></div><span>2017 – 2019</span></li>
             <li><div>Pixie, graduation project<small>Team lead</small></div><span>2019</span></li>
           </ul>
@@ -114,8 +138,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <li><div>Azure Administrator Associate (AZ-104)<small>Microsoft</small></div><span></span></li>
             <li><div>IELTS Academic, band 7.5 (C1)</div><span>May 2026</span></li>
             <li><div>TOEFL iBT, score 95</div><span>Jan 2020</span></li>
-            <li><div>ITIDA Next Technology Leaders<small>5 courses, Smart Village</small></div><span></span></li>
-            <li><div>Game Design and Development<small>Michigan State University (Coursera)</small></div><span>2018</span></li>
+            <li><div><a href="https://itida.gov.eg/English/Pages/default.aspx" target="_blank" rel="noopener">ITIDA Next Technology Leaders<span aria-hidden="true"> ↗</span></a><small>5 courses, Smart Village</small></div><span></span></li>
+            <li><div><a href="https://www.coursera.org/account/accomplishments/specialization/AGGR96534P3B" target="_blank" rel="noopener">Game Design and Development<span aria-hidden="true"> ↗</span></a><small>Michigan State University (Coursera)</small></div><span>2018</span></li>
           </ul>
         </div>
       </div>
@@ -143,25 +167,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="wrap">
       <div class="rv">
         <p class="eyebrow">Projects</p>
-        <h2>Things I've <em>built.</em></h2>
+        <h2>Other <em>projects.</em></h2>
       </div>
 
-      <article class="card llumen rv">
-        <a class="media" href="https://www.linkedin.com/posts/pixonal_llumen-the-agentic-geo-intelligence-platform-activity-7526623550733115392-y97I" target="_blank" rel="noopener" aria-label="Watch the Llumen video on LinkedIn">
-          <img src="/llumen-video.jpg" alt="Llumen showing trip flows as 3D arcs over a city map" loading="lazy" decoding="async">
-          <span class="badge">▶ Watch on LinkedIn</span>
-        </a>
-        <div class="lb">
-          <span class="kick">At work · Pixonal</span>
-          <h3>Llumen</h3>
-          <p class="lead">The agentic geo-intelligence platform. It brings city data, infrastructure, digital twins and AI into one governed environment, so decision-makers can monitor, explore, simulate and decide how cities operate and evolve.</p>
-          <p><b>My part:</b> I lead Llumen's delivery team, deploying it on site for government clients on Azure and on servers with no internet, and I own its map and 2D/3D graphics.</p>
-          <ul class="tags"><li>Connect</li><li>Studio</li><li>Helix</li><li>Flow</li><li>Command</li></ul>
-          <div class="links"><a class="go" href="https://www.linkedin.com/posts/pixonal_llumen-the-agentic-geo-intelligence-platform-activity-7526623550733115392-y97I" target="_blank" rel="noopener">Watch the video ↗</a><a class="go" href="https://pixonal.com" target="_blank" rel="noopener">pixonal.com ↗</a></div>
-        </div>
-      </article>
-
-      <h3 class="subhead rv">On my own time</h3>
       <div class="projects">
         <article class="card proj rv">
           <div class="art"><svg class="eq" id="eq" viewBox="0 0 440 130" aria-label="Ten-band EQ curve"></svg></div>

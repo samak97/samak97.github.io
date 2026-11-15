@@ -58,6 +58,8 @@ h1 { font: var(--dw) calc(var(--ds) * clamp(64px, 10vw, 120px))/.98 var(--displa
 .tagline .src:hover { color: var(--fg); }
 .lede { color: var(--muted); font-size: clamp(16.5px, 1.4vw, 18px); max-width: 36em; margin: 0; }
 .lede b { color: var(--fg); font-weight: 600; }
+.lede a { text-decoration: underline; text-decoration-color: rgba(255,255,255,.25); text-underline-offset: 4px; transition: text-decoration-color .2s; }
+.lede a:hover { text-decoration-color: var(--acc); }
 .ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 30px; }
 .btn { all: unset; box-sizing: border-box; cursor: pointer; display: inline-flex; align-items: stretch; border-radius: 10px; overflow: hidden; background: var(--grad); background-size: 140% 100%; background-position: 0 0; color: #0a0d18; transition: transform .15s ease, background-position .4s ease; text-decoration: none; }
 .btn:hover { transform: translateY(-1px); background-position: 100% 0; }
@@ -139,6 +141,10 @@ input[type=range] { width: 100%; accent-color: var(--acc); }
 .job .when { font: 500 13px var(--mono); color: var(--dim); padding-top: 3px; }
 .job h3 { margin: 0; font-size: 18px; font-weight: 600; }
 .job .at { color: var(--muted); font-size: 15px; margin-top: 2px; }
+/* Company, school and certificate names link to their websites. */
+.job .at a, .list a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; transition: text-decoration-color .2s; }
+.job .at a:hover, .list a:hover { text-decoration-color: var(--acc); }
+.job .at a span, .list a span { color: var(--dim); font-size: .85em; }
 .job ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 15.5px; }
 .job li { margin: 4px 0; }
 .job li::marker { color: var(--dim); }

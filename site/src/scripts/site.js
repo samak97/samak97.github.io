@@ -103,24 +103,25 @@
   // ---------- hero: drifting particles that fall into the pointer's gravity well ----------
   // Particles drift and link up when close; near the pointer they are pulled in and swirl
   // around it, and a hard core pushes them back out so they orbit instead of collapsing.
+  // Kept faint: small square dots in the page's blue / red / yellow and dotted moonlit threads, to sit with the dotted sky.
   const grav = $('#gravity'), gctx2 = grav.getContext('2d');
   const coarse = matchMedia('(pointer: coarse)').matches;
-  const GCOL = ['#7ea2ff', '#ff6b8b', '#ffc35c'], LINK = 120, WELL = coarse ? 200 : 280, CORE = 64, MAX_SPEED = 3;
+  const GCOL = ['#7ea2ff', '#ff6b8b', '#ffc35c'], LINK = 110, WELL = coarse ? 200 : 280, CORE = 64, MAX_SPEED = 3;
   let gw = 0, gh = 0, parts = [];
   const well = { x: -9999, y: -9999 };
   function sizeGravity() {
     const dpr = Math.min(devicePixelRatio || 1, coarse ? 1.5 : 2);
     gw = hero.clientWidth; gh = hero.clientHeight;
     grav.width = Math.round(gw * dpr); grav.height = Math.round(gh * dpr); gctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const n = Math.round(Math.min(110, (gw * gh) / (coarse ? 16000 : 11000)));
-    parts = Array.from({ length: n }, () => ({ x: Math.random() * gw, y: Math.random() * gh, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, r: Math.random() * 1.6 + .8, c: (Math.random() * 3) | 0 }));
+    const n = Math.round(Math.min(70, (gw * gh) / (coarse ? 22000 : 16000)));
+    parts = Array.from({ length: n }, () => ({ x: Math.random() * gw, y: Math.random() * gh, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, r: Math.random() < .3 ? 2 : 1.5, a: .3 + Math.random() * .35, c: (Math.random() * GCOL.length) | 0 }));
   }
   function drawGravity() {
     const c = gctx2, active = well.x > -999;
     c.clearRect(0, 0, gw, gh);
     if (active) {
       const g = c.createRadialGradient(well.x, well.y, 0, well.x, well.y, WELL * .6);
-      g.addColorStop(0, 'rgba(126,162,255,.14)'); g.addColorStop(1, 'rgba(126,162,255,0)');
+      g.addColorStop(0, 'rgba(200,212,240,.05)'); g.addColorStop(1, 'rgba(200,212,240,0)');
       c.fillStyle = g; c.fillRect(well.x - WELL, well.y - WELL, WELL * 2, WELL * 2);
     }
     for (const p of parts) {
@@ -140,20 +141,20 @@
       if (p.y < 0 || p.y > gh) p.vy *= -1;
       p.x = clamp(p.x, 0, gw); p.y = clamp(p.y, 0, gh);
     }
-    c.lineWidth = 1;
+    c.lineWidth = 1; c.setLineDash([1, 4]); c.strokeStyle = '#c9d3ea';
     if (active) {
-      c.strokeStyle = GCOL[0];
       for (const p of parts) {
         const d = Math.hypot(well.x - p.x, well.y - p.y);
-        if (d < WELL * .6) { c.globalAlpha = (1 - d / (WELL * .6)) * .45; c.beginPath(); c.moveTo(well.x, well.y); c.lineTo(p.x, p.y); c.stroke(); }
+        if (d < WELL * .6) { c.globalAlpha = (1 - d / (WELL * .6)) * .22; c.beginPath(); c.moveTo(well.x, well.y); c.lineTo(p.x, p.y); c.stroke(); }
       }
     }
     for (let i = 0; i < parts.length; i++) for (let j = i + 1; j < parts.length; j++) {
       const a = parts[i], b = parts[j], dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
-      if (d2 < LINK * LINK) { c.globalAlpha = (1 - Math.sqrt(d2) / LINK) * .3; c.strokeStyle = GCOL[a.c]; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke(); }
+      if (d2 < LINK * LINK) { c.globalAlpha = (1 - Math.sqrt(d2) / LINK) * .14; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke(); }
     }
-    c.globalAlpha = .9;
-    for (const p of parts) { c.fillStyle = GCOL[p.c]; c.beginPath(); c.arc(p.x, p.y, p.r, 0, 6.283); c.fill(); }
+    c.setLineDash([]);
+    // Square dots on a 2px grid, like the pixels of the moon.
+    for (const p of parts) { c.globalAlpha = p.a; c.fillStyle = GCOL[p.c]; c.fillRect(Math.round(p.x / 2) * 2, Math.round(p.y / 2) * 2, p.r, p.r); }
     c.globalAlpha = 1;
   }
   // Tracked on the window so the well follows the pointer to the screen edges; on touch it lets go when the finger lifts.
