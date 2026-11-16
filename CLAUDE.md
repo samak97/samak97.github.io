@@ -65,8 +65,8 @@ Bun only (Ahmed prefers it; there was no Node on the Windows machine). Scripts a
 - Client names are written as "UAE government entities" everywhere until Pixonal approves naming them. Don't commit the names.
 - Phone numbers appear only in the CV PDF, not on the site.
 - CV keeps **both** IELTS (7.5, C1, May 2026) and TOEFL (95, Jan 2020).
-- Pixonal titles: **Senior Engineer & Delivery Team Lead** (Dubai; the site's date reads only "Present", Ahmed found "Feb 2026" misleading) with client-facing bullets only (delivery
-  team, FDE, deployments); **Senior Software Engineer** (Sheikh Zayed, Jan 2025–Feb 2026) with the engineering bullets
+- Pixonal titles: **Senior Engineer & Delivery Team Lead** (Dubai, Feb 2026–) with client-facing bullets only (delivery
+  team, FDE, deployments); **Senior Software Engineer** (Sheikh Zayed, Jan 2025–Present on the site: the role didn't end in Feb 2026) with the engineering bullets
   (graphics + 100x GPU work, dashboards, GeoJSON library). Ahmed leads the **delivery** team; never write that he leads
   or co-leads the engineering team. CV headline: "Senior Software Engineer & Team Lead".
 - CV Projects: Frazer, Maclip, Solar System, Pixie, all in the same format (title, date, Tools line, bullets);
