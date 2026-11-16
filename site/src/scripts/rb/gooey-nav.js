@@ -690,6 +690,16 @@ export function mountGooeyNav(
       go: index => {
         mark(index);
         go(index, true);
+      },
+      // Switches the palette (and optionally the pill colour) without remounting.
+      theme: (name, pill) => {
+        const next = name === 'light' ? 'light' : 'dark';
+        const nextPill = pill || PILLS[next].color;
+        const rgb = parse(nextPill);
+        Object.assign(settingsRef.current, { pillRgb: rgb, hoverRgb: parse(PILLS[next].hover), shadow: PILLS[next].shadow });
+        Object.entries({ ...THEMES[next], '--gn-pill': nextPill, '--gn-active-ink': contrastInk(rgb) })
+          .forEach(([key, value]) => root.style.setProperty(key, value));
+        render();
       }
     };
   }

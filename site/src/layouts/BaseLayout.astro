@@ -49,6 +49,17 @@ const personLd = {
     <meta name="robots" content="index, follow, max-image-preview:large" />
 
     <meta name="theme-color" content="#090b10" />
+    <!-- Night (dark) or day (light) before first paint: the visitor's own choice if they made one, otherwise
+         their local time (day from 6:00 to 18:00). The toggle in the nav and the sun/moon in the hero switch it. -->
+    <script is:inline>
+      (() => {
+        let t = null;
+        try { t = localStorage.getItem('theme'); } catch {}
+        if (t !== 'light' && t !== 'dark') { const h = new Date().getHours(); t = h >= 6 && h < 18 ? 'light' : 'dark'; }
+        document.documentElement.dataset.theme = t;
+        document.querySelector('meta[name="theme-color"]').content = t === 'light' ? '#ece4d6' : '#090b10';
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />

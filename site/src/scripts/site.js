@@ -61,6 +61,9 @@
     dirty = true;
   }
   const C = { star: [228, 232, 246], moon: [232, 233, 240], moonDark: [96, 102, 126], cloud: [112, 120, 146], ptr: [190, 204, 232], bolt: [236, 240, 255], lit: [196, 206, 240] };
+  // Day: the sun takes the moon's place and the clouds turn into soft white puffs on the sand sky.
+  const D = { sky: [231, 216, 193], sun: [255, 192, 102], sunEdge: [242, 136, 72], halo: [255, 186, 112], cloud: [253, 249, 242], ptr: [168, 124, 88], bird: [88, 68, 54] };
+  const isDay = () => document.documentElement.dataset.theme === 'light';
 
   // ---------- lightning from the moon ----------
   // Every 7–16 s a bolt drops from the moon's underside: a jagged walk down the grid that kinks sideways every
@@ -84,12 +87,41 @@
   // Brightness over the strike's life: a flash, a dip, a second flash, then a fade.
   const boltLevel = (dt) => dt < 0 || dt > 560 ? 0 : dt < 70 ? 1 : dt < 130 ? .15 : dt < 210 ? .9 : .9 * (1 - (dt - 210) / 350) ** 1.5;
 
+  // ---------- birds by day ----------
+  // The day's counterpart to the lightning: a small group of pixel birds that stays in the sky, gliding a slow
+  // figure-eight above the sun (one loop a minute or so), each bobbing on its own and facing the way they fly.
+  const FLOCK = [[0, 0], [-4, -2], [-5, 3], [-9, -1]];
+  // Wings up (a v) and wings down (a ^), three cells wide.
+  const WINGS = [[[-1, -1], [0, 0], [1, -1]], [[-1, 1], [0, 0], [1, 1]]];
+
+  // ---------- day / night cycle ----------
+  // skyK is how far the sky is towards day: 0 at night, 1 by day. A switch eases it across in CYCLE ms while the
+  // outgoing orb swings down out of the sky and the other swings up into its place, like hands round a clock.
+  const CYCLE = 1600, SWING = 1.15;
+  let cyc = null, skyK = isDay() ? 1 : 0;
+  const easeIO = (p) => p < .5 ? 4 * p * p * p : 1 - (-2 * p + 2) ** 3 / 2;
+  function skyState(t) {
+    if (cyc && t - cyc.t0 >= CYCLE) cyc = null;
+    if (!cyc) { const day = isDay(); return { k: day ? 1 : 0, orbs: [{ sun: day, a: 0 }] }; }
+    const e = easeIO(clamp((t - cyc.t0) / CYCLE, 0, 1)), toDay = cyc.to === 'light';
+    return { k: toDay ? e : 1 - e, orbs: [{ sun: !toDay, a: e * SWING }, { sun: toDay, a: (e - 1) * SWING }] };
+  }
+
   function drawSky(t) {
     if (!S) return;
     const { cols, rows, buf, rnd, cr, cloud, cw, rM, moon } = S; buf.fill(0);
     const drift = reduce ? 0 : Math.floor(t / 1400) % cw, W = cols * 2, pR = 16;
-    if (!reduce && t > nextStrike) { bolt = makeBolt(t); nextStrike = t + 7000 + Math.random() * 9000; }
-    const strike = bolt ? boltLevel(t - bolt.t0) : 0, flash = strike * .7;
+    const { k, orbs } = skyState(t); skyK = k;
+    // A dim dot fades towards the sky behind it: black at night, the sand colour by day, and in between mid-switch.
+    const low = mix([0, 0, 0], D.sky, k), shade = (c, b) => pack(mix(low, c, b), 1);
+    if (!reduce && k === 0 && t > nextStrike) { bolt = makeBolt(t); nextStrike = t + 7000 + Math.random() * 9000; }
+    const strike = bolt && k === 0 ? boltLevel(t - bolt.t0) : 0, flash = strike * .7;
+    const cloudCol = mix(C.cloud, D.cloud, k), ptrCol = mix(C.ptr, D.ptr, k);
+    // The sun's rays turn slowly, one revolution every few minutes.
+    const spin = reduce ? 0 : t * .00004;
+    // Each orb hangs at the top of a circle centred far below it, so swinging it round sets or raises it.
+    const R = rows * .9;
+    const at = orbs.map((o) => ({ sun: o.sun, x: moon[0] + R * Math.sin(o.a), y: moon[1] + R - R * Math.cos(o.a) }));
     for (let y = 0; y < rows; y++) {
       // The sky fades out towards the bottom of the hero so it melts into the page.
       const fade = 1 - sm(.6, 1, y / rows);
@@ -97,26 +129,55 @@
         const i = y * cols + x, inText = x > cr.x0 && x < cr.x1 && y > cr.y0 && y < cr.y1;
         let I = 0, col = null, big = false;
         const c = cloud[y * cw + ((x + drift) % cw)];
-        if (c > 0 && !inText) { I = c * (.55 + .5 * flash); col = flash > .02 ? mix(C.cloud, C.lit, flash) : C.cloud; }
-        if (c < .1 && rnd[i] < .004 && !inText) {
+        if (c > 0 && !inText) { I = c * (.55 + .2 * k + .5 * flash); col = flash > .02 ? mix(C.cloud, C.lit, flash) : cloudCol; }
+        if (k < 1 && c < .1 && rnd[i] < .004 && !inText) {
           const s = .45 + .45 * Math.sin(t * .001 * (.4 + rnd[i] * 60) + rnd[i] * 999);
-          if (s > .3) { I = .9; col = C.star; }
+          if (s > .3) { I = .9 * (1 - k); col = C.star; }
         }
-        const dx = (x - moon[0]) / rM, dy = (y - moon[1]) / rM, d = Math.hypot(dx, dy);
-        if (d < 1) {
-          // Lit or dark side of the terminator for the current moon phase.
-          const edge = Math.sqrt(1 - dy * dy) * Math.cos(2 * Math.PI * moonK);
-          const lit = moonK < .5 ? dx > edge : dx < -edge;
-          // Solid lit side with soft grey patches for craters; the dark side stays faintly visible.
-          const crater = sm(.5, .68, craterNoise.fbm(dx * 2.2 + 9, dy * 2.2 + 9));
-          I = lit ? 1 : .32; col = lit ? mix(C.moon, [176, 180, 196], crater) : C.moonDark; big = lit;
-        } else if (d < 2.4 && !inText) { const h = .12 * Math.exp(-(d - 1) * 1.8); if (h > I) { I = h; col = C.moon; } }
+        for (const o of at) {
+          if (inText) break;
+          const dx = (x - o.x) / rM, dy = (y - o.y) / rM, d = Math.hypot(dx, dy);
+          if (d > 2.6) continue;
+          if (o.sun) {
+            // A full disc, warmer towards its rim, then a soft halo crossed by twelve slowly turning rays.
+            if (d < 1.05) { I = 1; col = mix(D.sun, D.sunEdge, d * d * .8); big = true; }
+            else {
+              const halo = .3 * Math.exp(-(d - 1) * 1.5);
+              const ray = d < 2.4 && ((Math.atan2(dy, dx) / (2 * Math.PI) + spin) * 12 % 1 + 1) % 1 < .2 ? .85 * (1 - (d - 1.05) / 1.35) : 0;
+              const h = Math.max(halo, ray);
+              if (h > I) { I = h; col = D.halo; }
+            }
+          } else if (d < 1) {
+            // Lit or dark side of the terminator for the current moon phase.
+            const edge = Math.sqrt(1 - dy * dy) * Math.cos(2 * Math.PI * moonK);
+            const lit = moonK < .5 ? dx > edge : dx < -edge;
+            // Solid lit side with soft grey patches for craters; the dark side stays faintly visible.
+            const crater = sm(.5, .68, craterNoise.fbm(dx * 2.2 + 9, dy * 2.2 + 9));
+            I = lit ? 1 : .32; col = lit ? mix(C.moon, [176, 180, 196], crater) : C.moonDark; big = lit;
+          } else if (d < 2.4) { const h = .12 * Math.exp(-(d - 1) * 1.8); if (h > I) { I = h; col = C.moon; } }
+        }
         const pd = Math.hypot(x - ptr.x, y - ptr.y);
-        if (pd < pR) { I += .3 * (1 - pd / pR) ** 2; if (!col) col = C.ptr; }
+        if (pd < pR) { I += .3 * (1 - pd / pR) ** 2; if (!col) col = ptrCol; }
         I *= fade;
         if (col && I > BAYER[(y & 3) * 4 + (x & 3)]) {
-          const p = pack(col, .5 + .5 * Math.min(1, I)), o = y * 2 * W + x * 2;
+          const p = shade(col, .5 + .5 * Math.min(1, I)), o = y * 2 * W + x * 2;
           buf[o] = p; if (big) { buf[o + 1] = p; buf[o + W] = p; buf[o + W + 1] = p; }
+        }
+      }
+    }
+    // Birds: one dark pixel per cell, so they stay small and thin; they keep out of the text.
+    // They follow the sun, so they swing away with it and fade out during a switch to night.
+    const sun = at.find((o) => o.sun);
+    if (sun && k > 0) {
+      const th = reduce ? 0 : t * .00011, dir = Math.cos(th) >= 0 ? 1 : -1;
+      const gx = sun.x + rM * 2.4 * Math.sin(th), gy = sun.y - rM * 1.5 + rM * .9 * Math.sin(2 * th);
+      for (let b = 0; b < FLOCK.length; b++) {
+        const [ox, oy] = FLOCK[b], wob = reduce ? 0 : t * .0013 + b * 1.9;
+        const bx = Math.round(gx + dir * ox + Math.sin(wob) * 1.5), by = Math.round(gy + oy + Math.cos(wob * 1.3) * 1.2);
+        for (const [wx, wy] of WINGS[reduce ? 0 : ((t / 210 + b * 1.7) | 0) % 2]) {
+          const x = bx + wx * dir, y = by + wy;
+          if (x < 0 || x >= cols || y < 0 || y >= rows || (x > cr.x0 && x < cr.x1 && y > cr.y0 && y < cr.y1)) continue;
+          buf[y * 2 * W + x * 2] = shade(D.bird, .75 * k);
         }
       }
     }
@@ -132,8 +193,39 @@
     }
     sctx.putImageData(S.img, 0, 0);
   }
-  hero.addEventListener('pointermove', (e) => { const b = hero.getBoundingClientRect(); ptr = { x: (e.clientX - b.left) / 4, y: (e.clientY - b.top) / 4 }; dirty = true; });
+  // Is a pointer event over the moon (or sun)? It doubles as the day/night toggle.
+  const onOrb = (e) => {
+    if (!S) return false;
+    const b = hero.getBoundingClientRect(), x = (e.clientX - b.left) / 4, y = (e.clientY - b.top) / 4;
+    return Math.hypot(x - S.moon[0], y - S.moon[1]) < S.rM * 1.4;
+  };
+  hero.addEventListener('pointermove', (e) => {
+    const b = hero.getBoundingClientRect(); ptr = { x: (e.clientX - b.left) / 4, y: (e.clientY - b.top) / 4 }; dirty = true;
+    hero.style.cursor = onOrb(e) ? 'pointer' : '';
+  });
   hero.addEventListener('pointerleave', () => { ptr = { x: -1e4, y: -1e4 }; dirty = true; });
+  hero.addEventListener('click', (e) => { if (!cyc && onOrb(e)) toggleTheme(); });
+
+  // ---------- day / night ----------
+  // The choice is remembered; without one, BaseLayout picks by the visitor's local time.
+  const themeBtn = $('#theme');
+  const labelTheme = () => themeBtn.setAttribute('aria-label', isDay() ? 'Switch to night' : 'Switch to day');
+  // The page colours fade over the same time the sky takes to swing round (CSS reads --theme-fade).
+  function toggleTheme() {
+    if (cyc) return;
+    const next = isDay() ? 'dark' : 'light', root = document.documentElement;
+    if (!reduce && vis.hero) cyc = { t0: performance.now(), to: next };
+    root.style.setProperty('--theme-fade', `${cyc ? CYCLE : 500}ms`);
+    root.classList.add('theme-fade');
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch {}
+    $('meta[name="theme-color"]').content = next === 'light' ? '#ece4d6' : '#090b10';
+    labelTheme(); dirty = true;
+    dispatchEvent(new CustomEvent('themechange', { detail: next }));
+    setTimeout(() => root.classList.remove('theme-fade'), (cyc ? CYCLE : 500) + 100);
+  }
+  themeBtn.addEventListener('click', toggleTheme);
+  labelTheme();
 
   // ---------- hero: drifting particles that fall into the pointer's gravity well ----------
   // Particles drift and link up when close; near the pointer they are pulled in and swirl
@@ -142,7 +234,11 @@
   const grav = $('#gravity'), gctx2 = grav.getContext('2d');
   const coarse = matchMedia('(pointer: coarse)').matches;
   const GCOL = ['#7ea2ff', '#ff6b8b', '#ffc35c'], LINK = 110, WELL = coarse ? 200 : 280, CORE = 64, MAX_SPEED = 3;
-  let gw = 0, gh = 0, parts = [];
+  // By day the particles become dust in the sunlight, after React Bits' Swarm Cursor but far lighter: a few
+  // hundred tiny warm motes that drift and float upward, and near the pointer gather into a loose swirling
+  // cloud that trails after it. Each mote has its own orbit round the pointer, so the cloud never clumps.
+  const DUST = ['#7a5a40', '#94683f', '#a86e55', '#6b5444', '#fff6e4'], SWARM = coarse ? 220 : 300;
+  let gw = 0, gh = 0, parts = [], dust = [];
   const well = { x: -9999, y: -9999 };
   function sizeGravity() {
     const dpr = Math.min(devicePixelRatio || 1, coarse ? 1.5 : 2);
@@ -150,20 +246,56 @@
     grav.width = Math.round(gw * dpr); grav.height = Math.round(gh * dpr); gctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
     const n = Math.round(Math.min(70, (gw * gh) / (coarse ? 22000 : 16000)));
     parts = Array.from({ length: n }, () => ({ x: Math.random() * gw, y: Math.random() * gh, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, r: Math.random() < .3 ? 2 : 1.5, a: .3 + Math.random() * .35, c: (Math.random() * GCOL.length) | 0 }));
+    const m = Math.round(Math.min(220, (gw * gh) / (coarse ? 6000 : 4500)));
+    dust = Array.from({ length: m }, () => ({
+      x: Math.random() * gw, y: Math.random() * gh, vx: (Math.random() - .5) * .6, vy: (Math.random() - .5) * .6,
+      r: .7 + Math.random() ** 2 * 1.3, a: .4 + Math.random() * .4, c: (Math.random() * DUST.length) | 0,
+      orbit: 14 + Math.random() ** .7 * 110, ang: Math.random() * Math.PI * 2, spin: (Math.random() < .5 ? -1 : 1) * (.006 + Math.random() * .018),
+      tw: Math.random() * 6.3
+    }));
   }
-  function drawGravity() {
-    const c = gctx2, active = well.x > -999;
+  function drawDust(c, active, alpha, t) {
+    for (const p of dust) {
+      // Brownian drift with a slight lift, as dust rides warm air.
+      p.vx += (Math.random() - .5) * .03; p.vy += (Math.random() - .5) * .03 - .0025;
+      if (active) {
+        const d = Math.hypot(well.x - p.x, well.y - p.y);
+        if (d < SWARM) {
+          // Pulled towards its own point on an orbit round the pointer, harder the closer it already is.
+          p.ang += p.spin;
+          const tx = well.x + Math.cos(p.ang) * p.orbit, ty = well.y + Math.sin(p.ang) * p.orbit * .8, w = (.3 + .7 * (1 - d / SWARM)) * .02;
+          p.vx += (tx - p.x) * w; p.vy += (ty - p.y) * w;
+        }
+      }
+      p.vx *= .95; p.vy *= .95;
+      const sp = Math.hypot(p.vx, p.vy); if (sp > 3) { p.vx *= 3 / sp; p.vy *= 3 / sp; }
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -4) p.x = gw + 4; else if (p.x > gw + 4) p.x = -4;
+      if (p.y < -4) p.y = gh + 4; else if (p.y > gh + 4) p.y = -4;
+      if (alpha <= 0) continue;
+      // A slow twinkle, as each mote turns through the light.
+      c.globalAlpha = alpha * p.a * (.55 + .45 * Math.sin(t * .0015 + p.tw));
+      c.fillStyle = DUST[p.c];
+      c.beginPath(); c.arc(p.x, p.y, p.r, 0, Math.PI * 2); c.fill();
+    }
+  }
+  function drawGravity(t) {
+    const c = gctx2, active = well.x > -999, night = 1 - skyK;
     c.clearRect(0, 0, gw, gh);
+    drawDust(c, active, skyK, t);
+    c.globalAlpha = 1;
+    if (night <= 0) return;
     if (active) {
       const g = c.createRadialGradient(well.x, well.y, 0, well.x, well.y, WELL * .6);
-      g.addColorStop(0, 'rgba(200,212,240,.05)'); g.addColorStop(1, 'rgba(200,212,240,0)');
+      g.addColorStop(0, `rgba(200,212,240,${.05 * night})`); g.addColorStop(1, 'rgba(200,212,240,0)');
       c.fillStyle = g; c.fillRect(well.x - WELL, well.y - WELL, WELL * 2, WELL * 2);
     }
     for (const p of parts) {
       if (active) {
         const dx = well.x - p.x, dy = well.y - p.y, d = Math.hypot(dx, dy) || 1;
         if (d < WELL) {
-          const pull = d < CORE ? -.09 : (1 - d / WELL) * .07;
+          // A floor on the pull, so particles at the edge of the well start moving at once instead of creeping in.
+          const pull = d < CORE ? -.09 : (.25 + .75 * (1 - d / WELL)) * .09;
           p.vx += (dx / d) * pull + (-dy / d) * .012; p.vy += (dy / d) * pull + (dx / d) * .012;
         }
       }
@@ -180,16 +312,16 @@
     if (active) {
       for (const p of parts) {
         const d = Math.hypot(well.x - p.x, well.y - p.y);
-        if (d < WELL * .6) { c.globalAlpha = (1 - d / (WELL * .6)) * .22; c.beginPath(); c.moveTo(well.x, well.y); c.lineTo(p.x, p.y); c.stroke(); }
+        if (d < WELL * .6) { c.globalAlpha = (1 - d / (WELL * .6)) * .22 * night; c.beginPath(); c.moveTo(well.x, well.y); c.lineTo(p.x, p.y); c.stroke(); }
       }
     }
     for (let i = 0; i < parts.length; i++) for (let j = i + 1; j < parts.length; j++) {
       const a = parts[i], b = parts[j], dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
-      if (d2 < LINK * LINK) { c.globalAlpha = (1 - Math.sqrt(d2) / LINK) * .14; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke(); }
+      if (d2 < LINK * LINK) { c.globalAlpha = (1 - Math.sqrt(d2) / LINK) * .14 * night; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke(); }
     }
     c.setLineDash([]);
     // Square dots on a 2px grid, like the pixels of the moon.
-    for (const p of parts) { c.globalAlpha = p.a; c.fillStyle = GCOL[p.c]; c.fillRect(Math.round(p.x / 2) * 2, Math.round(p.y / 2) * 2, p.r, p.r); }
+    for (const p of parts) { c.globalAlpha = p.a * night; c.fillStyle = GCOL[p.c]; c.fillRect(Math.round(p.x / 2) * 2, Math.round(p.y / 2) * 2, p.r, p.r); }
     c.globalAlpha = 1;
   }
   // Tracked on the window so the well follows the pointer to the screen edges; on touch it lets go when the finger lifts.
@@ -303,10 +435,11 @@
     const gains = [3, 4.5, 3.5, 1, -1, -1.5, 0, 2, 3.5, 2.5], W = 440, padX = 24, mid = 62, k = 8;
     const step = (W - padX * 2) / 9, pts = gains.map((g, i) => [padX + i * step, mid - g * k]);
     let d = `M${pts[0]}`; for (let i = 1; i < 10; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], c = (x0 + x1) / 2; d += ` C${c},${y0} ${c},${y1} ${x1},${y1}`; }
-    const grid = pts.map(([x]) => `<line x1="${x}" y1="14" x2="${x}" y2="112" stroke="rgba(255,255,255,.08)"/>`).join('');
-    const lab = ['31', '62', '125', '250', '500', '1k', '2k', '4k', '8k', '16k'].map((l, i) => `<text x="${pts[i][0]}" y="127" fill="#687083" font-size="10" font-family="Geist Mono, monospace" text-anchor="middle">${l}</text>`).join('');
-    const dots = pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" fill="#0d1017" stroke="url(#eqs)" stroke-width="2"/>`).join('');
-    svg.innerHTML = `<defs><linearGradient id="eqs" x1="0" x2="1"><stop offset="0" stop-color="#6f9bff"/><stop offset=".52" stop-color="#ff5e7e"/><stop offset="1" stop-color="#ffc35c"/></linearGradient><linearGradient id="eqf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5e7e" stop-opacity=".22"/><stop offset="1" stop-color="#6f9bff" stop-opacity="0"/></linearGradient></defs>${grid}<line x1="${padX}" y1="${mid}" x2="${W - padX}" y2="${mid}" stroke="rgba(255,255,255,.2)" stroke-dasharray="3 4"/><path d="${d} L${W - padX},112 L${padX},112Z" fill="url(#eqf)"/><path d="${d}" fill="none" stroke="url(#eqs)" stroke-width="2.4"/>${dots}${lab}`;
+    // Neutral colours come from the theme variables (via style, since SVG attributes can't read them).
+    const grid = pts.map(([x]) => `<line x1="${x}" y1="14" x2="${x}" y2="112" style="stroke:var(--line)"/>`).join('');
+    const lab = ['31', '62', '125', '250', '500', '1k', '2k', '4k', '8k', '16k'].map((l, i) => `<text x="${pts[i][0]}" y="127" style="fill:var(--dim)" font-size="10" font-family="Geist Mono, monospace" text-anchor="middle">${l}</text>`).join('');
+    const dots = pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" style="fill:var(--bg2)" stroke="url(#eqs)" stroke-width="2"/>`).join('');
+    svg.innerHTML = `<defs><linearGradient id="eqs" x1="0" x2="1"><stop offset="0" stop-color="#6f9bff"/><stop offset=".52" stop-color="#ff5e7e"/><stop offset="1" stop-color="#ffc35c"/></linearGradient><linearGradient id="eqf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5e7e" stop-opacity=".22"/><stop offset="1" stop-color="#6f9bff" stop-opacity="0"/></linearGradient></defs>${grid}<line x1="${padX}" y1="${mid}" x2="${W - padX}" y2="${mid}" style="stroke:var(--line2)" stroke-dasharray="3 4"/><path d="${d} L${W - padX},112 L${padX},112Z" fill="url(#eqf)"/><path d="${d}" fill="none" stroke="url(#eqs)" stroke-width="2.4"/>${dots}${lab}`;
   })();
 
   // ---------- copy email ----------
@@ -430,8 +563,9 @@
 
   let lastSky = 0;
   function frame(now) {
-    if (vis.hero && (dirty || (!reduce && now - lastSky > 50))) { drawSky(now); lastSky = now; dirty = false; }
-    if (vis.hero && !reduce && !document.hidden) drawGravity();
+    // Every frame while day and night are swapping, so the orbs move smoothly; otherwise 20 times a second.
+    if (vis.hero && (dirty || cyc || (!reduce && now - lastSky > 50))) { drawSky(now); lastSky = now; dirty = false; }
+    if (vis.hero && !reduce && !document.hidden) drawGravity(now);
     if (G) { if (vis.game) stepGame(now); else G.last = now; }
     requestAnimationFrame(frame);
   }

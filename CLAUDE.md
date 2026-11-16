@@ -47,7 +47,7 @@ Bun only (Ahmed prefers it; there was no Node on the Windows machine). Scripts a
 
 ## Decisions Ahmed made (don't undo without asking)
 
-- Design (Nov 2026, a hybrid of five reference sites he picked): dark only, dotted night sky in the hero, Instrument
+- Design (Nov 2026, a hybrid of five reference sites he picked): night and day themes (see below), dotted sky in the hero, Instrument
   Serif titles (he rejected Fraunces, Playfair, Bricolage and Syne), accent = blurred blue / red / yellow gradient,
   floating pill nav + bottom quick-links dock, simple and client-facing; not Dubai-themed (Dubai only as a location).
 - Section order: hero → About → Experience → Education → Skills → Projects → Threads → Case studies (+ GPU playground)
@@ -80,7 +80,16 @@ Bun only (Ahmed prefers it; there was no Node on the Windows machine). Scripts a
   (all cards and widgets), Click Spark, Gradual Blur (page bottom). He tried Laser Flow between About and Llumen
   and dropped it. He also wants the Accordion (React Bits "Accordion Gallery") added later; not placed yet.
 - Badge: front bar reads "FORWARD DEPLOYED" / "CODE WIZARD"; the back is only the logo and the site URL.
-- Lightning from the moon in the hero: simple and occasional (every 7–16 s), in the sky's own pixel style.
+- Lightning from the moon in the hero: simple and occasional (every 7–16 s), in the sky's own pixel style. Night only.
+- Day and night themes (`data-theme="light"` / `"dark"` on `<html>`): picked before first paint in BaseLayout from
+  the visitor's saved choice, else their local time (day 6:00–18:00). The nav's sun/moon button and clicking the
+  sun or moon in the hero both toggle it, and the choice is remembered. Day is warm parchment and sand (not white),
+  with a sun and turning pixel rays in place of the moon. Switching plays a 1.6 s day/night cycle: the orb swings
+  down like a clock hand, the other swings up, and the sky, particles and page colours blend along with it.
+  By day: four tiny pixel birds that stay, gliding a slow figure-eight above the sun (the counterpart of the night
+  lightning; Ahmed found passing flocks too rare), and the cursor
+  particles become sunlit dust that loosely swirls after the pointer (inspired by React Bits Swarm Cursor, kept subtle). The GPU playground, the game and the Maclip window stay
+  dark screens in both themes. Colours are CSS variables at the top of `global.css`; add new colours there, not inline.
 - Only "Llumen" in the hero intro links to the LinkedIn post; "Forward Deployed Engineer" is plain bold text.
 
 ## Gotchas

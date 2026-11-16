@@ -61,7 +61,11 @@ document.querySelectorAll('.copy-bell').forEach(root => {
 document.querySelectorAll('.rv').forEach(el => fadeContent(el, { blur: true, duration: 1, ease: 'power2.out', threshold: 0.1 }));
 
 // ---------- gooey nav: follows the section in view ----------
-const gooey = mountGooeyNav($('.nav .gooey-nav'), { color: '#e8ecf4', colors: COLORS, particleCount: 12 });
+// The pill is pale on the night glass and a warm near-black on the day glass.
+const PILL = { dark: '#e8ecf4', light: '#2f2923' };
+const theme = () => (document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
+const gooey = mountGooeyNav($('.nav .gooey-nav'), { theme: theme(), color: PILL[theme()], colors: COLORS, particleCount: 12 });
+addEventListener('themechange', () => gooey.theme(theme(), PILL[theme()]));
 // Sections without their own link light up the link they belong under; the hero and footer count too, so
 // jumping straight to either end of the page still moves the pill.
 const NAV_INDEX = { top: 0, about: 0, llumen: 0, experience: 1, education: 2, skills: 2, projects: 3, recommendation: 3, writing: 3, work: 3, play: 3, contact: 3 };
